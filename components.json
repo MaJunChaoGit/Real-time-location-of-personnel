@@ -1,0 +1,5 @@
+{
+  "Test": "'source/Scene/Test'",
+  "Viewer": "'source/Widgets/Viewer/Viewer'",
+  "testShaders": "'source/Shaders/AdjustTranslucentFS'"
+}
