@@ -596,7 +596,6 @@ import Scene_VerticalOrigin from 'cesium/Scene/VerticalOrigin';
 import Scene_ViewportQuad from 'cesium/Scene/ViewportQuad';
 import Scene_WebMapServiceImageryProvider from 'cesium/Scene/WebMapServiceImageryProvider';
 import Scene_WebMapTileServiceImageryProvider from 'cesium/Scene/WebMapTileServiceImageryProvider';
-import Shaders_AdjustTranslucentFS from 'cesium/Shaders/AdjustTranslucentFS';
 import Shaders_Appearances_AllMaterialAppearanceFS from 'cesium/Shaders/Appearances/AllMaterialAppearanceFS';
 import Shaders_Appearances_AllMaterialAppearanceVS from 'cesium/Shaders/Appearances/AllMaterialAppearanceVS';
 import Shaders_Appearances_BasicMaterialAppearanceFS from 'cesium/Shaders/Appearances/BasicMaterialAppearanceFS';
@@ -1692,7 +1691,7 @@ module.exports = {
   WebMapServiceImageryProvider: Scene_WebMapServiceImageryProvider,
   WebMapTileServiceImageryProvider: Scene_WebMapTileServiceImageryProvider,
   Autolinker: ThirdParty_Autolinker,
-  earcut_2_1_1: ThirdParty_earcut_2_1_1,
+  earcut-2_1_1: ThirdParty_earcut_2_1_1,
   addDefaults: ThirdParty_GltfPipeline_addDefaults,
   addExtensionsRequired: ThirdParty_GltfPipeline_addExtensionsRequired,
   addExtensionsUsed: ThirdParty_GltfPipeline_addExtensionsUsed,
@@ -1714,16 +1713,16 @@ module.exports = {
   techniqueParameterForSemantic: ThirdParty_GltfPipeline_techniqueParameterForSemantic,
   updateVersion: ThirdParty_GltfPipeline_updateVersion,
   webGLConstantToGlslType: ThirdParty_GltfPipeline_webGLConstantToGlslType,
-  google_earth_dbroot_parser: ThirdParty_google_earth_dbroot_parser,
+  google-earth-dbroot-parser: ThirdParty_google_earth_dbroot_parser,
   jsep: ThirdParty_jsep,
   kdbush: ThirdParty_kdbush,
-  knockout_3_4_2: ThirdParty_knockout_3_4_2,
-  knockout_es5: ThirdParty_knockout_es5,
+  knockout-3_4_2: ThirdParty_knockout_3_4_2,
+  knockout-es5: ThirdParty_knockout_es5,
   knockout: ThirdParty_knockout,
   measureText: ThirdParty_measureText,
-  mersenne_twister: ThirdParty_mersenne_twister,
+  mersenne-twister: ThirdParty_mersenne_twister,
   NoSleep: ThirdParty_NoSleep,
-  protobuf_minimal: ThirdParty_protobuf_minimal,
+  protobuf-minimal: ThirdParty_protobuf_minimal,
   quickselect: ThirdParty_quickselect,
   rbush: ThirdParty_rbush,
   FXAA3_11: ThirdParty_Shaders_FXAA3_11,
