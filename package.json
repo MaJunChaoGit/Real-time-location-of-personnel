@@ -1,0 +1,70 @@
+{
+  "name": "real-time-location-of-personnel",
+  "version": "1.0.0",
+  "description": "demo for real-time-location",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint test/**/* packages/**/* --quiet",
+    "test": "npm run lint && cross-env CI_ENV=/dev/ karma start test/unit/karma.conf.js --single-run",
+    "test:watch": "karma start test/unit/karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaJunChaoGit/Real-time-location-of-personnel.git"
+  },
+  "keywords": [
+    "cesium",
+    "real-time"
+  ],
+  "author": "mjc sxx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MaJunChaoGit/Real-time-location-of-personnel/issues"
+  },
+  "homepage": "https://github.com/MaJunChaoGit/Real-time-location-of-personnel#readme",
+  "dependencies": {
+    "vue": "^2.5.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-module-resolver": "^2.2.0",
+    "babel-plugin-syntax-jsx": "^6.8.0",
+    "babel-plugin-transform-vue-jsx": "^3.3.0",
+    "babel-preset-es2015": "^6.14.0",
+    "chai": "^4.1.2",
+    "cross-env": "^5.2.0",
+    "css-loader": "^0.28.7",
+    "html-loader": "^0.5.5",
+    "isparta-loader": "^2.0.0",
+    "json-loader": "^0.5.7",
+    "karma": "^1.3.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage": "^1.1.1",
+    "karma-mocha": "^1.2.0",
+    "karma-sinon-chai": "^1.2.4",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-spec-reporter": "0.0.26",
+    "karma-webpack": "^3.0.0",
+    "mocha": "^3.1.1",
+    "postcss-loader": "^2.1.6",
+    "progress-bar-webpack-plugin": "^1.11.0",
+    "sinon": "^6.1.3",
+    "sinon-chai": "^3.2.0",
+    "style-loader": "^0.21.0",
+    "url-loader": "^1.0.1",
+    "vue": "^2.5.2",
+    "vue-loader": "^13.3.0",
+    "vue-router": "2.7.0",
+    "vue-template-compiler": "^2.5.2",
+    "vue-template-es2015-compiler": "^1.6.0",
+    "webpack": "^3.7.1",
+    "eslint": "4.14.0",
+    "eslint-config-elemefe": "0.1.1",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-html": "^4.0.1",
+    "eslint-plugin-json": "^1.2.0"
+  }
+}
