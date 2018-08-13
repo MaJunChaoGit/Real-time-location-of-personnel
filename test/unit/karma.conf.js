@@ -1,5 +1,7 @@
 var webpackConfig = require('../../build/webpack.test.js');
 
+delete webpackConfig.entry;
+
 module.exports = function(config) {
   var configuration = {
     browser: ['Chrome'],

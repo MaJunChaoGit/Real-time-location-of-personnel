@@ -42,7 +42,7 @@ const webpackConfig = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            js: process.env.CI_ENV ? 'isparta-loader' : 'isparta-loader!eslint-loader'
+            js: 'isparta-loader!eslint-loader'
           },
           preserveWhitespace: false
         }
@@ -86,13 +86,8 @@ const webpackConfig = {
     ]
   },
   plugins: [
+    new ProgressBarPlugin()
   ]
 };
-
-if (!process.env.CI_ENV) {
-  webpackConfig.plugins.push(
-    new ProgressBarPlugin()
-  );
-}
 
 module.exports = webpackConfig;

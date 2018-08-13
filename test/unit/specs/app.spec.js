@@ -7,4 +7,3 @@ describe('test app vue', () => {
     expect(vm.title).to.equal('Hello World');
   });
 });
-
