@@ -5,7 +5,7 @@ var render = require('json-templater/string');
 var endOfLine = require('os').EOL;
 
 function mergeTemplate(importName, path, exportName) {
-  
+
   var index = importNameList.indexOf(importName);
 
   if (index > -1) {
@@ -18,8 +18,8 @@ function mergeTemplate(importName, path, exportName) {
   }));
   // 如果是自定Shaders或者是源码中的Shaders, 装入Shaders数组, 负责正常装入导出模块
   if (/^\'(cesium|source){1}\/Shaders\/.*/.test(path)) {
-    var index = shadersListTemplate.indexOf(importName);
-    if (index > -1) {
+    var isExist = shadersListTemplate.indexOf(importName);
+    if (isExist > -1) {
       shadersListTemplate.splice(index, 1, importName);
     } else {
       shadersListTemplate.push(render(SHADERS_TEMPLATE, {
@@ -63,11 +63,12 @@ var pathList = /define\(\[(.+)\]/g.exec(source.toString())[1].replace(/\'\./g, '
 
 // 获取导出名称
 var exportNameList = pathList.map(path => {
-  return path.slice(path.lastIndexOf('/') + 1).replace(/\./g, '_').replace(/\'/g, '');
+  return path.slice(path.lastIndexOf('/') + 1).replace(/\./g, '_').replace(/\-/g, '_').replace(/\'/g, '');
 });
 
 if (importNameList.length !== exportNameList.length || exportNameList.length !== pathList.length) {
-  throw new Error('没有正确匹配导入,导出与路径');
+  console.log('没有正确匹配导入,导出与路径');
+  return;
 }
 
 var mergeArray = [];

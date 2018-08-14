@@ -596,6 +596,7 @@ import Scene_VerticalOrigin from 'cesium/Scene/VerticalOrigin';
 import Scene_ViewportQuad from 'cesium/Scene/ViewportQuad';
 import Scene_WebMapServiceImageryProvider from 'cesium/Scene/WebMapServiceImageryProvider';
 import Scene_WebMapTileServiceImageryProvider from 'cesium/Scene/WebMapTileServiceImageryProvider';
+import Shaders_AdjustTranslucentFS from 'cesium/Shaders/AdjustTranslucentFS';
 import Shaders_Appearances_AllMaterialAppearanceFS from 'cesium/Shaders/Appearances/AllMaterialAppearanceFS';
 import Shaders_Appearances_AllMaterialAppearanceVS from 'cesium/Shaders/Appearances/AllMaterialAppearanceVS';
 import Shaders_Appearances_BasicMaterialAppearanceFS from 'cesium/Shaders/Appearances/BasicMaterialAppearanceFS';
@@ -877,7 +878,7 @@ import Widgets_Timeline_Timeline from 'cesium/Widgets/Timeline/Timeline';
 import Widgets_Timeline_TimelineHighlightRange from 'cesium/Widgets/Timeline/TimelineHighlightRange';
 import Widgets_Timeline_TimelineTrack from 'cesium/Widgets/Timeline/TimelineTrack';
 import Widgets_ToggleButtonViewModel from 'cesium/Widgets/ToggleButtonViewModel';
-import Widgets_Viewer_Viewer from 'source/Widgets/Viewer/Viewer';
+import Widgets_Viewer_Viewer from 'cesium/Widgets/Viewer/Viewer';
 import Widgets_Viewer_viewerCesium3DTilesInspectorMixin from 'cesium/Widgets/Viewer/viewerCesium3DTilesInspectorMixin';
 import Widgets_Viewer_viewerCesiumInspectorMixin from 'cesium/Widgets/Viewer/viewerCesiumInspectorMixin';
 import Widgets_Viewer_viewerDragDropMixin from 'cesium/Widgets/Viewer/viewerDragDropMixin';
@@ -885,8 +886,6 @@ import Widgets_Viewer_viewerPerformanceWatchdogMixin from 'cesium/Widgets/Viewer
 import Widgets_VRButton_VRButton from 'cesium/Widgets/VRButton/VRButton';
 import Widgets_VRButton_VRButtonViewModel from 'cesium/Widgets/VRButton/VRButtonViewModel';
 import Workers_createTaskProcessorWorker from 'cesium/Workers/createTaskProcessorWorker';
-import Scene_Test from 'source/Scene/Test';
-import Shaders_AdjustTranslucentFS from 'source/Shaders/AdjustTranslucentFS';
 
 const _shaders = {
   Shaders_AdjustTranslucentFS,
@@ -1691,7 +1690,7 @@ module.exports = {
   WebMapServiceImageryProvider: Scene_WebMapServiceImageryProvider,
   WebMapTileServiceImageryProvider: Scene_WebMapTileServiceImageryProvider,
   Autolinker: ThirdParty_Autolinker,
-  earcut-2_1_1: ThirdParty_earcut_2_1_1,
+  earcut_2_1_1: ThirdParty_earcut_2_1_1,
   addDefaults: ThirdParty_GltfPipeline_addDefaults,
   addExtensionsRequired: ThirdParty_GltfPipeline_addExtensionsRequired,
   addExtensionsUsed: ThirdParty_GltfPipeline_addExtensionsUsed,
@@ -1713,16 +1712,16 @@ module.exports = {
   techniqueParameterForSemantic: ThirdParty_GltfPipeline_techniqueParameterForSemantic,
   updateVersion: ThirdParty_GltfPipeline_updateVersion,
   webGLConstantToGlslType: ThirdParty_GltfPipeline_webGLConstantToGlslType,
-  google-earth-dbroot-parser: ThirdParty_google_earth_dbroot_parser,
+  google_earth_dbroot_parser: ThirdParty_google_earth_dbroot_parser,
   jsep: ThirdParty_jsep,
   kdbush: ThirdParty_kdbush,
-  knockout-3_4_2: ThirdParty_knockout_3_4_2,
-  knockout-es5: ThirdParty_knockout_es5,
+  knockout_3_4_2: ThirdParty_knockout_3_4_2,
+  knockout_es5: ThirdParty_knockout_es5,
   knockout: ThirdParty_knockout,
   measureText: ThirdParty_measureText,
-  mersenne-twister: ThirdParty_mersenne_twister,
+  mersenne_twister: ThirdParty_mersenne_twister,
   NoSleep: ThirdParty_NoSleep,
-  protobuf-minimal: ThirdParty_protobuf_minimal,
+  protobuf_minimal: ThirdParty_protobuf_minimal,
   quickselect: ThirdParty_quickselect,
   rbush: ThirdParty_rbush,
   FXAA3_11: ThirdParty_Shaders_FXAA3_11,
@@ -1780,8 +1779,7 @@ module.exports = {
   viewerPerformanceWatchdogMixin: Widgets_Viewer_viewerPerformanceWatchdogMixin,
   VRButton: Widgets_VRButton_VRButton,
   VRButtonViewModel: Widgets_VRButton_VRButtonViewModel,
-  createTaskProcessorWorker: Workers_createTaskProcessorWorker,
-  Test: Scene_Test
+  createTaskProcessorWorker: Workers_createTaskProcessorWorker
 };
 
 module.exports.default = module.exports;
