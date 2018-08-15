@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 
-const cesiumSource = '..node_modules/cesium/Source/';
+const cesiumSource = 'node_modules/cesium/Source/';
 const cesiumWorkers = '../build/Cesium/Workers';;
 
 const webpackConfig = {
@@ -15,10 +15,8 @@ const webpackConfig = {
   },
   mode: 'development',
   output: {
-    path: path.resolve(process.cwd(), './dist'),
-    publicPath: '/dist/',
+    path: path.resolve(process.cwd(), './lib'),
     filename: '[name].js',
-    chunkFilename: '[id].js',
     sourcePrefix: ''
   },
   amd: {
