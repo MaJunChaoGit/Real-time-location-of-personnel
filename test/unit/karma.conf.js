@@ -1,3 +1,4 @@
+var path = require('path');
 var webpackConfig = require('../../build/webpack.test.js');
 
 delete webpackConfig.entry;
@@ -6,7 +7,6 @@ module.exports = function(config) {
   var configuration = {
     browser: ['Chrome'],
     frameworks: ['mocha', 'sinon-chai'],
-    reporters: ['spec', 'coverage'],
     files: ['./index.js'],
     preprocessors: {
       './index.js': ['webpack', 'sourcemap']
@@ -15,12 +15,17 @@ module.exports = function(config) {
     webpackMiddleware: {
       noInfo: true
     },
-    coverageReporter: {
-      dir: './coverage',
-      reporters: [
-        { type: 'lcov', subdir: '.' },
-        { type: 'text-summary' }
-      ]
+    reporters: ['progress'],
+    reports: ['html', 'text-summary'],
+    coverageIstanbulReporter: {
+      reports: [ 'text-summary' ],
+      fixWebpackSourcePaths: true,
+      'report-config': {
+        html: {
+          subdir: 'html'
+        }
+      },
+      dir: path.join(__dirname, 'coverage')
     },
     client: {
       macha: {
