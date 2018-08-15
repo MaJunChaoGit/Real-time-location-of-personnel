@@ -4,6 +4,7 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 
 const cesiumSource = 'node_modules/cesium/Source/';
 const cesiumWorkers = '../build/Cesium/Workers';;
@@ -11,7 +12,6 @@ const cesiumWorkers = '../build/Cesium/Workers';;
 const config = require('./config');
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
-
 var webpackConfig = {
   entry: {
     app: ['./examples/index.js']
@@ -38,7 +38,6 @@ var webpackConfig = {
     alias: config.alias,
     modules: ['node_modules']
   },
-  // externals: config.externals,
   module: {
     rules: [
       {
@@ -86,6 +85,7 @@ var webpackConfig = {
     ]
   },
   plugins: [
+    new VueLoaderPlugin(),
     new ProgressBarPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: true
@@ -102,10 +102,6 @@ var webpackConfig = {
 };
 
 if (isProd) {
-  // webpackConfig.externals = {
-  //   vue: 'Vue',
-  //   'vue-router': 'VueRouter'
-  // };
   webpackConfig.module.rules.push(
     {
       test: /\.vue$/,
@@ -127,25 +123,13 @@ if (isProd) {
     }
   );
   webpackConfig.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      output: {
-        comments: false
-      },
-      sourceMap: false
-    }),
     new ExtractTextPlugin({
       filename: '[name].[contenthash:7].css'
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
       'CESIUM_BASE_URL': JSON.stringify('./')
-    }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: ['app', 'manifest']
-    // }),
+    })
   );
 }
 
@@ -165,9 +149,7 @@ if (isDev) {
   );
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
       'CESIUM_BASE_URL': JSON.stringify('')
     })
   );

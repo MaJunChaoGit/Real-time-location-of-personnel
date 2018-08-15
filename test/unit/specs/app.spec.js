@@ -1,9 +1,9 @@
 import Vue from 'vue';
-import app from '../../../packages/app.vue';
+import App from '../../../examples/App.vue';
 
-describe('test app vue', () => {
+describe('test App vue', () => {
   it('组件加载后,title是Hello World', () => {
-    let vm = new Vue(app).$mount();
+    let vm = new Vue(App).$mount();
     expect(vm.title).to.equal('Hello World');
   });
 });
