@@ -1,0 +1,119 @@
+[33mcommit 19cda96300fa294da95264b478fc2328433ce045[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: majunchao <354488954@qq.com>
+Date:   Thu Aug 16 22:08:14 2018 +0800
+
+    '修改了dockerfile'
+
+[33mcommit 1dcb7ba195e868806d29c395506517663af327e3[m
+Author: majunchao <354488954@qq.com>
+Date:   Thu Aug 16 21:51:51 2018 +0800
+
+    '修改了dockerfile'
+
+[33mcommit a9e00c373d160588ab382a8decf61a469d3e6157[m
+Author: majunchao <354488954@qq.com>
+Date:   Thu Aug 16 21:45:17 2018 +0800
+
+    '试一下'
+
+[33mcommit 807327b840e7b3def14a8b61720d9a1699398e96[m
+Author: majunchao <354488954@qq.com>
+Date:   Thu Aug 16 21:34:55 2018 +0800
+
+    '修改了dockerfile'
+
+[33mcommit 0f20d0f8dfa361d15f994ef6e4d863ec34857e8f[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Thu Aug 16 18:11:23 2018 +0800
+
+    再试一次
+
+[33mcommit 7cdb2e9ac458fb4653450073b44089cc64b93859[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Thu Aug 16 18:01:22 2018 +0800
+
+    再试一次构建
+
+[33mcommit b9391e7a1d9c4100afed04a41fbf7571c5ce6bda[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Thu Aug 16 17:44:21 2018 +0800
+
+    使用node普通版本
+
+[33mcommit 776d99f9367d5cc7d68a9af0a44bceedecec9b3b[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Thu Aug 16 17:41:20 2018 +0800
+
+    使用node普通版本
+
+[33mcommit 0493760fb3e1825dafa200bc09d4ad2f120cab21[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Thu Aug 16 17:16:52 2018 +0800
+
+    修改了dockerfile
+
+[33mcommit fa4705c472e2fdd7cdef832ffd0eb0be3fa7aac6[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Thu Aug 16 17:00:17 2018 +0800
+
+    取消了3dtiles下载工具
+
+[33mcommit 2fdb24780e10ad18724d6ca6b9fc2c3666e225f6[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Thu Aug 16 16:53:33 2018 +0800
+
+    新增dockerfile
+
+[33mcommit c955f144258e3cf366c54ff032b86843c9dac5f0[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Thu Aug 16 15:31:03 2018 +0800
+
+    分离业务和cesium源码
+
+[33mcommit cb96176e56f9d6108c78342a646c5b85f96c42a6[m
+Author: majunchao <354488954@qq.com>
+Date:   Thu Aug 16 01:23:21 2018 +0800
+
+    'karma还是和cesium静态资源相冲突,但入口部署环境搞定'
+
+[33mcommit 473e1e479d235e2084aec530b48fcd399df35750[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Wed Aug 15 18:10:23 2018 +0800
+
+    karma测试覆盖率没有生成
+
+[33mcommit 9efb83a8a8397750a9e4e674e5b33a5e4451815f[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Wed Aug 15 16:18:16 2018 +0800
+
+    开发环境搭建好了
+
+[33mcommit daca78060597e9cd4a8309eb4e90e6a56e4e68de[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Tue Aug 14 15:31:23 2018 +0800
+
+    开发环境和发布打包写完了
+
+[33mcommit 187b7f02ff1cd8bb3d915692e5f7c1839e71ce94[m
+Author: majunchao <354488954@qq.com>
+Date:   Mon Aug 13 23:20:35 2018 +0800
+
+    '编译入口文件模块写完了'
+
+[33mcommit f5f71def2e05728ba46525ef3a71a688220cb168[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Mon Aug 13 17:17:46 2018 +0800
+
+    转化文件这块思路不好,需要重构下
+
+[33mcommit 8263725ef1d2d835ea174cce20141f4666ef1329[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Mon Aug 13 14:28:23 2018 +0800
+
+    修改了单元测试的一个bug
+
+[33mcommit c623c15c9848692d50681c75068f29b672a922a4[m
+Author: MaJunChaoGit <354488954@qq.com>
+Date:   Mon Aug 13 11:40:36 2018 +0800
+
+    测试和语法环境搭完了
