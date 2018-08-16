@@ -14,12 +14,13 @@ const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
 var webpackConfig = {
   entry: {
-    app: ['./examples/index.js']
+    app: './examples/index.js'
   },
   output: {
     path: path.resolve(process.cwd(), './lib'),
     filename: '[name].js',
-    sourcePrefix: ''
+    sourcePrefix: '',
+    chunkFilename: '[name].js'
   },
   devServer: {
     host: '0.0.0.0',
@@ -38,6 +39,7 @@ var webpackConfig = {
     alias: config.alias,
     modules: ['node_modules']
   },
+  optimization: {},
   module: {
     rules: [
       {
@@ -102,6 +104,7 @@ var webpackConfig = {
 };
 
 if (isProd) {
+  // webpackConfig.entry.vendor = './src/index.js';
   webpackConfig.module.rules.push(
     {
       test: /\.vue$/,
@@ -127,10 +130,22 @@ if (isProd) {
       filename: 'main[hash].css'
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
       'CESIUM_BASE_URL': JSON.stringify('./')
     })
   );
+  webpackConfig.optimization.runtimeChunk = {
+    name: 'manifest'
+  };
+  webpackConfig.optimization.splitChunks = {
+    cacheGroups: {
+      vendor: {
+        test: /[\\/]node_modules[\\/]/,
+        name: 'vendors',
+        priority: -20,
+        chunks: 'all'
+      }
+    }
+  };
 }
 
 if (isDev) {
