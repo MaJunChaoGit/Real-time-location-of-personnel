@@ -12,6 +12,7 @@ const cesiumWorkers = '../build/Cesium/Workers';;
 const config = require('./config');
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
+
 var webpackConfig = {
   entry: {
     app: './examples/index.js'
@@ -94,7 +95,7 @@ var webpackConfig = {
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: './examples/index.html',
+      template: path.resolve(process.cwd(), './examples/index.html'),
       inject: true
     }),
     new CopyWebpackPlugin([ { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' } ]),
