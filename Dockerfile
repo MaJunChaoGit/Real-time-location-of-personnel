@@ -5,7 +5,7 @@ FROM node
 RUN apt-get update \
   && apt-get install -y nginx
 
-rm -rf /app
+RUN rm -rf /app
 
 #制定工作目录
 WORKDIR /app
