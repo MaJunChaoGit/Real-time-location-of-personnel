@@ -20,13 +20,9 @@ EXPOSE 80
 # 4.删除工作目录的文件，尤其是 node_modules 以减小镜像体积
 # 由于镜像构建的每一步都会产生新层
 # 为了减小镜像体积，尽可能将一些同类操作,集成到一个步骤中,如下
-<<<<<<< HEAD
-RUN cnpm install \
-  && npm run build \
-=======
+
 RUN npm install \
   && npm run dist \
->>>>>>> parent of 0f20d0f... 再试一次
   && cp -r lib/* /var/www/html \
   && rm -rf /app
 
