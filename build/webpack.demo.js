@@ -14,6 +14,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
 
 var webpackConfig = {
+  context: path.resolve(__dirname, '../'),
   entry: {
     app: './examples/index.js'
   },
@@ -21,7 +22,10 @@ var webpackConfig = {
     path: path.resolve(process.cwd(), './lib'),
     filename: '[name].js',
     sourcePrefix: '',
-    chunkFilename: '[name].js'
+    chunkFilename: '[name].js',
+    publicPath: isProd
+      ? './'
+      : '/'
   },
   devServer: {
     host: '0.0.0.0',
