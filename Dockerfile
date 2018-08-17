@@ -22,9 +22,9 @@ EXPOSE 80
 # 为了减小镜像体积，尽可能将一些同类操作,集成到一个步骤中,如下
 RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
 RUN cnpm install \
-  && npm run dist \
-  && cp -r lib/* /var/www/html \
-  && rm -rf /app
+RUN npm run dist \
+RUN cp -r lib/* /var/www/html \
+RUN rm -rf /app
 
 # 以前台的方式启动 NGINX
 CMD ["nginx","-g","daemon off;"]
