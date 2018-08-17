@@ -23,8 +23,8 @@ EXPOSE 80
 RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
 RUN cnpm install \
 RUN npm run dist \
-RUN cp -r lib/* /var/www/html \
-RUN rm -rf /app
+ && cp -r lib/* /var/www/html \
+ && rm -rf /app
 
 # 以前台的方式启动 NGINX
 CMD ["nginx","-g","daemon off;"]
