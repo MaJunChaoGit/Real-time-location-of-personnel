@@ -111,6 +111,8 @@ var webpackConfig = {
     new CopyWebpackPlugin([ { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' } ])
   ]
 };
+console.log(path.join(cesiumSource, 'Widgets'));
+console.log(path.join(cesiumWorkers, 'Workers'));
 
 if (isProd) {
   // webpackConfig.entry.vendor = './src/index.js';
