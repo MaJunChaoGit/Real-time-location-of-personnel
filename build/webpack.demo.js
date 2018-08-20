@@ -4,7 +4,7 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const { VueLoaderPlugin } = require('vue-loader');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const cesiumSource = 'node_modules/cesium/Source/';
 const cesiumWorkers = '../build/Cesium/Workers';;
@@ -12,7 +12,7 @@ const cesiumWorkers = '../build/Cesium/Workers';;
 const config = require('./config');
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
-console.log(isProd);
+
 var webpackConfig = {
   context: path.resolve(__dirname, '../'),
   entry: {
@@ -55,11 +55,7 @@ var webpackConfig = {
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          extractCSS: true,
-          preserveWhitespace: false
-        }
+        loader: 'vue-loader'
       },
       {
         test: /\.json$/,
