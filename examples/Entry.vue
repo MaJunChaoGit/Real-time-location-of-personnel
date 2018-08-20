@@ -6,7 +6,7 @@
 import { Viewer } from '../src/index.js';
 
 export default {
-  name: 'App',
+  name: 'Entry',
   mounted() {
     let viewer = new Viewer('cesiumContainer');
   }
