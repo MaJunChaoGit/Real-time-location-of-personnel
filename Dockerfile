@@ -24,8 +24,3 @@ RUN npm run dist \
  && rm -rf /usr/src/app
 
 CMD ["nginx","-g","daemon off;"]
-
-
-#RUN npm rebuild node-sass --force
-
-

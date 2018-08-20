@@ -54,6 +54,14 @@ var webpackConfig = {
         loader: 'babel-loader'
       },
       {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          extractCSS: true,
+          preserveWhitespace: false
+        }
+      },
+      {
         test: /\.json$/,
         loader: 'json-loader'
       },
@@ -112,14 +120,6 @@ if (isProd) {
   // webpackConfig.entry.vendor = './src/index.js';
   webpackConfig.module.rules.push(
     {
-      test: /\.vue$/,
-      loader: 'vue-loader',
-      options: {
-        extractCSS: true,
-        preserveWhitespace: false
-      }
-    },
-    {
       test: /\.css$/,
       loader: ExtractTextPlugin.extract({
         fallback: 'style-loader',
@@ -155,13 +155,6 @@ if (isProd) {
 
 if (isDev) {
   webpackConfig.module.rules.push(
-    {
-      test: /\.vue$/,
-      loader: 'vue-loader',
-      options: {
-        preserveWhitespace: false
-      }
-    },
     {
       test: /\.css$/,
       loaders: ['style-loader', 'css-loader', 'postcss-loader']
