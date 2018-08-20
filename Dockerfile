@@ -1,23 +1,30 @@
-FROM node:8.0.0
-MAINTAINER MJC
+FROM node:boron
 
-RUN apt-get update \
-  && apt-get install -y nginx
+RUN apt-get update \ && apt-get install -y nginx
 
-ADD . /app/
+RUN npm install pm2 -g --registry=https://registry.npm.taobao.org
 
-#制定工作目录
-WORKDIR /app
+RUN mkdir -p /usr/src/app
 
-# 声明运行时容器提供服务端口
+WORKDIR /usr/src/app
+
+COPY package.json /usr/src/app/
+
+RUN npm install --registry=https://registry.npm.taobao.org
+
+COPY . /usr/src/app
+
+ENV NODE_ENV production
+
 EXPOSE 80
-
-RUN npm install
-RUN npm rebuild node-sass --force
 
 RUN npm run dist \
  && cp -r lib/* /var/www/html \
  && rm -rf /app
 
-# 以前台的方式启动 NGINX
 CMD ["nginx","-g","daemon off;"]
+
+
+#RUN npm rebuild node-sass --force
+
+
