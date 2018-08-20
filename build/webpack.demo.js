@@ -7,7 +7,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const cesiumSource = 'node_modules/cesium/Source/';
-const cesiumWorkers = 'node_modules/cesium/build/Cesium/';;
+const cesiumWorkers = 'node_modules/cesium/Build/Cesium/';;
 
 const config = require('./config');
 const isProd = process.env.NODE_ENV === 'production';
@@ -111,8 +111,6 @@ var webpackConfig = {
     new CopyWebpackPlugin([ { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' } ])
   ]
 };
-console.log(path.join(cesiumSource, 'Widgets'));
-console.log(path.join(cesiumWorkers, 'Workers'));
 
 if (isProd) {
   // webpackConfig.entry.vendor = './src/index.js';
