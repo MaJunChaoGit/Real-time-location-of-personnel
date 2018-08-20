@@ -12,7 +12,7 @@ const cesiumWorkers = '../build/Cesium/Workers';;
 const config = require('./config');
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
-
+console.log(isProd);
 var webpackConfig = {
   context: path.resolve(__dirname, '../'),
   entry: {
