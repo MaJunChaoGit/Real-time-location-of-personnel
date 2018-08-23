@@ -1,0 +1,14 @@
+docker run --detach \
+    --name staticserver \
+    --publish 32768:80 \
+    -v /data/staticserver/data:/usr/share/nginx/html:rw \
+    -v /data/staticserver/config/nginx.conf:/etc/nginx/nginx.conf:rw \
+    -v /data/staticserver/config/servers:/etc/nginx/servers:rw \
+    -v /data/staticserver/logs/error.log:/var/log/nginx/error.log:rw \
+    -d nginx
+
+后台静态服务
+
+docker run --name mywebgis -p 80:80 -itd dama5555/real-time-location-of-personnel:latest
+
+前端服务
