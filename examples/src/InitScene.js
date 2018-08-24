@@ -1,8 +1,5 @@
 import {
   Cesium3DTileStyle,
-  Cartesian3,
-  HeadingPitchRoll,
-  Matrix4,
   Color,
   Cesium3DTileset
 } from '../../src/index';
@@ -21,8 +18,6 @@ class InitScene {
     this.initImageryLayers();
     // 初始化场景
     this.initScene();
-    // 初始化摄像机位置
-    this.initCamera();
     // 初始化高光效果
     this.updatePostProcess();
   }
@@ -33,7 +28,7 @@ class InitScene {
   initScene() {
     // 设置地形深度测试
     this.viewer.scene.globe.depthTestAgainstTerrain = false;
-    this.viewer.scene.globe.enableLighting = true;
+    this.viewer.scene.globe.enableLighting = false;
 
     // 加载数据
     let tileset = new Cesium3DTileset({
@@ -48,21 +43,6 @@ class InitScene {
     });
 
     this.viewer.scene.primitives.add(tileset);
-  }
-  /**
-   * 初始化相机的位置
-   * @return {[type]} [description]
-   */
-  initCamera() {
-    // 设置相机的初始位置
-    let initialPosition = Cartesian3.fromDegrees(-74.01881302800248, 40.69114333714821, 753);
-    /* eslint-disable new-cap */
-    let initialOrientation = new HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
-    this.viewer.scene.camera.flyTo({
-      destination: initialPosition,
-      orientation: initialOrientation,
-      endTransform: Matrix4.IDENTITY
-    });
   }
   /**
    * 初始化图层的颜色等

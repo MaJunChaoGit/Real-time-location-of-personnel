@@ -9,6 +9,6 @@ docker run --detach \
 
 后台静态服务
 
-docker run --name mywebgis -p 80:80 -itd dama5555/real-time-location-of-personnel:latest
+docker run --name mywebgis -p 80:80 -itd c1281d25e082
 
 前端服务

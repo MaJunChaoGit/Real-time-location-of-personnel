@@ -1,0 +1,148 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(loading-mask) {
+  position: absolute;
+  z-index: 2000;
+  // background-color: rgba(255, 255, 255, .9);
+  margin: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: opacity 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include when(fullscreen) {
+    position: fixed;
+
+    .rp-loading-content {
+      margin-top: #{- $--loading-fullscreen-content-size / 2};
+
+      figure {
+        height: $--loading-fullscreen-content-size;
+        width: $--loading-fullscreen-content-size;
+      }
+    }
+  }
+}
+
+@include b(loading-content) {
+  margin-top: #{- $--loading-content-size / 2};
+  text-align: center;
+  position: absolute;
+
+  .rp-loading-text {
+    color: $--color-primary;
+    margin: 3px 0;
+    font-size: 14px;
+  }
+
+  figure {
+    height: $--loading-content-size;
+    width: $--loading-content-size;
+
+    #sea {
+      fill: #acc7f2;
+    }
+
+    #hi {
+      fill: rgba(255, 255, 255, 0.2);
+    }
+
+    #light {
+      fill: #769bd4;
+    }
+
+    #shad {
+      fill: rgba(227, 238, 255, .6);
+    }
+
+    #land {
+      fill: #f3f2ed;
+      animation: spin 10s linear infinite forwards;
+    }
+
+    .vehicles use {
+      fill: #e55934;
+      animation: orbit 15s linear infinite;
+      transform-origin: center center;
+    }
+
+    #boat1 {
+      transform: translateX(40px) translateY(-80px);
+    }
+
+    #boat1 use {
+      animation-duration: 30s;
+    }
+
+    #plane1 {
+      transform: translateX(-10px) translateY(170px);
+    }
+    #plane2 {
+      transform: translateX(170px) translateY(150px);
+    }
+    #plane2 use {
+      animation-delay: 7.5s;
+    }
+    #plane3 {
+      transform: translateX(140px) translateY(-50px);
+    }
+    #plane3 use {
+      animation-delay: 1.25s;
+      animation-duration: 12s;
+    }
+    #bike1 {
+      transform: translateX(50px) translateY(190px);
+    }
+    #bike1 use {
+      animation-duration: 25s;
+    }
+  }
+}
+
+
+.el-loading-enter,
+.el-loading-leave-active {
+  opacity: 0;
+}
+
+.rp-loading-enter-active {
+  animation: bounce-in .9s;
+}
+.rp-loading-leave-active {
+  animation: bounce-in .9s reverse;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(-160px);
+  }
+  to {
+    transform: rotate(360deg) translateX(-160px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: translateX(-300px);
+  }
+  to {
+    transform: translateX(0px);
+  }
+}
