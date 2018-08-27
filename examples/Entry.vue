@@ -54,7 +54,7 @@ export default {
       showRenderLoopErrors: true, // 如果设为true，将在一个HTML面板中显示错误信息
       imageryProvider: new IonImageryProvider({ assetId: 4 })
     });
-  //   
+    viewer._cesiumWidget._creditContainer.style.display = 'none';
   },
   methods: {
     loadingFinishHandle() {
@@ -63,15 +63,17 @@ export default {
       /* eslint-disable new-cap */
       let initialOrientation = new HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
       // 定位过去
-      viewer.scene.camera.flyTo({
-        destination: initialPosition,
-        duration: 4,
-        orientation: initialOrientation,
-        endTransform: Matrix4.IDENTITY,
-        complete: function() {
-          let initScene = new InitScene(viewer);
-        }
-      });
+      setTimeout(() => {
+        viewer.scene.camera.flyTo({
+          destination: initialPosition,
+          duration: 4,
+          orientation: initialOrientation,
+          endTransform: Matrix4.IDENTITY,
+          complete: function() {
+            let initScene = new InitScene(viewer);
+          }
+        });
+      }, 1000);
     }
   }
 };
