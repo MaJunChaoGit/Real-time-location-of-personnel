@@ -1,6 +1,6 @@
 <template>
   <div :id="mountedId" class="rp-container">
-    <rp-loading :visible="loading"></rp-loading>
+    <rp-loading :visible="loading" background="#f0f8fa"></rp-loading>
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
 
   mounted() {
     Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkNTNlZjE1ZC1kMDZjLTQyNzQtYWJlMC04NzY4ODU0NjQzNmYiLCJpZCI6MjY2NywiaWF0IjoxNTM1MDgwNzU3fQ.t6hJUdDhs005ZfaF5O8PaxoBZ3g37Et7QG-ub852UXk';
-    
+
     // let viewer = new Viewer(this.mountedId, {
     //   animation: false, // 是否创建动画小器件，左下角仪表
     //   baseLayerPicker: false, // 是否显示图层选择器
@@ -52,7 +52,7 @@ export default {
     //   imageryProvider: new IonImageryProvider({ assetId: 4 })
     // });
     
-    // this.loading = false;
+    
   //   // 设置相机的初始位置
   //   let initialPosition = Cartesian3.fromDegrees(-74.01881302800248, 40.69114333714821, 753);
   //   /* eslint-disable new-cap */

@@ -43,9 +43,12 @@
   figure {
     height: $--loading-content-size;
     width: $--loading-content-size;
-
+    
+    #circ {
+      stroke: #68adc7;
+    }
     #sea {
-      fill: #acc7f2;
+      fill: #047bb3;
     }
 
     #hi {
@@ -55,13 +58,17 @@
     #light {
       fill: #769bd4;
     }
+    #highHight {
+      fill: red;
+    }
 
-    #shad {
-      fill: rgba(227, 238, 255, .6);
+    #test {
+      fill: green;
     }
 
     #land {
-      fill: #f3f2ed;
+      fill: #fbf9fa;
+      stroke: #515e63;
       animation: spin 10s linear infinite forwards;
     }
 

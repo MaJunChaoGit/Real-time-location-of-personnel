@@ -8,25 +8,47 @@
       <div class="rp-loading-content">
         <figure>
           <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" viewBox="0 0 136 166" xml:space="preserve">
-            <ellipse id="shad" cx="68" cy="150" rx="40" ry="10"/>
-              <g clip-path="url(#outer)">
-                <use id="sea" xlink:href="#circ"/>
-                <g id="boat1" class="vehicles"><use xlink:href="#boat"/></g>
-                <g id="land">
-                  <use xlink:href="#map" transform="translate(300,-309)" />
-                  <use xlink:href="#map" transform="translate(600,-309)" />
-                </g>
-                <rect id="hi" mask="url(#light)" width="300" height="300"/>
-                <g class="vehicles">
-                  <g id="plane1"><use xlink:href="#plane"/></g>
-                  <g id="plane2"><use xlink:href="#plane"/></g>
-                  <g id="plane3"><use xlink:href="#plane"/></g>
-                  <g id="bike1" ><use xlink:href="#bike" /></g>
-                </g>
+            <ellipse id="shad" cx="68" cy="138" rx="45" ry="4" style="fill:url(#grey_blue);"/>
+            <g clip-path="url(#outer)">
+              <use id="sea" xlink:href="#circ"/>
+              <g id="boat1" class="vehicles"><use xlink:href="#boat"/></g>
+              <g id="land" style="filter: url(#landshadow)">
+                <use xlink:href="#map" transform="translate(300,-309)" />
+                <use xlink:href="#map" transform="translate(600,-309)" />
               </g>
+              <rect id="hi" mask="url(#light)" width="300" height="300"/>
+              <circle id="hier" fill="rgba(255, 255, 255, 0.2)" cx="50" cy="50" r="35" style="filter:url(#light_Blur);"/>
+              <g class="vehicles">
+                <g id="plane1"><use xlink:href="#plane"/></g>
+                <g id="plane2"><use xlink:href="#plane"/></g>
+                <g id="plane3"><use xlink:href="#plane"/></g>
+                <g id="bike1" ><use xlink:href="#bike" /></g>
+              </g>
+            </g>
             <defs>
+              <radialGradient id="grey_blue" cx="50%" cy="50%" r="50%"
+              fx="50%" fy="50%">
+                <stop offset="30%" style="stop-color:rgb(75, 125, 166);
+                stop-opacity:0.6"/>
+                <stop offset="100%" style="stop-color:rgb(20, 20, 20);
+                stop-opacity:0.1"/>
+              </radialGradient>
+              <filter id="Gaussian_Blur">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+              </filter>
+              <filter id="light_Blur">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="6"/>
+              </filter>
+              <filter id="landshadow" x="0" y="0" width="100%" height="100%">
+                <feOffset result="offOut" in="SourceGraphic" dx="2" dy="2" />
+                <feColorMatrix result="matrixOut" in="offOut" type="matrix"
+                values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0" />
+                <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="2" />
+                <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+              </filter>
               <clipPath id="outer">
-                <circle id="circ" cx="68" cy="68" r="68"/>
+                <!-- style="filter:url(#Gaussian_Blur)" -->
+                <circle id="circ" cx="68" cy="68" r="68" style="filter:url(#Gaussian_Blur)"/>
               </clipPath>
               <mask id="light">
                 <use xlink:href="#circ" x="-5" y="-12"/>
