@@ -1,6 +1,6 @@
 <template>
   <div :id="mountedId" class="rp-container">
-    <rp-loading :visible="loading" background="#f0f8fa"></rp-loading>
+    <rp-loading :visible="loading"></rp-loading>
   </div>
 </template>
 
