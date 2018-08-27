@@ -81,7 +81,7 @@ export default {
   data() {
     return {
       visible: true
-    }
+    };
   },
 
   props: {
@@ -101,7 +101,7 @@ export default {
   },
 
   mounted() {
-    let bar = new ProgressBar.Line(progress, {
+    let bar = new ProgressBar.Line('progress', {
       strokeWidth: 2,
       easing: 'easeInOut',
       duration: 8400,
