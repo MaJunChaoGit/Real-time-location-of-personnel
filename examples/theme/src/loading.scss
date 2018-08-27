@@ -123,13 +123,18 @@
 @include b(loading-shadow) {
   border-radius: 100%;
   animation: shadow 400ms cubic-bezier(0.165, 0.840, 0.440, 1.000) infinite alternate;
-  background: #000;
-  bottom: -90px;
+  background: #0c6c96;
+  position: relative;
   height: 25px;
   width: 95px;
 }
-.el-loading-enter,
-.el-loading-leave-active {
+
+@include b(loading-progressbar) {
+  position: absolute;
+  margin-top: 50px;
+}
+.rp-loading-enter,
+.rp-loading-leave-active {
   opacity: 0;
 }
 

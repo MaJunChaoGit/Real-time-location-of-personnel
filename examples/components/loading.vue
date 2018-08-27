@@ -67,41 +67,62 @@
         <p v-if="text" class="rp-loading-text">{{ text }}</p>
       </div>
       <div class="rp-loading-shadow"></div>
+      <div class="rp-loading-progressbar" id="progress"></div>
     </div>
   </transition>
 </template>
 
 <script>
-  export default {
-    name: 'RpLoading',
+import ProgressBar from 'progressbar.js';
 
-    props: {
-      text: {
-        type: String,
-        default: ''
-      },
-      background: {
-        type: String,
-        default: ''
-      },
-      fullscreen: {
-        type: Boolean,
-        default: true
-      },
-      visible: {
-        type: Boolean,
-        default: false
-      },
-      customClass: ''
-    },
-    
-    methods: {
-      handleAfterLeave() {
-        this.$emit('after-leave');
-      },
-      setText(text) {
-        this.text = text;
-      }
+export default {
+  name: 'RpLoading',
+
+  data() {
+    return {
+      visible: true
     }
-  };
+  },
+
+  props: {
+    text: {
+      type: String,
+      default: ''
+    },
+    background: {
+      type: String,
+      default: ''
+    },
+    fullscreen: {
+      type: Boolean,
+      default: true
+    },
+    customClass: ''
+  },
+
+  mounted() {
+    let bar = new ProgressBar.Line(progress, {
+      strokeWidth: 2,
+      easing: 'easeInOut',
+      duration: 8400,
+      color: '#FFEA82',
+      trailColor: '#eee',
+      trailWidth: 1,
+      svgStyle: {display: 'block', width: '100%', height: '100%'}
+    });
+
+    bar.animate(1.0, () => {
+      this.visible = false;
+    });
+  },
+
+  methods: {
+    handleAfterLeave() {
+      this.$emit('after-leave');
+    },
+    setText(text) {
+      this.text = text;
+    }
+  }
+};
 </script>

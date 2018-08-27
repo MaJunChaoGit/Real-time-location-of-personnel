@@ -58,7 +58,6 @@ class InitScene {
    * @return {[type]} [description]
    */
   creditsHide() {
-    console.log(this.viewer);
     this.viewer._cesiumWidget._creditContainer.style.display = 'none';
   }
   /**
