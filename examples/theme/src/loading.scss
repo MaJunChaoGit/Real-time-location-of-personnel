@@ -16,7 +16,7 @@
   align-items: center;
 
   @include when(fullscreen) {
-    position: fixed;
+    position: absolute;
 
     .rp-loading-content {
       margin-top: #{- $--loading-fullscreen-content-size / 2};
