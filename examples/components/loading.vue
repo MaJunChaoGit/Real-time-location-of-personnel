@@ -101,7 +101,8 @@ export default {
   },
 
   mounted() {
-    let bar = new ProgressBar.Line('progress', {
+    /* eslint-disable no-undef */
+    let bar = new ProgressBar.Line(progress, {
       strokeWidth: 2,
       easing: 'easeInOut',
       duration: 8400,

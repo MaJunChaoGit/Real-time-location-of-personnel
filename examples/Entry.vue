@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       mountedId: 'cesiumContainer',
-      loading: false,
+      loading: false
     };
   },
 
