@@ -4,6 +4,10 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const extractCSS = new ExtractTextPlugin('third[hash].css');
+const extractSCSS = new ExtractTextPlugin('main[hash].css');
+
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const cesiumSource = 'node_modules/cesium/Source/';
@@ -60,10 +64,6 @@ var webpackConfig = {
         loader: 'json-loader'
       },
       {
-        test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
-      },
-      {
         test: /\.html$/,
         loader: 'html-loader?minimize=false'
       },
@@ -116,7 +116,7 @@ if (isProd) {
   webpackConfig.module.rules.push(
     {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract({
+      loader: extractCSS.extract({
         fallback: 'style-loader',
         use: [
           { loader: 'css-loader', options: { importLoaders: 1 } },
@@ -125,10 +125,18 @@ if (isProd) {
       })
     }
   );
+  webpackConfig.module.rules.push(
+    {
+      test: /\.scss$/,
+      use: extractSCSS.extract({
+        fallback: 'style-loader',
+        use: ['css-loader', 'postcss-loader', 'sass-loader']
+      })
+    }
+  );
   webpackConfig.plugins.push(
-    new ExtractTextPlugin({
-      filename: 'main[hash].css'
-    }),
+    extractCSS,
+    extractSCSS,
     new webpack.DefinePlugin({
       'CESIUM_BASE_URL': JSON.stringify('./')
     })
@@ -153,6 +161,12 @@ if (isDev) {
     {
       test: /\.css$/,
       loaders: ['style-loader', 'css-loader', 'postcss-loader']
+    }
+  );
+  webpackConfig.module.rules.push(
+    {
+      test: /\.scss$/,
+      loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
     }
   );
   webpackConfig.plugins.push(
