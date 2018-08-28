@@ -887,6 +887,7 @@ import Widgets_Viewer_viewerPerformanceWatchdogMixin from 'cesium/Widgets/Viewer
 import Widgets_VRButton_VRButton from 'cesium/Widgets/VRButton/VRButton';
 import Widgets_VRButton_VRButtonViewModel from 'cesium/Widgets/VRButton/VRButtonViewModel';
 import Workers_createTaskProcessorWorker from 'cesium/Workers/createTaskProcessorWorker';
+import Widgets_Navigation_viewerCesiumNavigationMixin from 'source/Widgets/Navigation/viewerCesiumNavigationMixin';
 
 const _shaders = {
   Shaders_AdjustTranslucentFS,
@@ -1780,7 +1781,8 @@ module.exports = {
   viewerPerformanceWatchdogMixin: Widgets_Viewer_viewerPerformanceWatchdogMixin,
   VRButton: Widgets_VRButton_VRButton,
   VRButtonViewModel: Widgets_VRButton_VRButtonViewModel,
-  createTaskProcessorWorker: Workers_createTaskProcessorWorker
+  createTaskProcessorWorker: Workers_createTaskProcessorWorker,
+  viewerCesiumNavigationMixin: Widgets_Navigation_viewerCesiumNavigationMixin
 };
 
 module.exports.default = module.exports;

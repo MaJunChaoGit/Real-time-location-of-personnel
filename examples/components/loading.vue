@@ -4,7 +4,7 @@
       v-show="visible"
       class="rp-loading-mask"
       :style="{ backgroundColor: background || '' }"
-      :class="[customClass, { 'is-fullscreen': fullscreen }]">
+      :class="[customClass]">
       <div class="rp-loading-content">
         <figure>
           <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" viewBox="0 0 136 166" xml:space="preserve">
@@ -92,10 +92,6 @@ export default {
     background: {
       type: String,
       default: ''
-    },
-    fullscreen: {
-      type: Boolean,
-      default: true
     },
     customClass: ''
   },

@@ -1,8 +1,38 @@
+
+/* Break-point
+--------------------------*/
+$--sm: 768px !default;
+$--md: 992px !default;
+$--lg: 1200px !default;
+$--xl: 1920px !default;
+
+$--breakpoints: (
+  'xs' : (max-width: $--sm),
+  'sm' : (min-width: $--sm),
+  'md' : (min-width: $--md),
+  'lg' : (min-width: $--lg),
+  'xl' : (min-width: $--xl)
+);
+
 /* Colors
 -------------------------- */
 $--color-primary: #409EFF !default;
 
 /* Loading
 -------------------------- */
-$--loading-content-size: 68px !default;
-$--loading-fullscreen-content-size: 100px !default;
+$--loading-content-xs-size: 10vh !default;
+$--loading-content-sm-size: 12vh !default;
+$--loading-content-md-size: 8vw !default;
+$--loading-content-lg-size: 9vw !default;
+$--loading-content-xl-size: 10vw !default;
+
+$--loading-shadow-xs-width: 14vw !default;
+$--loading-shadow-xs-height: 2.5vh !default;
+$--loading-shadow-sm-width: 6vw !default;
+$--loading-shadow-sm-height: 2.5vh !default;
+$--loading-shadow-md-width: 6vw !default;
+$--loading-shadow-md-height: 2.5vh !default;
+$--loading-shadow-lg-width: 6vw !default;
+$--loading-shadow-lg-height: 2.5vh !default;
+$--loading-shadow-xl-width: 6vw !default;
+$--loading-shadow-xl-height: 2.5vh !default;
