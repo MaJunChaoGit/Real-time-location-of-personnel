@@ -27,8 +27,8 @@ class InitScene {
    */
   initScene() {
     // 设置地形深度测试
-    this.viewer.scene.globe.depthTestAgainstTerrain = false;
-    this.viewer.scene.globe.enableLighting = false;
+    this.viewer.scene.globe.depthTestAgainstTerrain = true;
+    this.viewer.scene.globe.enableLighting = true;
 
     // 加载数据
     let tileset = new Cesium3DTileset({

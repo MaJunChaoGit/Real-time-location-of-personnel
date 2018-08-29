@@ -9,7 +9,7 @@ docker run --detach \
 
 后台静态服务
 
-docker run --name mywebgis -p 80:80 -itd c1281d25e082sss
+docker run --name mywebgis -p 80:80 -itd 2c540c1811f7
 
 前端服务又走了个
 vue-load样式打包有问题
