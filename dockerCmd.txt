@@ -12,4 +12,4 @@ docker run --detach \
 docker run --name mywebgis -p 80:80 -itd 2c540c1811f7
 
 前端服务又走了个
-vue-load样式打包有问题
+样式问题解决了
