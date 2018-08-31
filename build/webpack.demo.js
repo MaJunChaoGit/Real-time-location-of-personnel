@@ -4,7 +4,7 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+const extractLESS = new ExtractTextPlugin('nav[hash].css');
 const extractCSS = new ExtractTextPlugin('third[hash].css');
 const extractSCSS = new ExtractTextPlugin('main[hash].css');
 
@@ -134,8 +134,18 @@ if (isProd) {
       })
     }
   );
+  webpackConfig.module.rules.push(
+    {
+      test: /\.less$/,
+      use: extractLESS.extract({
+        fallback: 'style-loader',
+        use: ['css-loader', 'postcss-loader', 'less-loader']
+      })
+    }
+  );
   webpackConfig.plugins.push(
     extractCSS,
+    extractLESS,
     extractSCSS,
     new webpack.DefinePlugin({
       'CESIUM_BASE_URL': JSON.stringify('./')
@@ -167,6 +177,12 @@ if (isDev) {
     {
       test: /\.scss$/,
       loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+    }
+  );
+  webpackConfig.module.rules.push(
+    {
+      test: /\.less$/,
+      loaders: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
     }
   );
   webpackConfig.plugins.push(

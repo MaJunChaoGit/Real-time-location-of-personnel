@@ -1,6 +1,6 @@
-import defined from '../../../Core/defined';
-import defineProperties from '../../../Core/defineProperties';
-import DeveloperError from '../../../Core/DeveloperError';
+import defined from 'cesium/Core/defined';
+import defineProperties from 'cesium/Core/defineProperties';
+import DeveloperError from 'cesium/Core/DeveloperError';
 import * as Knockout from 'knockout-es5/dist/knockout-es5.min';
 
 /**

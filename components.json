@@ -1,3 +1,5 @@
 {
-  "viewerCesiumNavigationMixin": "'source/Widgets/Navigation/viewerCesiumNavigationMixin'"
+  "viewerCesiumNavigationMixin": "'source/Widgets/Navigation/viewerCesiumNavigationMixin'",
+  "Viewer": "'source/Widgets/Viewer/Viewer'",
+  "Camera": "'source/Scene/Camera'"
 }

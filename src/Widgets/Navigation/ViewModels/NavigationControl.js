@@ -1,6 +1,6 @@
-import UserInterfaceControl from './UserInterfaceControl'
+import UserInterfaceControl from './UserInterfaceControl';
 
-    /**
+/**
      * 实现UserInterfaceControl的派生类
      *
      * @alias NavigationControl
@@ -9,10 +9,11 @@ import UserInterfaceControl from './UserInterfaceControl'
      *
      * @param {Terria} terria The Terria instance.
      */
-    var NavigationControl = function (terria) {
-        UserInterfaceControl.apply(this, arguments);
-    };
+/* eslint-disable no-unused-vars */
+var NavigationControl = function(terria) {
+  UserInterfaceControl.apply(this, arguments);
+};
 
-    NavigationControl.prototype = Object.create(UserInterfaceControl.prototype);
+NavigationControl.prototype = Object.create(UserInterfaceControl.prototype);
 
-export default NavigationControl
+export default NavigationControl;
