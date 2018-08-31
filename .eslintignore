@@ -4,6 +4,10 @@ node_modules
 *.scss
 *.woff
 *.ttf
+*.png
+*.jpg
+*.svg
+*.less
 coverage
 lib
 src/Assets

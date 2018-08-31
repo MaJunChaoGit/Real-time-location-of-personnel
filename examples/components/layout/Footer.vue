@@ -5,12 +5,13 @@
 </template>
 
 <script>
-import RpBasicInfomation from '../functionality/BasicInformation'
+import RpBasicInfomation from '../functionality/BasicInformation';
+
 export default {
   name: 'RpFooter',
 
   components: {
     RpBasicInfomation
   }
-}  
+};
 </script>

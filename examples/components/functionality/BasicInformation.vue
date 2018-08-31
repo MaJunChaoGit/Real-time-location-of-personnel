@@ -1,9 +1,9 @@
 <template>
   <div class="rp-basicinfomation" id="infoContainer">
-    <p>{{ transLon }}经&nbsp;&nbsp; <span>{{lon | convertDigitalToDegrees('lon',lon)}}  </span></p>
-    <p>{{ transLat }}纬&nbsp;&nbsp; <span>{{lat | convertDigitalToDegrees('lat',lat)}}  </span></p>
+    <p>{{ transLon }}经&nbsp;&nbsp; <span>{{ lon | convertDigitalToDegrees('lon', lon) }}  </span></p>
+    <p>{{ transLat }}纬&nbsp;&nbsp; <span>{{ lat | convertDigitalToDegrees('lat', lat) }}  </span></p>
     <p>海拔 <span>0.00</span> 米</p>
-    <p>视角海拔高度 <span>{{viewHeight}}</span> 米</p>
+    <p>视角海拔高度 <span>{{ viewHeight }}</span> 米</p>
   </div>
 </template>
 
@@ -48,9 +48,9 @@ export default {
         return;
       }
       const num = 60;
-      let degree = value ? parseInt(value) : '0';
+      let degree = value ? parseInt(value, 0) : '0';
       let tmp = value % 1 * 60;
-      let minute = parseInt(tmp);
+      let minute = parseInt(tmp, 0);
       let second = tmp % 1 * 60;
       let degrees = '' + degree + '°    ' + Math.abs(minute) + '′    ' + Math.abs(second.toFixed(2)) + '″    ';
       return degrees;

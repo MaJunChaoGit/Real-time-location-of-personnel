@@ -299,21 +299,21 @@ NavigationViewModel.prototype.handleDoubleClick = function(viewModel, e) {
   // 获取屏幕空间摄像机控制器
   var sscc = scene.screenSpaceCameraController;
   // 如果场景正在变换或者禁止输入
-  if (scene.mode == SceneMode.MORPHING || !sscc.enableInputs) {
+  if (scene.mode === SceneMode.MORPHING || !sscc.enableInputs) {
     return true;
   }
   // 如果场景是哥伦布视角,并且禁止地图平移
-  if (scene.mode == SceneMode.COLUMBUS_VIEW && !sscc.enableTranslate) {
+  if (scene.mode === SceneMode.COLUMBUS_VIEW && !sscc.enableTranslate) {
     return;
   }
   // 如果是3D或者是哥伦布视角的话
-  if (scene.mode == SceneMode.SCENE3D || scene.mode == SceneMode.COLUMBUS_VIEW) {
+  if (scene.mode === SceneMode.SCENE3D || scene.mode === SceneMode.COLUMBUS_VIEW) {
     // 如果摄像机为禁止自由观察
     if (!sscc.enableLook) {
       return;
     }
     // 如果场景为3D并且禁止旋转
-    if (scene.mode == SceneMode.SCENE3D) {
+    if (scene.mode === SceneMode.SCENE3D) {
       if (!sscc.enableRotate) {
         return;
       }
@@ -364,7 +364,7 @@ function orbit(viewModel, compassElement, cursorVector) {
   var sscc = scene.screenSpaceCameraController;
 
   // 如果处于变换状态或者禁用所有输入
-  if (scene.mode == SceneMode.MORPHING || !sscc.enableInputs) {
+  if (scene.mode === SceneMode.MORPHING || !sscc.enableInputs) {
     return;
   }
 
@@ -446,7 +446,7 @@ function orbit(viewModel, compassElement, cursorVector) {
     }
 
     // do not look up/down or rotate in 2D mode
-    if (scene.mode == SceneMode.SCENE2D) {
+    if (scene.mode === SceneMode.SCENE2D) {
       camera.move(new Cartesian3(x, y, 0), Math.max(scene.canvas.clientWidth, scene.canvas.clientHeight) / 100 * camera.positionCartographic.height * distance);
     } else {
       if (viewModel.orbitIsLook) {
@@ -526,10 +526,10 @@ function rotate(viewModel, compassElement, cursorVector) {
 
     var sscc = scene.screenSpaceCameraController;
     // do not rotate in 2D mode or if rotating is disabled
-    if (scene.mode == SceneMode.MORPHING || scene.mode == SceneMode.SCENE2D || !sscc.enableInputs) {
+    if (scene.mode === SceneMode.MORPHING || scene.mode === SceneMode.SCENE2D || !sscc.enableInputs) {
       return;
     }
-    if (!sscc.enableLook && (scene.mode == SceneMode.COLUMBUS_VIEW || (scene.mode == SceneMode.SCENE3D && !sscc.enableRotate))) {
+    if (!sscc.enableLook && (scene.mode === SceneMode.COLUMBUS_VIEW || (scene.mode === SceneMode.SCENE3D && !sscc.enableRotate))) {
       return;
     }
 
@@ -550,7 +550,7 @@ function rotate(viewModel, compassElement, cursorVector) {
     } else {
       var viewCenter = Utils.getCameraFocus(viewModel.terria, true, centerScratch);
 
-      if (!defined(viewCenter) || (scene.mode == SceneMode.COLUMBUS_VIEW && !sscc.enableLook && !sscc.enableTranslate)) {
+      if (!defined(viewCenter) || (scene.mode === SceneMode.COLUMBUS_VIEW && !sscc.enableLook && !sscc.enableTranslate)) {
         viewModel.rotateFrame = Transforms.eastNorthUpToFixedFrame(camera.positionWC, scene.globe.ellipsoid, newTransformScratch);
         viewModel.rotateIsLook = true;
       } else {

@@ -48,6 +48,7 @@ var webpackConfig = {
   },
   optimization: {},
   module: {
+    unknownContextCritical: false,
     rules: [
       {
         test: /\.(jsx?|babel|es6)$/,
