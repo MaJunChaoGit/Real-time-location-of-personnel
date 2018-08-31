@@ -1,41 +1,40 @@
 <template>
   <div class="rp-container">
-    <div :id="mountedId"class="rp-content"></div>
-    <div class="rp-tool">
-      <div id="navigation-outring"></div>
-      <div id="navigation-button"></div>
-    </div>
+    <div :id="mountedId" class="rp-content"></div>
+    <rp-layout v-if="isReady"></rp-layout>
     <rp-loading @after-leave="loaded" background="#fff"></rp-loading>
   </div>
 </template>
 
 <script>
-import RpLoading from './components/loading.vue';
-import InitScene from './src/InitScene';
+import InitScene from 'ex/src/InitScene';
+import RpLayout from 'ex/components/layout/Layout';
+import RpLoading from 'ex/components/functionality/Loading';
 
-let is = {};
-
+let initScene = {};
 export default {
   name: 'Entry',
 
   data() {
     return {
       mountedId: 'cesiumContainer',
-      loading: false
+      isReady: false
     };
   },
 
   components: {
+    RpLayout,
     RpLoading
   },
 
   mounted() {
-    is = new InitScene(this.mountedId);
+    initScene = new InitScene(this.mountedId);
+    this.isReady = true;
   },
 
   methods: {
     loaded() {
-      is.initCameraHandle();
+      initScene.initCameraHandle();
     }
   }
 };

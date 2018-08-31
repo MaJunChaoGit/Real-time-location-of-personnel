@@ -1,6 +1,5 @@
 import {
   Viewer,
-  viewerCesiumNavigationMixin,
   Ion,
   IonImageryProvider,
   Cartesian3,
@@ -18,9 +17,10 @@ class InitScene {
   constructor(el) {
     Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkNTNlZjE1ZC1kMDZjLTQyNzQtYWJlMC04NzY4ODU0NjQzNmYiLCJpZCI6MjY2NywiaWF0IjoxNTM1MDgwNzU3fQ.t6hJUdDhs005ZfaF5O8PaxoBZ3g37Et7QG-ub852UXk';
 
+    this.isComplete = false;
     this.api = api;
 
-    this.viewer = new Viewer(el, {
+    global.viewer = new Viewer(el, {
       animation: false, // 是否创建动画小器件，左下角仪表
       baseLayerPicker: false, // 是否显示图层选择器
       fullscreenButton: false, // 是否显示全屏按钮
@@ -39,14 +39,16 @@ class InitScene {
     });
 
     // 隐藏版权信息
-    this.viewer.creditControll();
+    global.viewer.creditControll();
 
-    this.viewer.setLayersStyles({
+    global.viewer.setLayersStyles({
       saturation: 0,
       brightness: 0.36
     });
 
-    this.viewer.setBloomStyles({});
+    global.viewer.setBloomStyles({});
+
+    this.isComplete = true;
   }
 
   initCameraHandle() {
@@ -56,7 +58,7 @@ class InitScene {
     let initialOrientation = new HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
     // 定位过去
     setTimeout(() => {
-      this.viewer.scene.camera.flyTo({
+      global.viewer.scene.camera.flyTo({
         destination: initialPosition,
         duration: 4,
         orientation: initialOrientation,
@@ -67,8 +69,8 @@ class InitScene {
   }
 
   add3dTiles() {
-    this.viewer.scene.globe.depthTestAgainstTerrain = true;
-    this.viewer.scene.globe.enableLighting = true;
+    global.viewer.scene.globe.depthTestAgainstTerrain = true;
+    global.viewer.scene.globe.enableLighting = true;
 
     // 加载数据
     let tileset = new Cesium3DTileset({
@@ -82,7 +84,7 @@ class InitScene {
       }
     });
 
-    this.viewer.scene.primitives.add(tileset);
+    global.viewer.scene.primitives.add(tileset);
   }
 
 }

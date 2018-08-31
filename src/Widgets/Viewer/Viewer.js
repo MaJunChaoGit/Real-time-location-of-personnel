@@ -1,6 +1,6 @@
 import supViewer from 'cesium/Widgets/Viewer/Viewer';
 import Camera from 'source/Scene/Camera';
-import viewerCesiumNavigationMixin from 'source/Widgets/Navigation/viewerCesiumNavigationMixin';
+
 /* eslint-disable no-undef */
 // 初始化摄像机Symbol
 const initializeCamera = Symbol();
@@ -8,8 +8,6 @@ const initializeCamera = Symbol();
 class Viewer extends supViewer {
   constructor(el, options = {}) {
     super(el, options);
-
-    viewerCesiumNavigationMixin.mixinWidget(this, {});
 
     this[initializeCamera]();
 
@@ -28,7 +26,7 @@ class Viewer extends supViewer {
    *
    */
   [initializeCamera]() {
-    Object.setPrototypeOf(this.viewer.camera, Camera.prototype);
+    Object.setPrototypeOf(this.camera, Camera.prototype);
   }
 
   /**

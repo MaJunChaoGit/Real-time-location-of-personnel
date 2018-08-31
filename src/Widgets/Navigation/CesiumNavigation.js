@@ -1,8 +1,6 @@
 import defined from 'cesium/Core/defined';
 import DeveloperError from 'cesium/Core/DeveloperError';
-// import defineProperties from 'cesium/Core/defineProperties';
 import CesiumEvent from 'cesium/Core/Event';
-// import * as Knockout from 'knockout-es5/dist/knockout-es5.min';
 import registerKnockoutBindings from './Core/registerKnockoutBindings';
 import DistanceLegendViewModel from './ViewModels/DistanceLegendViewModel';
 import NavigationViewModel from './ViewModels/NavigationViewModel';
@@ -96,7 +94,9 @@ function initialize(viewerCesiumWidget, options) {
   if (!defined(this.terria.options.enableDistanceLegend) || this.terria.options.enableDistanceLegend) {
     // 如果开启的话创建DIV,并设置id为distanceLegendDiv
     this.distanceLegendDiv = document.createElement('div');
+    
     this.distanceLegendDiv.setAttribute('id', 'distanceLegendDiv');
+
     var list = document.getElementById('infoContainer');
 
     list.insertBefore(this.distanceLegendDiv, list.childNodes[0]);

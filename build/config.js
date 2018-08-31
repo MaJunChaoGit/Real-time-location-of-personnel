@@ -4,6 +4,7 @@ var path = require('path');
 exports.alias = {
   cesium: path.resolve(__dirname, '../node_modules/cesium/Source/'),
   source: path.resolve(__dirname, '../src'),
+  ex: path.resolve(__dirname, '../examples/'),
   vue$: 'vue/dist/vue.common.js'
 };
 // 不进行测试的文件与路径
