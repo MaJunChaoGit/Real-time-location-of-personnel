@@ -1,0 +1,36 @@
+@import "./mixins/mixins";
+@import "common/var";
+
+@include b(footer) {
+  position: fixed;
+  box-sizing: inherit;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(to right, rgba(20,62,141,0.0), rgba(20,62,141,0.75));
+
+  @include res(xs) {
+    width: $--footer-container-xs-width;
+    height: $--footer-container-xs-line-height;
+    line-height: $--footer-container-xs-line-height;
+  }
+  @include res(sm) {
+    width: $--footer-container-sm-width;
+    height: $--footer-container-sm-line-height;
+    line-height: $--footer-container-sm-line-height;
+  }
+  @include res(md) {
+    width: $--footer-container-md-width;
+    height: $--footer-container-md-line-height;
+    line-height: $--footer-container-md-line-height;
+  }
+  @include res(lg) {
+    width: $--footer-container-lg-width;
+    height: $--footer-container-lg-line-height;
+    line-height: $--footer-container-lg-line-height;
+  }
+  @include res(xl) {
+    width: $--footer-container-xl-width;
+    height: $--footer-container-xl-line-height;
+    line-height: $--footer-container-xl-line-height;
+  }
+}

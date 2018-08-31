@@ -1,9 +1,13 @@
 <template>
-  <div class="rp-basicinfomation" id="infoContainer">
+  <div id="infoContainer" class="rp-basicinfomation">
+    <!-- span></span>
+    <span></span>
+    <span></span>
+    <span></span>
     <p>{{ transLon }}经&nbsp;&nbsp; <span>{{ lon | convertDigitalToDegrees('lon', lon) }}  </span></p>
     <p>{{ transLat }}纬&nbsp;&nbsp; <span>{{ lat | convertDigitalToDegrees('lat', lat) }}  </span></p>
     <p>海拔 <span>0.00</span> 米</p>
-    <p>视角海拔高度 <span>{{ viewHeight }}</span> 米</p>
+    <p>视角海拔高度 <span>{{ viewHeight }}</span> 米</p> -->
   </div>
 </template>
 
@@ -69,25 +73,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-#infoContainer{
-  display: flex;
-  height: 28px;
-  font-size: 12px;
-  float: right;
-}
-#infoContainer>p{
-  color: white;
-  height: 28px;
-  margin-right: 10px;
-}
-#infoContainer>p>span{
-  color: yellow;
-  height: 28px;
-}
-p,span{
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
-</style>

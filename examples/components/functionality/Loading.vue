@@ -1,7 +1,7 @@
 <template>
   <transition name="rp-loading" @after-leave="handleAfterLeave">
     <div
-      v-show="visible"
+      v-if="visible"
       class="rp-loading-mask"
       :style="{ backgroundColor: background || '' }"
       :class="[customClass]">
@@ -80,7 +80,7 @@ export default {
 
   data() {
     return {
-      visible: true
+      visible: false
     };
   },
 

@@ -2,6 +2,7 @@
 @import "common/var";
 
 @include b(container) {
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -10,9 +11,8 @@
 }
 
 @include b(content) {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+  box-sizing: inherit;
+  width: inherit;
+  height: inherit;
+  overflow: inherit;
 }
