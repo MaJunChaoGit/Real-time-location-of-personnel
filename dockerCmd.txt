@@ -13,3 +13,4 @@ docker run --name mywebgis -p 80:80 -itd 2c540c1811f7
 
 前端服务又走了个
 样式问题解决了
+写到右下角样式了
