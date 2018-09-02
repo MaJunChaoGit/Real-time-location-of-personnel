@@ -1,22 +1,23 @@
 <template>
-  <div id="infoContainer" class="rp-basicinfomation">
-    <!-- span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <p>{{ transLon }}经&nbsp;&nbsp; <span>{{ lon | convertDigitalToDegrees('lon', lon) }}  </span></p>
-    <p>{{ transLat }}纬&nbsp;&nbsp; <span>{{ lat | convertDigitalToDegrees('lat', lat) }}  </span></p>
-    <p>海拔 <span>0.00</span> 米</p>
-    <p>视角海拔高度 <span>{{ viewHeight }}</span> 米</p> -->
+  <div id="infoContainer" class="rp-basicinformation">
+    <span class="rp-basicinformation__item">
+      <label>{{transLon}}经:  <b>{{lon|convertDigitalToDegrees('lon', lon)}}</b></label>
+    </span>
+    <span class="rp-basicinformation__item">
+      <label>{{transLat}}纬:  <b>{{lat|convertDigitalToDegrees('lat', lat)}}</b></label>
+    </span>
+    <span class="rp-basicinformation__item rp-basicinformation__item-xs">
+      <label>视角高度:  <b>{{ viewHeight }}</b> 米</label>
+    </span>
   </div>
 </template>
 
 <script>
 import Picker from 'ex/src/Picker';
-
+import { getBreakPoints, getClientWidth } from 'ex/utils/dom';
 // 组件公开化
 export default {
-  name: 'RpBasicInfomation',
+  name: 'RpBasicInformation',
 
   data() {
     return {
@@ -56,7 +57,7 @@ export default {
       let tmp = value % 1 * 60;
       let minute = parseInt(tmp, 0);
       let second = tmp % 1 * 60;
-      let degrees = '' + degree + '°    ' + Math.abs(minute) + '′    ' + Math.abs(second.toFixed(2)) + '″    ';
+      let degrees = '' + degree + '°' + Math.abs(minute) + '′' + Math.abs(second.toFixed(2)) + '″ ';
       return degrees;
     }
   },

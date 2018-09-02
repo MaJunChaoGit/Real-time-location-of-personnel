@@ -1,6 +1,29 @@
 @import "./mixins/mixins";
 @import "common/var";
 
-@include b(basicinfomation) {
+@include b(basicinformation) {
+
+  width: $--basicinfomation-container-size;
+  height: $--basicinfomation-container-size;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  color: $--font-label-color;
+  font-size: $--font-size;
+
+  @include e(item) {
+    margin: 0 $--basicinfomation-item-margin;
+    white-space:pre-wrap;
+    b {
+      color: $--font-content-color;
+    }
+  }
   
+  @include e(item-xs) {
+    @include res(xs) {
+      display: none;
+    }
+  }
 }

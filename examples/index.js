@@ -4,6 +4,7 @@ import api from './api';
 import './theme/src/index.scss';
 
 Vue.config.productionTip = false;
+
 Vue.prototype.$api = api;
 /* eslint-disable no-new */
 new Vue({

@@ -1,17 +1,17 @@
 <template>
   <div class="rp-footer">
-    <rp-basic-infomation></rp-basic-infomation>
+    <rp-basic-information></rp-basic-information>
   </div>
 </template>
 
 <script>
-import RpBasicInfomation from '../functionality/BasicInformation';
+import RpBasicInformation from '../functionality/BasicInformation';
 
 export default {
   name: 'RpFooter',
 
   components: {
-    RpBasicInfomation
+    RpBasicInformation
   }
 };
 </script>

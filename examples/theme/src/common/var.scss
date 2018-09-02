@@ -14,9 +14,14 @@ $--breakpoints: (
   'xl' : (min-width: $--xl)
 );
 
+/* Font
+ -------------------------- */
+$--font-size: 0.5rem !default;
+$--font-label-color: white !default;
+$--font-content-color: yellow !default;
 /* Colors
 -------------------------- */
-$--color-primary: #409EFF !default;
+$--color-primary: #fff !default;
 
 /* Loading
 -------------------------- */
@@ -40,12 +45,17 @@ $--loading-shadow-xl-height: 2.5vh !default;
 /* Footer
 -------------------------- */
 $--footer-container-xs-width: 100vw !default;
-$--footer-container-xs-line-height: 4vh !default;
+$--footer-container-xs-height: 4vh !default;
 $--footer-container-sm-width: 40vw !default;
-$--footer-container-sm-line-height: 1.6vw !default;
-$--footer-container-md-width: 40vw !default;
-$--footer-container-md-line-height: 1.6vw !default;
-$--footer-container-lg-width: 30vw !default;
-$--footer-container-lg-line-height: 1.6vw !default;
+$--footer-container-sm-height: 3vh !default;
+$--footer-container-md-width: 50vw !default;
+$--footer-container-md-height: 3vh !default;
+$--footer-container-lg-width: 40vw !default;
+$--footer-container-lg-height: 3vh !default;
 $--footer-container-xl-width: 40vw !default;
-$--footer-container-xl-line-height: 3vh !default;
+$--footer-container-xl-height: 3vh !default;
+
+/* BasicInformation
+ -------------------------- */
+ $--basicinfomation-container-size: 100% !default;
+ $--basicinfomation-item-margin: 0.5vw !default;
