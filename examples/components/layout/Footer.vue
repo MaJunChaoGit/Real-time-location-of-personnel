@@ -12,6 +12,10 @@ export default {
 
   components: {
     RpBasicInformation
+  },
+
+  mounted() {
+  
   }
 };
 </script>
