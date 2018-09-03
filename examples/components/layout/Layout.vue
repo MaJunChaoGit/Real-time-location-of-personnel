@@ -1,6 +1,6 @@
 <template>
   <div class="rp-layout">
-    <rp-outring></rp-outring>
+    <rp-right-side></rp-right-side>
     <rp-footer></rp-footer>
   </div>
 </template>
@@ -9,7 +9,7 @@
 import { viewerCesiumNavigationMixin } from 'source/index';
 
 import RpFooter from './Footer';
-import RpOutring from './Outring';
+import RpRightSide from './RightSideBar';
 
 export default {
   name: 'RpLayout',
@@ -23,7 +23,7 @@ export default {
 
   components: {
     RpFooter,
-    RpOutring
+    RpRightSide
   }
 };
 </script>

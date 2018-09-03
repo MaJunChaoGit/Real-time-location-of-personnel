@@ -9,7 +9,7 @@ docker run --detach \
 
 后台静态服务
 
-docker run --name mywebgis -p 80:80 -itd 2c540c1811f7
+docker run --name mywebgis -p 80:80 -itd ab90e2ed0981
 
 前端服务又走了个
 样式问题解决了

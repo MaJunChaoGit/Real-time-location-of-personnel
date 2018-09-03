@@ -9,7 +9,7 @@
       <label>{{transLat}}纬:  <b>{{lat | convertDigitalToDegrees}}</b></label>
     </span>
     <span class="rp-basicinformation__item rp-basicinformation__item-xs">
-      <label>高度:  <b>{{ viewHeight }}</b> m</label>
+      <label>高度:  <b>{{ viewHeight }} m</b></label>
     </span>
   </div>
 </template>

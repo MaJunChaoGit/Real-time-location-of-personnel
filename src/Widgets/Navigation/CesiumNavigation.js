@@ -108,37 +108,37 @@ function initialize(viewerCesiumWidget, options, el) {
   }
 
   if ((!defined(this.terria.options.enableZoomControls) || this.terria.options.enableZoomControls) && (!defined(this.terria.options.enableCompass) || this.terria.options.enableCompass)) {
-    this.navigationDiv = document.createElement('div');
-    this.navigationDiv.setAttribute('id', 'navigationDiv');
+    // this.navigationDiv = document.createElement('div');
+    // this.navigationDiv.setAttribute('id', 'navigationDiv');
 
-    document.getElementById(el.outring).appendChild(this.navigationDiv);
+    // .appendChild(this.navigationDiv);
     // Create the navigation controls.
     this.navigationViewModel = NavigationViewModel.create({
-      container: this.navigationDiv,
+      container: document.getElementById(el.outring),
       terria: this.terria,
       enableZoomControls: true,
       enableCompass: true
     });
   } else if ((defined(this.terria.options.enableZoomControls) && !this.terria.options.enableZoomControls) && (!defined(this.terria.options.enableCompass) || this.terria.options.enableCompass)) {
-    this.navigationDiv = document.createElement('div');
-    this.navigationDiv.setAttribute('id', 'navigationDiv');
-    document.getElementById(el.outring).appendChild(this.navigationDiv);
+    // this.navigationDiv = document.createElement('div');
+    // this.navigationDiv.setAttribute('id', 'navigationDiv');
+    // .appendChild(this.navigationDiv);
     // container.appendChild(this.navigationDiv);
     // Create the navigation controls.
     this.navigationViewModel = NavigationViewModel.create({
-      container: this.navigationDiv,
+      container: document.getElementById(el.outring),
       terria: this.terria,
       enableZoomControls: false,
       enableCompass: true
     });
   } else if ((!defined(this.terria.options.enableZoomControls) || this.terria.options.enableZoomControls) && (defined(this.terria.options.enableCompass) && !this.terria.options.enableCompass)) {
-    this.navigationDiv = document.createElement('div');
-    this.navigationDiv.setAttribute('id', 'navigationDiv');
+    // this.navigationDiv = document.createElement('div');
+    // this.navigationDiv.setAttribute('id', 'navigationDiv');
     // container.appendChild(this.navigationDiv);
-    document.getElementById(el.outring).appendChild(this.navigationDiv);
+    // .appendChild(this.navigationDiv);
     // Create the navigation controls.
     this.navigationViewModel = NavigationViewModel.create({
-      container: this.navigationDiv,
+      container: document.getElementById(el.outring),
       terria: this.terria,
       enableZoomControls: true,
       enableCompass: false

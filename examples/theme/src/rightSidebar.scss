@@ -1,0 +1,38 @@
+@import "./mixins/mixins";
+@import "common/var";
+
+@include b(right-side) {
+  position: fixed;
+  right: 0;
+  top: 0;
+  margin-top: 5vh;
+
+  @include res(xs) {
+    width: 26vw;
+    height: 100 - $--footer-container-xs-height;
+  }
+  @include res(sm) {
+    width: 26vw;
+    height: 100 - $--footer-container-sm-height;
+  }
+  @include res(md) {
+    width: 6vw;
+    height: 100 - $--footer-container-md-height;
+  }
+  @include res(lg) {
+    width: 6vw;
+    height: 100 - $--footer-container-lg-height;
+  }
+  @include res(xl) {
+    width: 6vw;
+    height: 100 - $--footer-container-xl-height;
+  }
+
+  @include e(navigation) {
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
