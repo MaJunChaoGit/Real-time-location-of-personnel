@@ -14,6 +14,11 @@
   font-size: $--font-size;
 
   @include e(item) {
+    
+    @include res(ls) {
+      width: 33.333333%;
+      min-width: 125px;
+    }
 
     @include res(xs) {
       width: 33.333333%;

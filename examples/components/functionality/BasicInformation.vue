@@ -15,7 +15,6 @@
 </template>
 <script>
 import Picker from 'ex/src/Picker';
-import { getClientWidth } from 'ex/utils/dom';
 
 export default {
   name: 'RpBasicInformation',
