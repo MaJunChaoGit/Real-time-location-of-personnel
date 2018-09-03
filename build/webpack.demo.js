@@ -149,7 +149,8 @@ if (isProd) {
     extractLESS,
     extractSCSS,
     new webpack.DefinePlugin({
-      'CESIUM_BASE_URL': JSON.stringify('./')
+      'CESIUM_BASE_URL': JSON.stringify('./'),
+      'NEEDLOAD': true
     })
   );
   webpackConfig.optimization.runtimeChunk = {
@@ -189,7 +190,8 @@ if (isDev) {
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      'CESIUM_BASE_URL': JSON.stringify('')
+      'CESIUM_BASE_URL': JSON.stringify(''),
+      'NEEDLOAD': false
     })
   );
 }

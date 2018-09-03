@@ -80,7 +80,8 @@ export default {
 
   data() {
     return {
-      visible: false
+      /* eslint-disable no-undef */
+      visible: NEEDLOAD
     };
   },
 
