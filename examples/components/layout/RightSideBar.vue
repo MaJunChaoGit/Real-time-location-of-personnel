@@ -3,8 +3,8 @@
     <div class="rp-right-side__item rp-right-side__navigation" id="rp-outring"></div>
     <div class="rp-right-side__item">
       <rp-button-group direction="column">
-        <rp-button round icon="rp-icon-fullscreen" @click="screenHandle"></rp-button>
-        <rp-button round icon="rp-icon-scenemode" @click="SceneModeHandle"></rp-button>
+        <rp-button round icon="rp-icon-fullscreen" @click="screenHandle" v-if="buttonShowHandle()"></rp-button>
+        <rp-button round icon="rp-icon-scenemode" @click="sceneModeHandle"></rp-button>
       </rp-button-group>
     </div>
   </div>
@@ -29,8 +29,12 @@ export default {
     screenHandle() {
       Fullscreen(document.body);
     },
-    SceneModeHandle() {
+    sceneModeHandle() {
       changeSceneMode(global.viewer.scene);
+    },
+    buttonShowHandle() {
+      let userAgent = navigator.userAgent;
+      return userAgent.indexOf('iPhone') > -1 || userAgent.indexOf('Mac');
     }
   }
 };
