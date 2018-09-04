@@ -2,11 +2,15 @@
 @import "common/var";
 
 @include b(right-side) {
+  box-sizing: border-box;
   position: fixed;
   right: 0;
   top: 0;
-  margin-top: 5vh;
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
   @include res(ls) {
     width: 12vw;
     height: 100 - $--footer-container-ls-height;
@@ -38,5 +42,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+  @include e(item) {
+    position: relative;
+    width: 100%;
+
+    &:first-child {
+      margin-top: 3vh;
+    }
+
+    &:last-child {
+      margin-bottom: 3vh;
+    }
   }
 }

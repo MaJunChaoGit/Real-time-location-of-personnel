@@ -1,4 +1,3 @@
-
 /* Break-point
 --------------------------*/
 $--sm: 768px !default;
@@ -17,13 +16,36 @@ $--breakpoints: (
 
 /* Font
  -------------------------- */
+$--font-path: 'fonts' !default;
 $--font-size: 0.5rem !default;
 $--font-label-color: white !default;
 $--font-content-color: yellow !default;
 $--font-family: 'Roboto', sans-serif;
+$--font-weight-primary: 500 !default;
+
+/* Border
+-------------------------- */
+$--border-width-base: 1.7px !default;
+$--border-style-base: solid !default;
+$--border-color-base: rgba(20,62,141,0.7) !default;
+$--border-radius-base: 4px !default;
+$--border-base: $--border-width-base $--border-style-base $--border-color-base !default;
+
+/* Shadow
+-------------------------- */
+$--box-shadow-base: 2px 2px 7px rgba(39,39,39,0.95) !default;
+
 /* Colors
 -------------------------- */
-$--color-primary: #fff !default;
+$--color-primary: rgba(20, 62, 141, 0.7) !default;
+$--color-text-primary: #fff !default;
+
+/* Button
+-------------------------- */
+$--button-default-fill: $--color-primary;
+$--button-default-border: $--border-color-base;
+$--button-default-color: $--color-text-primary;
+$--button-font-weight: $--font-weight-primary;
 
 /* Loading
 -------------------------- */
