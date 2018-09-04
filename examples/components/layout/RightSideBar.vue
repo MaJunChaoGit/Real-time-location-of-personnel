@@ -13,7 +13,7 @@
 import RpButtonGroup from './ButtonGroup';
 import RpButton from '../functionality/Button';
 import {
-  FullScreen,
+  Fullscreen,
   changeSceneMode,
 } from 'source/index';
 
@@ -27,7 +27,7 @@ export default {
 
   methods: {
     screenHandle() {
-      FullScreen(document.body);
+      Fullscreen(document.body);
     },
     SceneModeHandle() {
       changeSceneMode(global.viewer.scene);

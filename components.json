@@ -2,6 +2,6 @@
   "viewerCesiumNavigationMixin": "'source/Widgets/Navigation/viewerCesiumNavigationMixin'",
   "Viewer": "'source/Widgets/Viewer/Viewer'",
   "Camera": "'source/Scene/Camera'",
-  "FullScreen": "'source/Core/FullScreen'",
+  "FullScreen": "'source/Core/Fullscreen'",
   "changeSceneMode": "'source/Scene/changeSceneMode'"
 }
