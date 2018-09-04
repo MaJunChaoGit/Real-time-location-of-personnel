@@ -888,6 +888,8 @@ import Widgets_VRButton_VRButton from 'cesium/Widgets/VRButton/VRButton';
 import Widgets_VRButton_VRButtonViewModel from 'cesium/Widgets/VRButton/VRButtonViewModel';
 import Workers_createTaskProcessorWorker from 'cesium/Workers/createTaskProcessorWorker';
 import Widgets_Navigation_viewerCesiumNavigationMixin from 'source/Widgets/Navigation/viewerCesiumNavigationMixin';
+import Core_FullScreen from 'source/Core/FullScreen';
+import Scene_changeSceneMode from 'source/Scene/changeSceneMode';
 
 const _shaders = {
   Shaders_AdjustTranslucentFS,
@@ -1782,7 +1784,9 @@ module.exports = {
   VRButton: Widgets_VRButton_VRButton,
   VRButtonViewModel: Widgets_VRButton_VRButtonViewModel,
   createTaskProcessorWorker: Workers_createTaskProcessorWorker,
-  viewerCesiumNavigationMixin: Widgets_Navigation_viewerCesiumNavigationMixin
+  viewerCesiumNavigationMixin: Widgets_Navigation_viewerCesiumNavigationMixin,
+  FullScreen: Core_FullScreen,
+  changeSceneMode: Scene_changeSceneMode
 };
 
 module.exports.default = module.exports;

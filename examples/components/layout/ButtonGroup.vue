@@ -15,5 +15,5 @@ export default {
       default: 'row'
     }
   }
-}
+};
 </script>

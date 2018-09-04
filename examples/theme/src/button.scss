@@ -14,7 +14,7 @@
 
     @include b(button) {
       & + .rp-button {
-        margin-left: 10px;
+        margin-left: 15px;
       }
     }
   }
@@ -24,7 +24,7 @@
 
     @include b(button) {
       & + .rp-button {
-        margin-top: 10px;
+        margin-top: 15px;
       }
     }
   }
@@ -43,9 +43,10 @@
   color: $--button-default-color;
   -webkit-appearance: none;
   text-align: center;
-  box-sizing: border-box;
+  box-sizing: content-box;
   outline: none;
   margin: 0;
+  padding: 0;
   transition: .1s;
   font-weight: $--button-font-weight;
   box-shadow: $--box-shadow-base;
