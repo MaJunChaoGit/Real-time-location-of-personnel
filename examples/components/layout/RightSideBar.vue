@@ -14,7 +14,7 @@ import RpButtonGroup from './ButtonGroup';
 import RpButton from '../functionality/Button';
 import {
   Fullscreen,
-  changeSceneMode,
+  changeSceneMode
 } from 'source/index';
 
 export default {

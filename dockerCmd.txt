@@ -7,10 +7,12 @@ docker run --detach \
     -v /data/staticserver/logs/error.log:/var/log/nginx/error.log:rw \
     -d nginx
 
-后台静态服务
+潞贸脤篓戮虏脤卢路镁脦帽
 
-docker run --name mywebgis -p 80:80 -itd a66c5769894a
+docker run --name mywebgis -p 80:80 -itd d26874b83854
 
-前端服务又走了个
-样式问题解决了
-写到右下角样式了
+脟掳露脣路镁脦帽脫脰脳脽脕脣赂枚
+脩霉脢陆脦脢脤芒陆芒戮枚脕脣
+脨麓碌陆脫脪脧脗陆脟脩霉脢陆脕脣
+
+IOS 涓婂叏灞忔寜閽け鏁堬紝SAFI娴忚鍣ㄦ牱寮忔湁闂

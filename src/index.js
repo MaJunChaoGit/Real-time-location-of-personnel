@@ -85,7 +85,6 @@ import Core_formatError from 'cesium/Core/formatError';
 import Core_freezeObject from 'cesium/Core/freezeObject';
 import Core_FrustumGeometry from 'cesium/Core/FrustumGeometry';
 import Core_FrustumOutlineGeometry from 'cesium/Core/FrustumOutlineGeometry';
-import Core_Fullscreen from 'cesium/Core/Fullscreen';
 import Core_GeocoderService from 'cesium/Core/GeocoderService';
 import Core_GeocodeType from 'cesium/Core/GeocodeType';
 import Core_GeographicProjection from 'cesium/Core/GeographicProjection';
@@ -888,7 +887,7 @@ import Widgets_VRButton_VRButton from 'cesium/Widgets/VRButton/VRButton';
 import Widgets_VRButton_VRButtonViewModel from 'cesium/Widgets/VRButton/VRButtonViewModel';
 import Workers_createTaskProcessorWorker from 'cesium/Workers/createTaskProcessorWorker';
 import Widgets_Navigation_viewerCesiumNavigationMixin from 'source/Widgets/Navigation/viewerCesiumNavigationMixin';
-import Core_FullScreen from 'source/Core/FullScreen';
+import Core_Fullscreen from 'source/Core/Fullscreen';
 import Scene_changeSceneMode from 'source/Scene/changeSceneMode';
 
 const _shaders = {
@@ -1785,7 +1784,7 @@ module.exports = {
   VRButtonViewModel: Widgets_VRButton_VRButtonViewModel,
   createTaskProcessorWorker: Workers_createTaskProcessorWorker,
   viewerCesiumNavigationMixin: Widgets_Navigation_viewerCesiumNavigationMixin,
-  FullScreen: Core_FullScreen,
+  FullScreen: Core_Fullscreen,
   changeSceneMode: Scene_changeSceneMode
 };
 
