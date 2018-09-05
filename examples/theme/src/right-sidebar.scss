@@ -1,0 +1,58 @@
+@import "./mixins/mixins";
+@import "common/var";
+
+@include b(right-side) {
+  box-sizing: border-box;
+  position: fixed;
+  right: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  @include res(ls) {
+    width: 12vw;
+    height: 100 - $--footer-container-ls-height;
+  }
+  @include res(xs) {
+    width: 12vw;
+    height: 100 - $--footer-container-xs-height;
+  }
+  @include res(sm) {
+    width: 12vw;
+    height: 100 - $--footer-container-sm-height;
+  }
+  @include res(md) {
+    width: 8vw;
+    height: 100 - $--footer-container-md-height;
+  }
+  @include res(lg) {
+    width: 7vw;
+    height: 100 - $--footer-container-lg-height;
+  }
+  @include res(xl) {
+    width: 6vw;
+    height: 100 - $--footer-container-xl-height;
+  }
+
+  @include e(navigation) {
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  @include e(item) {
+    position: relative;
+    width: 100%;
+
+    &:first-child {
+      margin-top: 3vh;
+    }
+
+    &:last-child {
+      margin-bottom: 3vh;
+    }
+  }
+}

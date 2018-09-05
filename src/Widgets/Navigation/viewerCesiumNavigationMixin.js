@@ -57,9 +57,9 @@ viewerCesiumNavigationMixin.mixinWidget = function(cesiumWidget, options) {
   * @param {Viewer|CesiumWidget} viewerCesiumWidget The Viewer or CesiumWidget instance
   * @param {{}} options the options
   */
-var init = function(viewerCesiumWidget, options) {
+var init = function(viewerCesiumWidget, options, el) {
   // 新建一个一个cesiumNavigation实例
-  var cesiumNavigation = new CesiumNavigation(viewerCesiumWidget, options);
+  var cesiumNavigation = new CesiumNavigation(viewerCesiumWidget, options, el);
   // 获取viewer中的cesiumWidget或者直接传入cesiumWidger
   var cesiumWidget = defined(viewerCesiumWidget.cesiumWidget) ? viewerCesiumWidget.cesiumWidget : viewerCesiumWidget;
 

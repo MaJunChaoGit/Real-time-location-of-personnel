@@ -1,0 +1,59 @@
+@charset "UTF-8";
+@import "common/var";
+@import "mixins/mixins";
+@import "mixins/utils";
+
+@include b(button-group) {
+  @include utils-clearfix;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include when(row) {
+    flex-direction: row;
+
+    @include b(button) {
+      & + .rp-button {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  @include when(column) {
+    flex-direction: column;
+
+    @include b(button) {
+      & + .rp-button {
+        margin-top: 15px;
+      }
+    }
+  }
+}
+
+@include b(button) {
+  width: 2.5em;
+  height: 2.5em;
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  background: $--button-default-fill;
+  border: $--border-base;
+  border-color: $--button-default-border;
+  color: $--button-default-color;
+  -webkit-appearance: none;
+  text-align: center;
+  box-sizing: content-box;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  transition: .1s;
+  font-weight: $--button-font-weight;
+  box-shadow: $--box-shadow-base;
+
+  @include utils-user-select(none);
+
+  @include when(round) {
+    border-radius: $--border-radius-base;
+  }
+}

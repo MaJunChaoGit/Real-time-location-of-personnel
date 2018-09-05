@@ -91,6 +91,10 @@ var webpackConfig = {
           limit: 10000,
           name: path.posix.join('static', '[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /(cesiumWorkerBootstrapper|\.worker)\.js$/,
+        loader: 'worker-loader'
       }
     ]
   },
@@ -149,7 +153,8 @@ if (isProd) {
     extractLESS,
     extractSCSS,
     new webpack.DefinePlugin({
-      'CESIUM_BASE_URL': JSON.stringify('./')
+      'CESIUM_BASE_URL': JSON.stringify('./'),
+      'NEEDLOAD': true
     })
   );
   webpackConfig.optimization.runtimeChunk = {
@@ -189,7 +194,8 @@ if (isDev) {
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      'CESIUM_BASE_URL': JSON.stringify('')
+      'CESIUM_BASE_URL': JSON.stringify(''),
+      'NEEDLOAD': false
     })
   );
 }

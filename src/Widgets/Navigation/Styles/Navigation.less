@@ -2,8 +2,6 @@
 .navigation-controls {
     //.floating-vertical;
     position: relative;
-    clear:both;
-    float:right;
     /* border: 1px solid rgba(255, 255, 255, 0.1); */
     font-weight: 300;
     -webkit-touch-callout: none;
@@ -11,7 +9,6 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    z-index: 999;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,7 +16,7 @@
     background: rgba(20,62,141,0.4);
     border: 1.7px solid rgba(20,62,141,0.7);
     border-radius: 15px;
-    margin-right:7px;
+    box-sizing: border-box;
 }
 
 .navigation-control {
@@ -27,7 +24,7 @@
     //border-bottom: @floating-element-border;
     width:25px;
     height:25px;
-    line-height:27px;
+    line-height:25px;
     /* border-right: 1.7px solid rgba(20,62,141,0.7); */
     margin-left: 1px;
 }
@@ -64,7 +61,7 @@
     width: 12px;
     height: 12px;
     fill: fade(@floating-text-color, 80%);
-    box-sizing: content-box;
+    box-sizing: border-box;
     margin: 0 auto;
     top: 30%;
 }
@@ -75,89 +72,39 @@
 @compass-gyro-diameter: @compass-diameter * 50 / 145;
 
 .compass {
-    .opaque-to-input;
     position: relative;
-    float:right;
     width: @compass-diameter;
     height: @compass-diameter;
     overflow: hidden;
-    z-index: 999;
-    margin-right: -23px;
 }
 
 .compass-outer-ring {
     position: absolute;
-    top: 0;
-    width: @compass-diameter;
-    height: @compass-diameter;
+    width: inherit;
+    height: inherit;
     background: url(./outerRing.png) 0 0 no-repeat;
-    //fill: rgba(255,255,255,0.5);
 }
 
-.compass-outer-ring-background {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    width: 44px;
-    height: 44px;
-    border-radius: 44px;
-    border: 12px solid @floating-background-color;
-    box-sizing: content-box;
-}
 
 .compass-gyro {
     pointer-events: none;
     position: absolute;
-    top: 0;
-    width: @compass-diameter;
-    height: @compass-diameter;
+    width: inherit;
+    height: inherit;
     fill: #CCC;
 }
 
-.compass-gyro-active {
-    fill: @highlight-color;
-}
-
-.compass-gyro-background {
-    position: absolute;
-    top: 30px;
-    left: 30px;
-    width: 33px;
-    height: 33px;
-    border-radius: 33px;
-    background-color: @floating-background-color;
-    border: 1px solid rgba(255,255,255,0.2);
-    box-sizing: content-box;
-}
-
-.compass-gyro-background:hover + .compass-gyro {
-    fill: @highlight-color;
-}
 
 .compass-rotation-marker {
     position: absolute;
-    top: 0;
-    width: @compass-diameter;
-    height: @compass-diameter;
+    width: inherit;
+    height: inherit;
     fill: white;
     background: url(./clickIcon.png) 0 0 no-repeat;
     z-index:999;
 }
 
-// Don't display the nav controls on small screens like mobile phones.
-@media screen and (max-width: 700px), screen and (max-height: 420px) {
-    .navigation-controls {
-        display: none;
-    }
-    .compass {
-        display: none;
-    }
-}
-
-@media print {
-    .navigation-controls {
-        display: none;
-    }
+@media screen and (max-width: 700px) {
     .compass {
         display: none;
     }

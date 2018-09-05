@@ -104,14 +104,15 @@ DistanceLegendViewModel.prototype.show = function(container) {
   var testing ;
   // 如果用户开启了比例尺功能
   if (this.enableDistanceLegend) {
+    var baseWidth = document.querySelector('#rp-distance-legend').clientWidth;
     testing = '<div class="distance-legend" data-bind="visible: distanceLabel && barWidth">' +
-                '<div class="distance-legend-label" data-bind="text: distanceLabel"></div>' +
-                '<div class="distance-legend-scale-bar" data-bind="style: { width: barWidth + \'px\', left: (5 + (125 - barWidth) / 2) + \'px\' }"></div>' +
-                '</div>';
+              '<div class="distance-legend-label" data-bind="text: distanceLabel"></div>' +
+              '<div class="distance-legend-scale-bar" data-bind="style: { width: barWidth + \'px\', left: ((' + baseWidth + '- barWidth) / 2) + \'px\' }"></div>' +
+              '</div>';
   } else {
     testing = '<div class="distance-legend"  style="display: none;" data-bind="visible: distanceLabel && barWidth">' +
                 '<div class="distance-legend-label"  data-bind="text: distanceLabel"></div>' +
-                '<div class="distance-legend-scale-bar"  data-bind="style: { width: barWidth + \'px\', left: (5 + (125 - barWidth) / 2) + \'px\' }"></div>' +
+                '<div class="distance-legend-scale-bar"  data-bind="style: { width: barWidth + \'px\', left: ((' + baseWidth + '- barWidth) / 2) + \'px\' }"></div>' +
                 '</div>';
   }
 

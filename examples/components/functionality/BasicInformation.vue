@@ -1,21 +1,21 @@
 <template>
-  <div id="infoContainer" class="rp-basicinformation">
-    <span class="rp-basicinformation__item">
-      <label>{{transLon}}经:  <b>{{lon|convertDigitalToDegrees('lon', lon)}}</b></label>
+  <div class="rp-basicinformation">
+    <span class="rp-basicinformation__item rp-basicinformation__item-vs" id="rp-distance-legend">
     </span>
     <span class="rp-basicinformation__item">
-      <label>{{transLat}}纬:  <b>{{lat|convertDigitalToDegrees('lat', lat)}}</b></label>
+      <label>{{transLon}}经:  <b>{{lon | convertDigitalToDegrees}}</b></label>
+    </span>
+    <span class="rp-basicinformation__item">
+      <label>{{transLat}}纬:  <b>{{lat | convertDigitalToDegrees}}</b></label>
     </span>
     <span class="rp-basicinformation__item rp-basicinformation__item-xs">
-      <label>视角高度:  <b>{{ viewHeight }}</b> 米</label>
+      <label>高度:  <b>{{ viewHeight }} m</b></label>
     </span>
   </div>
 </template>
-
 <script>
 import Picker from 'ex/src/Picker';
-import { getBreakPoints, getClientWidth } from 'ex/utils/dom';
-// 组件公开化
+
 export default {
   name: 'RpBasicInformation',
 
@@ -24,9 +24,7 @@ export default {
       lon: '0',
       lat: '0',
       height: '0',
-      viewHeight: '25834697.41',
-      lonText: '',
-      latText: ''
+      viewHeight: '25834697'
     };
   },
 
@@ -38,7 +36,15 @@ export default {
   },
 
   methods: {
-    // 回调函数
+    /**
+     * Picker类中所使用的Proxy代理对象，我们将这个方法传入其set方法中，与Vue配合实现数据绑定
+     * @Author   MJC
+     * @DateTime 2018-09-03
+     * @version  1.0.0
+     * @param    {Object}   obj   proxy对象
+     * @param    {String}   prop  lon, lat, height, viewHeight等字段属性
+     * @param    {Boolean}  value 返回true完成赋值
+     */
     setPosition: function(obj, prop, value) {
       // 设置变量的值
       this[prop] = value;
@@ -47,8 +53,15 @@ export default {
   },
 
   filters: {
-    // 经纬度转换度分秒
-    convertDigitalToDegrees: (value, type) => {
+    /**
+     * 根据用户的经纬度精度需求所编写的转换方法，可以将经纬度转为度分秒展示
+     * @Author   MJC
+     * @DateTime 2018-09-03
+     * @version  1.0.0
+     * @param    {String}   value Vue过滤器中传入需要被过滤的初始值， 这里是经纬度
+     * @return   {String}   经过转换后的经纬度 格式为120°11′11'
+     */
+    convertDigitalToDegrees: (value) => {
       if (!value) {
         return;
       }
@@ -64,12 +77,10 @@ export default {
 
   computed: {
     transLon: function() {
-      this.lonText = this.lon > 0 ? '东' : '西';
-      return this.lonText;
+      return this.lon > 0 ? '东' : '西';
     },
     transLat: function() {
-      this.latText = this.lat > 0 ? '北' : '南';
-      return this.latText;
+      return this.lat > 0 ? '北' : '南';
     }
   }
 };

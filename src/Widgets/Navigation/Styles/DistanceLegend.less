@@ -1,27 +1,18 @@
 .distance-legend {
     .floating-horizontal;
-    bottom: 30px;
-    height: 30px;
-    width: 125px;
-    //border: 1px solid rgba(255,255,255,0.1);
-    position: absolute;
-    right: 480px;
-    bottom: 0px;
-    box-sizing: content-box;
-    z-index: 200;
-    margin-right: 7%;
+    height: inherit;
+    width: inherit;
+    box-sizing: border-box;
 }
 
 .distance-legend-label {
     display: inline-block;
     font-family: @default-font;
-    font-size: 12px;
-    font-weight: lighter;
-    line-height: 30px;
-    //color: @floating-text-color;
     color: yellow;
-    width: 125px;
     text-align: center;
+    font-size: .5rem;
+    font-weight: bold;
+    width: 100%;
 }
 
 .distance-legend-scale-bar {
@@ -29,19 +20,24 @@
     border-right: 1px solid @floating-text-color;
     border-bottom: 1px solid @floating-text-color;
     position: absolute;
-    height: 6px;
-    top: 15px;
+    height: 0.5rem;
+    top: .75rem;
 }
 
-@media print {
+// @media print {
+    // .distance-legend {
+        // display: none;
+    // }
+// }
+
+@media screen and (max-width: 700px) {
     .distance-legend {
         display: none;
     }
 }
-
 // Don't display the distance legend on small screens like mobile phones.
-@media screen and (max-width: 700px), screen and (max-height: 420px) {
-    .distance-legend {
-        display: none;
-    }
-}
+// @media screen and (max-width: 700px), screen and (max-height: 420px) {
+    // .distance-legend {
+        // display: none;
+    // }
+// }

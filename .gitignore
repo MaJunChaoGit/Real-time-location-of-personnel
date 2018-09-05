@@ -10,3 +10,4 @@ lib
 .npmrc
 coverage
 .envrc
+dockerCmd.txt

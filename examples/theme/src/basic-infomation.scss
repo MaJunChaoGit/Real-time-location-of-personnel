@@ -1,0 +1,66 @@
+@import "./mixins/mixins";
+@import "common/var";
+
+@include b(basicinformation) {
+
+  width: $--basicinfomation-container-size;
+  height: $--basicinfomation-container-size;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  color: $--font-label-color;
+  font-size: $--font-size;
+
+  @include e(item) {
+    
+    @include res(ls) {
+      width: 33.333333%;
+      min-width: 125px;
+    }
+
+    @include res(xs) {
+      width: 33.333333%;
+      min-width: 125px;
+    }
+
+    @include res(sm) {
+      width: 33.333333%;
+      min-width: 125px;
+    }
+
+    @include res(md) {
+      width: 25%;
+    }
+
+    @include res(lg) {
+      width: 25%;
+    }
+
+    @include res(xl) {
+      width: 20%;
+    }
+    
+    height: 100%;
+    // margin: 0 $--basicinfomation-item-margin;
+    white-space:pre-wrap;
+    b {
+      color: $--font-content-color;
+    }
+  }
+  
+  @include e(item-xs) {
+
+    @include res(xs) {
+      display: none;
+    }
+  }
+
+  @inlcude e(item-vs) {
+
+    @media screen and (max-width: 375px){
+      display: none;
+    }
+  }
+}

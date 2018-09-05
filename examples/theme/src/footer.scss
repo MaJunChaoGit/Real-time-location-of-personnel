@@ -7,6 +7,13 @@
   bottom: 0;
   right: 0;
   background: linear-gradient(to right, rgba(20,62,141,0.0), rgba(20,62,141,0.75));
+  
+
+  @include res(ls) {
+    width: $--footer-container-ls-width;
+    height: $--footer-container-ls-height;
+    line-height: $--footer-container-ls-height;
+  }
 
   @include res(xs) {
     width: $--footer-container-xs-width;
