@@ -34,6 +34,7 @@ export default {
     },
     buttonShowHandle() {
       let userAgent = navigator.userAgent;
+      alert(userAgent);
       return userAgent.indexOf('iPhone') > -1 || userAgent.indexOf('Mac');
     }
   }

@@ -9,10 +9,55 @@ docker run --detach \
 
 ºóÌ¨¾²Ì¬·þÎñ
 
-docker run --name mywebgis -p 80:80 -itd d26874b83854
+docker run --name mywebgis -p 80:80 -itd 20bc6b90946d
 
 Ç°¶Ë·þÎñÓÖ×ßÁË¸ö
 ÑùÊ½ÎÊÌâ½â¾öÁË
 Ð´µ½ÓÒÏÂ½ÇÑùÊ½ÁË
 
 IOS 上全屏按钮失效，SAFI浏览器样式有问题
+
+
+
+var viewer = new Cesium.Viewer('cesiumContainer', {
+    showRenderLoopErrors : false,
+    shouldAnimate : true
+});
+
+var videoElement = document.getElementById('trailer');
+
+var cyanPolygon = viewer.entities.add({
+    name : 'Cyan vertical polygon with per-position heights and outline',
+    polygon : {
+        hierarchy : Cesium.Cartesian3.fromDegreesArrayHeights([
+           -90.0, 41.0, 0.0,
+           -90.0, 51.0, 0.0,
+           -80.0, 51.0, 0.0,
+           -80.0, 41.0, 0.0
+        ]),
+        perPositionHeight : true,
+        material : videoElement,
+        outline : true,
+        outlineColor : Cesium.Color.BLACK
+    }
+});
+
+viewer.trackedEntity = cyanPolygon;
+
+// Since it's just an image material, we can modify the number
+// of times the video repeats in each direction..
+var isRepeating = false;
+
+cyanPolygon.polygon.material.repeat = new Cesium.CallbackProperty(function(time, result) {
+    if (!Cesium.defined(result)) {
+        result = new Cesium.Cartesian2();
+    }
+    if (isRepeating) {
+        result.x = 8;
+        result.y = 8;
+    } else {
+        result.x = 1;
+        result.y = 1;
+    }
+    return result;
+}, false);
