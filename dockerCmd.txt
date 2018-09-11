@@ -7,15 +7,9 @@ docker run --detach \
     -v /data/staticserver/logs/error.log:/var/log/nginx/error.log:rw \
     -d nginx
 
-ºóÌ¨¾²Ì¬·þÎñ
+
 
 docker run --name mywebgis -p 80:80 -itd 20bc6b90946d
-
-Ç°¶Ë·þÎñÓÖ×ßÁË¸ö
-ÑùÊ½ÎÊÌâ½â¾öÁË
-Ð´µ½ÓÒÏÂ½ÇÑùÊ½ÁË
-
-IOS 上全屏按钮失效，SAFI浏览器样式有问题
 
 
 
