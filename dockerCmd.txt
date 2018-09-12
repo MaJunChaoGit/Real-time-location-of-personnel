@@ -7,6 +7,7 @@ docker run --detach \
     -v /data/staticserver/logs/error.log:/var/log/nginx/error.log:rw \
     -d nginx
 
+<<<<<<< HEAD
 docker run --name mywebgis -p 80:80 -itd d26874b83854
 不知道15号还能完成
 大部分完成了
@@ -14,3 +15,53 @@ docker run --name mywebgis -p 80:80 -itd d26874b83854
 增加框选功能\
 老婆新家爬虫功能
 效率有点低
+=======
+
+
+docker run --name mywebgis -p 80:80 -itd 20bc6b90946d
+
+
+
+var viewer = new Cesium.Viewer('cesiumContainer', {
+    showRenderLoopErrors : false,
+    shouldAnimate : true
+});
+
+var videoElement = document.getElementById('trailer');
+
+var cyanPolygon = viewer.entities.add({
+    name : 'Cyan vertical polygon with per-position heights and outline',
+    polygon : {
+        hierarchy : Cesium.Cartesian3.fromDegreesArrayHeights([
+           -90.0, 41.0, 0.0,
+           -90.0, 51.0, 0.0,
+           -80.0, 51.0, 0.0,
+           -80.0, 41.0, 0.0
+        ]),
+        perPositionHeight : true,
+        material : videoElement,
+        outline : true,
+        outlineColor : Cesium.Color.BLACK
+    }
+});
+
+viewer.trackedEntity = cyanPolygon;
+
+// Since it's just an image material, we can modify the number
+// of times the video repeats in each direction..
+var isRepeating = false;
+
+cyanPolygon.polygon.material.repeat = new Cesium.CallbackProperty(function(time, result) {
+    if (!Cesium.defined(result)) {
+        result = new Cesium.Cartesian2();
+    }
+    if (isRepeating) {
+        result.x = 8;
+        result.y = 8;
+    } else {
+        result.x = 1;
+        result.y = 1;
+    }
+    return result;
+}, false);
+>>>>>>> d76de1d016a9691fae44a846fa0364fea328bd4e
