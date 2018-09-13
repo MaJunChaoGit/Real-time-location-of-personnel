@@ -7,7 +7,7 @@ docker run --detach \
     -v /data/staticserver/logs/error.log:/var/log/nginx/error.log:rw \
     -d nginx
 
-<<<<<<< HEAD
+
 docker run --name mywebgis -p 80:80 -itd d26874b83854
 不知道15号还能完成
 大部分完成了
@@ -15,8 +15,8 @@ docker run --name mywebgis -p 80:80 -itd d26874b83854
 增加框选功能\
 老婆新家爬虫功能
 效率有点低
+他妹的有冲突了
 =======
-
 
 docker run --name mywebgis -p 80:80 -itd 20bc6b90946d
 
@@ -64,4 +64,4 @@ cyanPolygon.polygon.material.repeat = new Cesium.CallbackProperty(function(time,
     }
     return result;
 }, false);
->>>>>>> d76de1d016a9691fae44a846fa0364fea328bd4e
+
