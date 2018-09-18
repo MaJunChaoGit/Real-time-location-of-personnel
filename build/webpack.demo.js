@@ -154,7 +154,7 @@ if (isProd) {
     extractSCSS,
     new webpack.DefinePlugin({
       'CESIUM_BASE_URL': JSON.stringify('./'),
-      'NEEDLOAD': true
+      'LOADINGTIME': 8400
     })
   );
   webpackConfig.optimization.runtimeChunk = {
@@ -195,7 +195,7 @@ if (isDev) {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'CESIUM_BASE_URL': JSON.stringify(''),
-      'NEEDLOAD': false
+      'LOADINGTIME': 0
     })
   );
 }

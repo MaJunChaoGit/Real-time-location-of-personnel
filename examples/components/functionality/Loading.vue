@@ -81,7 +81,7 @@ export default {
   data() {
     return {
       /* eslint-disable no-undef */
-      visible: NEEDLOAD
+      visible: true
     };
   },
 
@@ -102,7 +102,7 @@ export default {
     let bar = new ProgressBar.Line(progress, {
       strokeWidth: 2,
       easing: 'easeInOut',
-      duration: 8400,
+      duration: LOADINGTIME,
       color: '#FFEA82',
       trailColor: '#eee',
       trailWidth: 1,

@@ -7,7 +7,10 @@ import {
   Matrix4,
   Cesium3DTileset,
   Cesium3DTileStyle,
-  Color
+  Color,
+  HorizontalOrigin,
+  VerticalOrigin,
+  Math
 } from 'source/index';
 
 import api from '../api/index';
@@ -57,15 +60,29 @@ class InitScene {
     /* eslint-disable new-cap */
     let initialOrientation = new HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
     // 定位过去
-    setTimeout(() => {
-      global.viewer.scene.camera.flyTo({
-        destination: initialPosition,
-        duration: 4,
-        orientation: initialOrientation,
-        endTransform: Matrix4.IDENTITY,
-        complete: () => { this.add3dTiles(); }
-      });
-    }, 1000);
+    global.viewer.entities.add({
+      position: Cartesian3.fromDegrees(109, 19, 10000),
+      billboard: {
+        image: './Assets/rect.png',
+        show: true,
+        horizontalOrigin: HorizontalOrigin.CENTER,
+        verticalOrigin: VerticalOrigin.CENTER,
+        width: 4000,
+        height: 4000
+      }
+    });
+    global.viewer.camera.flyTo({
+      destination: Cartesian3.fromDegrees(109, 19, 1000000)
+    });
+    // setTimeout(() => {
+    //   global.viewer.scene.camera.flyTo({
+    //     destination: initialPosition,
+    //     duration: 4,
+    //     orientation: initialOrientation,
+    //     endTransform: Matrix4.IDENTITY,
+    //     complete: () => { this.add3dTiles(); }
+    //   });
+    // }, 1000);
   }
 
   add3dTiles() {

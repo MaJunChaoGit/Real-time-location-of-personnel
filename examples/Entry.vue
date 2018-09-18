@@ -10,7 +10,11 @@
 import InitScene from 'ex/src/InitScene';
 import RpLayout from 'ex/components/layout/Layout';
 import RpLoading from 'ex/components/functionality/Loading';
-
+import {
+  Cartesian3,
+  HorizontalOrigin,
+  VerticalOrigin
+} from 'source/index.js';
 let initScene = {};
 export default {
   name: 'Entry',
