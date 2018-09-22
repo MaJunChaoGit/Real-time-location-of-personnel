@@ -55,6 +55,7 @@ export default (()=>{
       options.position = _camera.positionWC.clone();
     } else {
       var cartographic = _scene.mapProjection.unproject(_camera.position);
+      cartographic.height = _camera.getViewHeight();
       options.position = _scene.mapProjection.ellipsoid.cartographicToCartesian(cartographic);
     }
 

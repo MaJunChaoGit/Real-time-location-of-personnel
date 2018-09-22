@@ -1,5 +1,6 @@
 import supViewer from 'cesium/Widgets/Viewer/Viewer';
 import Camera from 'source/Scene/Camera';
+import Cartesian3 from 'cesium/Core/Cartesian3';
 
 /* eslint-disable no-undef */
 // 初始化摄像机Symbol
