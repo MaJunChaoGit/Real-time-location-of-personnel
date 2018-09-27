@@ -1,22 +1,17 @@
 import defined from 'cesium/Core/defined';
-import Cartesian3 from 'cesium/Core/Cartesian3';
-import Color from 'cesium/Core/Color';
-import PolylineGeometry from 'cesium/Core/PolylineGeometry';
-import LabelStyle from 'cesium/Scene/LabelStyle';
-import ChangeablePrimitive from 'source/DrawHelper/ChangeablePrimitive';
+import PolygonGeometry from 'cesium/Core/PolygonGeometry';
+import ChangeablePrimitive from './ChangeablePrimitive';
 import VertexFormat from 'cesium/Core/VertexFormat';
 import ScreenSpaceEventHandler from 'cesium/Core/ScreenSpaceEventHandler';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
-import LabelCollection from 'cesium/Scene/LabelCollection';
+
 import DrawHelper from 'source/DrawHelper/DrawHelper';
 import BillboardGroup from 'source/DrawHelper/BillboardGroup';
 
-/* eslint-disable */
-class MeasureDistance extends ChangeablePrimitive {
+class PolygonPrimitive extends ChangeablePrimitive {
   constructor(options) {
     super(options);
-    this.isPolygon = false;
-    this.labels = viewer.scene.primitives.add(new LabelCollection());
+    this.isPolygon = true;
   }
 
   setPositions(positions) {
@@ -27,45 +22,40 @@ class MeasureDistance extends ChangeablePrimitive {
     return this.getAttribute('positions');
   }
 
-  // getType () {
-  //     return "measure";
-  // }
+  getType() {
+    return 'polygon';
+  }
 
   getGeometryInstances() {
-    if (!defined(this.positions) || this.positions.length < 2) {
+    if (!defined(this.positions) || this.positions.length < 3) {
       return;
     }
-    this.labels.removeAll();
-    addDistanceLanel(this.positions, this.labels);
-    let geometry = new PolylineGeometry({
+    let geometry = PolygonGeometry.fromPositions({
       positions: this.positions,
       height: this.height,
-      width: 2,
       vertexFormat: VertexFormat.POSITION_AND_NORMAL,
-      ellipsoid: this.ellipsoid
+      stRotation: this.textureRotationAngle,
+      ellipsoid: this.ellipsoid,
+      granularity: 0.1
     });
     let geometryInstances = this.createGeometryInstance(geometry, this.color);
     return geometryInstances;
   }
   setEditMode(editMode) {
-    if (this._editMode == editMode) {
-      return;
-    }
+    if (this._editMode === editMode) {return;}
     if (editMode) {
       DrawHelper.setEdited(this);
-      let scene = global.viewer.scene;
+      let scene = global.ev.scene;
       let _self = this;
       if (this._markers == null) {
         let markers = new BillboardGroup(scene, undefined, this._primitives);
+        /* eslint-disable */
         function onEdited() {
           _self.executeListeners({name: 'onEdited', positions: _self.positions});
         }
         let handleMarkerChanges = {
           dragHandlers: {
             onDrag: function(index, position) {
-              if (defined(_self.billboards) && index === (_self.positions.length - 1)) {
-                _self.billboards._billboards[0].position = position;
-              }
               _self.positions[index] = position;
               _self._createPrimitive = true;
             },
@@ -81,6 +71,7 @@ class MeasureDistance extends ChangeablePrimitive {
             _self.positions.splice(index, 1);
             _self._createPrimitive = true;
             markers.removeBillboard(index);
+
             onEdited();
           }
         };
@@ -97,6 +88,7 @@ class MeasureDistance extends ChangeablePrimitive {
         markers.setOnTop();
       }
       this._editMode = true;
+
     } else {
       if (this._markers != null) {
         this._markers.remove();
@@ -107,26 +99,5 @@ class MeasureDistance extends ChangeablePrimitive {
     }
   }
 }
-function addDistanceLanel(positions, labels) {
-  let distance = 0, text;
-  for (let i = 1; i < positions.length; ++i) {
-    distance += Cartesian3.distance(positions[i - 1], positions[i]);
-    if (distance > 1000) {
-      text = (distance / 1000).toFixed(2) + 'km ';
-    } else {
-      text = distance.toFixed(2) + 'm ';
-    }
-    labels.add({
-      position: positions[i],
-      text: text,
-      font: '20px 微软雅黑',
-      horizontalOrigin: -1,
-      verticalOrigin: 0,
-      fillColor: Color.AQUAMARINE,
-      outlineColor: Color.BLACK,
-      outlineWidth: 2,
-      style: LabelStyle.FILL_AND_OUTLINE
-    });
-  }
-}
-export default MeasureDistance;
+
+export default PolygonPrimitive;

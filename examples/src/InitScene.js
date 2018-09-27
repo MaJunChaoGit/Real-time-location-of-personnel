@@ -80,7 +80,7 @@ class InitScene {
   }
 
   add3dTiles() {
-    global.viewer.scene.globe.depthTestAgainstTerrain = true;
+    // global.viewer.scene.globe.depthTestAgainstTerrain = true;
     global.viewer.scene.globe.enableLighting = true;
 
     // 加载数据

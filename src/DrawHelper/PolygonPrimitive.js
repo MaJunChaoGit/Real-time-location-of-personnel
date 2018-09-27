@@ -5,8 +5,8 @@ import VertexFormat from 'cesium/Core/VertexFormat';
 import ScreenSpaceEventHandler from 'cesium/Core/ScreenSpaceEventHandler';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
 
-import DrawHelper from 'source/Milstd/DrawHelper';
-import BillboardGroup from 'source/Milstd/BillboardGroup';
+import DrawHelper from 'source/DrawHelper/DrawHelper';
+import BillboardGroup from 'source/DrawHelper/BillboardGroup';
 
 class PolygonPrimitive extends ChangeablePrimitive {
   constructor(options) {

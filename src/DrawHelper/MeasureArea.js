@@ -4,9 +4,9 @@ import Color from 'cesium/Core/Color';
 import VertexFormat from 'cesium/Core/VertexFormat';
 import ScreenSpaceEventHandler from 'cesium/Core/ScreenSpaceEventHandler';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
-import ChangeablePrimitive from 'source/Milstd/ChangeablePrimitive';
-import DrawHelper from 'source/Milstd/DrawHelper';
-import BillboardGroup from 'source/Milstd/BillboardGroup';
+import ChangeablePrimitive from 'source/DrawHelper/ChangeablePrimitive';
+import DrawHelper from 'source/DrawHelper/DrawHelper';
+import BillboardGroup from 'source/DrawHelper/BillboardGroup';
 import LabelCollection from 'cesium/Scene/LabelCollection';
 import LabelStyle from 'cesium/Scene/LabelStyle';
 import Cartographic from 'cesium/Core/Cartographic';
@@ -22,7 +22,7 @@ class MeasureArea extends ChangeablePrimitive {
   constructor(options) {
     super(options);
     this.isPolygon = true;
-    this.labels = global.ev.scene.primitives.add(new LabelCollection());
+    this.labels = global.viewer.scene.primitives.add(new LabelCollection());
   }
 
   setPositions(positions) {
@@ -72,7 +72,7 @@ class MeasureArea extends ChangeablePrimitive {
     }
     if (editMode) {
       DrawHelper.setEdited(this);
-      let scene = global.ev.scene;
+      let scene = global.viewer.scene;
       let _self = this;
 
       if (this._markers == null) {

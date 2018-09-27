@@ -889,6 +889,7 @@ import Workers_createTaskProcessorWorker from 'cesium/Workers/createTaskProcesso
 import Widgets_Navigation_viewerCesiumNavigationMixin from 'source/Widgets/Navigation/viewerCesiumNavigationMixin';
 import Core_Fullscreen from 'source/Core/Fullscreen';
 import Scene_changeSceneMode from 'source/Scene/changeSceneMode';
+import DrawHelper_DrawHelper from 'source/DrawHelper/DrawHelper';
 
 const _shaders = {
   Shaders_AdjustTranslucentFS,
@@ -1785,7 +1786,8 @@ module.exports = {
   createTaskProcessorWorker: Workers_createTaskProcessorWorker,
   viewerCesiumNavigationMixin: Widgets_Navigation_viewerCesiumNavigationMixin,
   FullScreen: Core_Fullscreen,
-  changeSceneMode: Scene_changeSceneMode
+  changeSceneMode: Scene_changeSceneMode,
+  DrawHelper: DrawHelper_DrawHelper
 };
 
 module.exports.default = module.exports;

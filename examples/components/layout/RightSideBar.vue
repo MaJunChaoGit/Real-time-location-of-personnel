@@ -3,6 +3,8 @@
     <div class="rp-right-side__item rp-right-side__navigation" id="rp-outring"></div>
     <div class="rp-right-side__item">
       <rp-button-group direction="column">
+        <rp-button round icon="rp-icon-scenemode" @click="measureDistance"></rp-button>
+        <rp-button round icon="rp-icon-scenemode" @click="measureArea"></rp-button>
         <rp-button round icon="rp-icon-fullscreen" @click="screenHandle" v-if="buttonShowHandle()"></rp-button>
         <rp-button round icon="rp-icon-scenemode" @click="sceneModeHandle"></rp-button>
       </rp-button-group>
@@ -14,7 +16,8 @@ import RpButtonGroup from './ButtonGroup';
 import RpButton from '../functionality/Button';
 import {
   Fullscreen,
-  changeSceneMode
+  changeSceneMode,
+  DrawHelper
 } from 'source/index';
 
 export default {
@@ -31,6 +34,12 @@ export default {
     },
     sceneModeHandle() {
       changeSceneMode(global.viewer.scene);
+    },
+    measureDistance() {
+      new DrawHelper(global.viewer.scene).startMeasureDistance();
+    },
+    measureArea() {
+      new DrawHelper(global.viewer.scene).startMeasureArea();
     },
     buttonShowHandle() {
       if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { // 判断iPhone|iPad|iPod|iOS

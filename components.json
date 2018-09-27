@@ -3,5 +3,6 @@
   "Viewer": "'source/Widgets/Viewer/Viewer'",
   "Camera": "'source/Scene/Camera'",
   "FullScreen": "'source/Core/Fullscreen'",
-  "changeSceneMode": "'source/Scene/changeSceneMode'"
+  "changeSceneMode": "'source/Scene/changeSceneMode'",
+  "DrawHelper": "'source/DrawHelper/DrawHelper'"
 }
