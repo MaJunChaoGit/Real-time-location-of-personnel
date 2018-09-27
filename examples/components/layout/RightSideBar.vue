@@ -33,9 +33,13 @@ export default {
       changeSceneMode(global.viewer.scene);
     },
     buttonShowHandle() {
-      let userAgent = navigator.userAgent;
-      alert(userAgent);
-      return userAgent.indexOf('iPhone') > -1 || userAgent.indexOf('Mac');
+      if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { //判断iPhone|iPad|iPod|iOS
+        return false;
+      } else if (/(Android)/i.test(navigator.userAgent)) {  //判断Android
+        return true;
+      } else {
+        return true;
+      };
     }
   }
 };

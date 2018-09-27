@@ -1,4 +1,4 @@
-docker run --detach \
+锘縟ocker run --detach \
     --name staticserver \
     --publish 32768:80 \
     -v /data/staticserver/data:/usr/share/nginx/html:rw \
@@ -9,23 +9,12 @@ docker run --detach \
 
 
 docker run --name mywebgis -p 80:80 -itd d26874b83854
-不知道15号还能完成
-大部分完成了
-明天跟鑫鑫调接口
-增加框选功能\
-老婆新家爬虫功能
-效率有点低aa
-他妹的有冲突了
-又加班了
-找不到人哦
 
-=======又是一周
 
-明天调试一下军标显示隐藏
 docker run --name mywebgis -p 80:80 -itd 20bc6b90946d
 
 
-
+閲嶆柊寤虹珛涓�涓猟ocker闀滃儚
 var viewer = new Cesium.Viewer('cesiumContainer', {
     showRenderLoopErrors : false,
     shouldAnimate : true

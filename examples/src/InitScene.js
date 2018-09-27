@@ -59,30 +59,24 @@ class InitScene {
     let initialPosition = Cartesian3.fromDegrees(-74.01881302800248, 40.69114333714821, 753);
     /* eslint-disable new-cap */
     let initialOrientation = new HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
-    // 定位过去
-    global.viewer.entities.add({
-      position: Cartesian3.fromDegrees(109, 19, 10000),
-      billboard: {
-        image: './Assets/rect.png',
-        show: true,
-        horizontalOrigin: HorizontalOrigin.CENTER,
-        verticalOrigin: VerticalOrigin.CENTER,
-        width: 4000,
-        height: 4000
-      }
-    });
-    global.viewer.camera.flyTo({
-      destination: Cartesian3.fromDegrees(109, 19, 1000000)
-    });
-    // setTimeout(() => {
-    //   global.viewer.scene.camera.flyTo({
-    //     destination: initialPosition,
-    //     duration: 4,
-    //     orientation: initialOrientation,
-    //     endTransform: Matrix4.IDENTITY,
-    //     complete: () => { this.add3dTiles(); }
-    //   });
-    // }, 1000);
+
+    setTimeout(() => {
+      global.viewer.scene.camera.fly({
+        destination: initialPosition,
+        duration: 4,
+        complete: () => {
+          global.viewer.scene.camera.flyTo({
+            destination: initialPosition,
+            duration: 2,
+            orientation: initialOrientation,
+            endTransform: Matrix4.IDENTITY,
+            complete: () => {
+              this.add3dTiles();
+            }
+          });
+        }
+      });
+    }, 1000);
   }
 
   add3dTiles() {
