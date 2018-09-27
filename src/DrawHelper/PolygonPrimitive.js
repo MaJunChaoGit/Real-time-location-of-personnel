@@ -42,16 +42,19 @@ class PolygonPrimitive extends ChangeablePrimitive {
     return geometryInstances;
   }
   setEditMode(editMode) {
-    if (this._editMode == editMode) {return;}
+    if (this._editMode === editMode) {return;}
     if (editMode) {
       DrawHelper.setEdited(this);
       let scene = global.ev.scene;
       let _self = this;
       if (this._markers == null) {
         let markers = new BillboardGroup(scene, undefined, this._primitives);
+
+        /* eslint-disable*/
         function onEdited() {
           _self.executeListeners({name: 'onEdited', positions: _self.positions});
         }
+
         let handleMarkerChanges = {
           dragHandlers: {
             onDrag: function(index, position) {
