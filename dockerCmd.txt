@@ -12,7 +12,7 @@ docker run --name mywebgis -p 80:80 -itd d26874b83854
 
 
 docker run --name mywebgis -p 80:80 -itd 20bc6b90946d
-
+试试
 
 重新建立一个docker镜像
 var viewer = new Cesium.Viewer('cesiumContainer', {
