@@ -18,7 +18,7 @@ class ChangeablePrimitive {
     this.asynchronous = defaultValue(options.asynchronous, false);
     this.show = defaultValue(options.show, true);
     this.debugShowBoundingVolume = defaultValue(options.debugShowBoundingVolume, false);
-    this.color = defaultValue(options.color, 'rgba(124, 252, 0, 0.6)');
+    this.color = defaultValue(options.color, 'rgba(253, 128, 69, 0.6)');
     this.appearance = defaultValue(options.appearance, new PerInstanceColorAppearance());
     this.rotation = defaultValue(options.rotation, 0);
     optionsFunction.fillOptions(this, options);

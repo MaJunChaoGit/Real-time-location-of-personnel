@@ -3,10 +3,10 @@
     <div class="rp-right-side__item rp-right-side__navigation" id="rp-outring"></div>
     <div class="rp-right-side__item">
       <rp-button-group direction="column">
-        <rp-button round icon="rp-icon-scenemode" @click="measureDistance"></rp-button>
-        <rp-button round icon="rp-icon-scenemode" @click="measureArea"></rp-button>
-        <rp-button round icon="rp-icon-fullscreen" @click="screenHandle" v-if="buttonShowHandle()"></rp-button>
-        <rp-button round icon="rp-icon-scenemode" @click="sceneModeHandle"></rp-button>
+        <rp-button round icon="rp-icon--custom__distance" @click="measureDistance"></rp-button>
+        <rp-button round icon="rp-icon--custom__area" @click="measureArea"></rp-button>
+        <rp-button round icon="rp-icon--custom__fullscreen" @click="screenHandle" v-if="buttonShowHandle()"></rp-button>
+        <rp-button round icon="rp-icon--custom__scenemode" @click="sceneModeHandle"></rp-button>
       </rp-button-group>
     </div>
   </div>

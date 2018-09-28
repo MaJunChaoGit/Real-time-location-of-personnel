@@ -46,13 +46,13 @@ class MeasureArea extends ChangeablePrimitive {
     this.labels.add({
       position: this.positions[this.positions.length - 1],
       text: '总面积:' + text,
-      font: '20px 黑体',
+      font: '15px 微软雅黑',
       horizontalOrigin: -1,
       verticalOrigin: 0,
-      fillColor: Color.AQUAMARINE,
-      outlineColor: Color.BLACK,
+      fillColor: Color.fromCssColorString('#ff6319'),
+      style: LabelStyle.FILL_AND_OUTLINE,
+      outlineColor: Color.LEMONCHIFFON,
       outlineWidth: 2,
-      style: LabelStyle.FILL_AND_OUTLINE
     });
     let geometry = PolygonGeometry.fromPositions({
       positions: this.positions,
