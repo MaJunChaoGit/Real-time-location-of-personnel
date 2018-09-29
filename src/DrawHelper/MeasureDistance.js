@@ -1,22 +1,23 @@
 import defined from 'cesium/Core/defined';
 import Cartesian3 from 'cesium/Core/Cartesian3';
+import Cartesian2 from 'cesium/Core/Cartesian2';
 import Color from 'cesium/Core/Color';
 import PolylineGeometry from 'cesium/Core/PolylineGeometry';
 import LabelStyle from 'cesium/Scene/LabelStyle';
-import ChangeablePrimitive from 'source/Milstd/ChangeablePrimitive';
+import ChangeablePrimitive from 'source/DrawHelper/ChangeablePrimitive';
 import VertexFormat from 'cesium/Core/VertexFormat';
 import ScreenSpaceEventHandler from 'cesium/Core/ScreenSpaceEventHandler';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
 import LabelCollection from 'cesium/Scene/LabelCollection';
-import DrawHelper from 'source/Milstd/DrawHelper';
-import BillboardGroup from 'source/Milstd/BillboardGroup';
+import DrawHelper from 'source/DrawHelper/DrawHelper';
+import BillboardGroup from 'source/DrawHelper/BillboardGroup';
 
 /* eslint-disable */
 class MeasureDistance extends ChangeablePrimitive {
   constructor(options) {
     super(options);
     this.isPolygon = false;
-    this.labels = ev.scene.primitives.add(new LabelCollection());
+    this.labels = viewer.scene.primitives.add(new LabelCollection());
   }
 
   setPositions(positions) {
@@ -53,7 +54,7 @@ class MeasureDistance extends ChangeablePrimitive {
     }
     if (editMode) {
       DrawHelper.setEdited(this);
-      let scene = global.ev.scene;
+      let scene = global.viewer.scene;
       let _self = this;
       if (this._markers == null) {
         let markers = new BillboardGroup(scene, undefined, this._primitives);
@@ -112,20 +113,20 @@ function addDistanceLanel(positions, labels) {
   for (let i = 1; i < positions.length; ++i) {
     distance += Cartesian3.distance(positions[i - 1], positions[i]);
     if (distance > 1000) {
-      text = (distance / 1000).toFixed(2) + 'km ';
+      text = (distance / 1000).toFixed(2) + '千米 ';
     } else {
-      text = distance.toFixed(2) + 'm ';
+      text = distance.toFixed(2) + '米 ';
     }
     labels.add({
       position: positions[i],
       text: text,
-      font: '20px 微软雅黑',
+      font: '15px 微软雅黑',
       horizontalOrigin: -1,
       verticalOrigin: 0,
-      fillColor: Color.AQUAMARINE,
-      outlineColor: Color.BLACK,
+      fillColor: Color.fromCssColorString('#c54204'),
+      style: LabelStyle.FILL_AND_OUTLINE,
+      outlineColor: Color.IVORY,
       outlineWidth: 2,
-      style: LabelStyle.FILL_AND_OUTLINE
     });
   }
 }

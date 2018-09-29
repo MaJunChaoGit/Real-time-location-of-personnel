@@ -165,20 +165,27 @@
 
 .rp-icon-loading:before { content: "\e61e"; }
 
-.rp-icon-scenemode { 
-  position: relative;
-  background: url("./fonts/scenemode.png") no-repeat;
-  width: inherit;
-  height: inherit;
-  background-size: 100% 100%;
+.rp-icon--custom__scenemode { 
+  background: url("./images/scenemode.png") no-repeat;
 }
 
-.rp-icon-fullscreen { 
-  position: relative;
-  background: url("./fonts/fullscreen.png") no-repeat;
-  width: inherit;
-  height: inherit;
-  background-size: 100% 100%;
+.rp-icon--custom__fullscreen { 
+  background: url("./images/fullscreen.png") no-repeat;
+}
+
+.rp-icon--custom__distance { 
+  background: url("./images/getDis.png") no-repeat;
+}
+
+.rp-icon--custom__area { 
+  background: url("./images/getArea.png") no-repeat;
+}
+
+[class^="rp-icon--custom"] {
+  position: $--custom-icon-position;
+  width: $--custom-icon-width;
+  height: $--custom-icon-height;
+  background-size: $--custom-icon-background-size;
 }
 
 .rp-icon-loading {

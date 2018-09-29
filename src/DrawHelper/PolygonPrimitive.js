@@ -5,8 +5,8 @@ import VertexFormat from 'cesium/Core/VertexFormat';
 import ScreenSpaceEventHandler from 'cesium/Core/ScreenSpaceEventHandler';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
 
-import DrawHelper from 'source/Milstd/DrawHelper';
-import BillboardGroup from 'source/Milstd/BillboardGroup';
+import DrawHelper from 'source/DrawHelper/DrawHelper';
+import BillboardGroup from 'source/DrawHelper/BillboardGroup';
 
 class PolygonPrimitive extends ChangeablePrimitive {
   constructor(options) {
@@ -42,16 +42,19 @@ class PolygonPrimitive extends ChangeablePrimitive {
     return geometryInstances;
   }
   setEditMode(editMode) {
-    if (this._editMode == editMode) {return;}
+    if (this._editMode === editMode) {return;}
     if (editMode) {
       DrawHelper.setEdited(this);
       let scene = global.ev.scene;
       let _self = this;
       if (this._markers == null) {
         let markers = new BillboardGroup(scene, undefined, this._primitives);
+
+        /* eslint-disable*/
         function onEdited() {
           _self.executeListeners({name: 'onEdited', positions: _self.positions});
         }
+
         let handleMarkerChanges = {
           dragHandlers: {
             onDrag: function(index, position) {

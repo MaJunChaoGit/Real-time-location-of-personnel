@@ -8,7 +8,7 @@ import ColorGeometryInstanceAttribute from 'cesium/Core/ColorGeometryInstanceAtt
 import PerInstanceColorAppearance from 'cesium/Scene/PerInstanceColorAppearance';
 import optionsFunction from './optionsFunction';
 import Color from 'cesium/Core/Color';
-import localStorage from 'ex/assets/utils/LocalStorage';
+// import localStorage from 'ex/assets/utils/LocalStorage';
 
 class ChangeablePrimitive {
   constructor(options) {
@@ -18,7 +18,7 @@ class ChangeablePrimitive {
     this.asynchronous = defaultValue(options.asynchronous, false);
     this.show = defaultValue(options.show, true);
     this.debugShowBoundingVolume = defaultValue(options.debugShowBoundingVolume, false);
-    this.color = defaultValue(options.color, 'rgba(124, 252, 0, 0.6)');
+    this.color = defaultValue(options.color, 'rgba(253, 128, 69, 0.6)');
     this.appearance = defaultValue(options.appearance, new PerInstanceColorAppearance());
     this.rotation = defaultValue(options.rotation, 0);
     optionsFunction.fillOptions(this, options);
@@ -38,9 +38,9 @@ class ChangeablePrimitive {
     if (name === 'inText') {
       let url;
       if (value === '') {
-        url = localStorage.get('apiUrl').renderDataUrl + this.code;
+        // url = localStorage.get('apiUrl').renderDataUrl + this.code;
       } else {
-        url = localStorage.get('apiUrl').textRenderDataUrl + this.code + '/' + value;
+        // url = localStorage.get('apiUrl').textRenderDataUrl + this.code + '/' + value;
       }
       let _self = this;
       let ajax = new XMLHttpRequest();

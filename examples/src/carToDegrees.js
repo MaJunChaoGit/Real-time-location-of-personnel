@@ -3,7 +3,6 @@ import defined from 'cesium/Core/defined';
 import Math from 'cesium/Core/Math';
 
 export default function carToDegrees(cartesian) {
-
   if (!defined(cartesian)) {
     throw new Error('需要传入一个笛卡尔坐标');
   }
