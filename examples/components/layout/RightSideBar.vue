@@ -35,24 +35,12 @@ export default {
     },
     sceneModeHandle() {
       changeSceneMode(global.viewer.scene);
-<<<<<<< HEAD
-=======
     },
     measureDistance() {
       new DrawHelper(global.viewer.scene).startMeasureDistance();
     },
     measureArea() {
       new DrawHelper(global.viewer.scene).startMeasureArea();
-    },
-    buttonShowHandle() {
-      if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { // 判断iPhone|iPad|iPod|iOS
-        return false;
-      } else if (/(Android)/i.test(navigator.userAgent)) {  // 判断Android
-        return true;
-      } else {
-        return true;
-      }
->>>>>>> 660f6fc2b6a1c67970341f36a2df6b0b57106a96
     }
   }
 };
