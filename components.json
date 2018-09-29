@@ -4,5 +4,7 @@
   "Camera": "'source/Scene/Camera'",
   "FullScreen": "'source/Core/Fullscreen'",
   "changeSceneMode": "'source/Scene/changeSceneMode'",
-  "DrawHelper": "'source/DrawHelper/DrawHelper'"
+  "DrawHelper": "'source/DrawHelper/DrawHelper'",
+  "NameOverlay": "'source/Core/NameOverlay'",
+  "EventHelper": "'source/Core/EventHelper'"
 }

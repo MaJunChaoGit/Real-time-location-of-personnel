@@ -7,7 +7,7 @@ class EventHelper {
   }
 
   setEvent(callback, eventType) {
-    this.handler.screenSpaceEventHandler.setInputAction(callback, eventType);
+    this.handler.setInputAction(callback, eventType);
   }
 
   getEvent(eventType) {

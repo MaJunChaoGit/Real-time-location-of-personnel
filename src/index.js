@@ -78,7 +78,7 @@ import Core_EllipsoidTangentPlane from 'cesium/Core/EllipsoidTangentPlane';
 import Core_EllipsoidTerrainProvider from 'cesium/Core/EllipsoidTerrainProvider';
 import Core_EncodedCartesian3 from 'cesium/Core/EncodedCartesian3';
 import Core_Event from 'cesium/Core/Event';
-import Core_EventHelper from 'cesium/Core/EventHelper';
+import Core_EventHelper from 'source/Core/EventHelper';
 import Core_ExtrapolationType from 'cesium/Core/ExtrapolationType';
 import Core_FeatureDetection from 'cesium/Core/FeatureDetection';
 import Core_formatError from 'cesium/Core/formatError';
@@ -890,6 +890,7 @@ import Widgets_Navigation_viewerCesiumNavigationMixin from 'source/Widgets/Navig
 import Core_Fullscreen from 'source/Core/Fullscreen';
 import Scene_changeSceneMode from 'source/Scene/changeSceneMode';
 import DrawHelper_DrawHelper from 'source/DrawHelper/DrawHelper';
+import Core_NameOverlay from 'source/Core/NameOverlay';
 
 const _shaders = {
   Shaders_AdjustTranslucentFS,
@@ -1787,7 +1788,8 @@ module.exports = {
   viewerCesiumNavigationMixin: Widgets_Navigation_viewerCesiumNavigationMixin,
   FullScreen: Core_Fullscreen,
   changeSceneMode: Scene_changeSceneMode,
-  DrawHelper: DrawHelper_DrawHelper
+  DrawHelper: DrawHelper_DrawHelper,
+  NameOverlay: Core_NameOverlay
 };
 
 module.exports.default = module.exports;

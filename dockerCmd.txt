@@ -8,7 +8,7 @@
     -d nginx
 
 
-docker run --name mywebgis -p 80:80 -itd d26874b83854
+docker run --name mywebgis -p 80:80 -itd b97d1ba23d20
 
 
 docker run --name mywebgis -p 80:80 -itd 20bc6b90946d

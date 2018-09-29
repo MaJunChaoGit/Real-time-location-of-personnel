@@ -1,20 +1,17 @@
 class NameOverlay {
-  constuctor(className, style, viewer) {
+  constructor(className, viewer) {
     this.viewer = viewer;
     this.className = className;
-    this.style = style;
 
     this.nameOverlay = this._createElement();
 
     this.viewer.container.appendChild(this.nameOverlay);
+
+    this.nameOverlay.className = this.className;
+
   }
   _createElement() {
     let nameOverlay = document.createElement('div');
-
-    nameOverlay.className = this.className;
-
-    nameOverlay.style = this.style;
-
     return nameOverlay;
   }
   show(isShow) {
@@ -23,6 +20,9 @@ class NameOverlay {
   setPostion(movement) {
     this.nameOverlay.style.bottom = this.viewer.canvas.clientHeight - movement.endPosition.y + 'px';
     this.nameOverlay.style.left = movement.endPosition.x + 'px';
+  }
+  text(text) {
+    this.nameOverlay.textContent = text;
   }
 }
 
