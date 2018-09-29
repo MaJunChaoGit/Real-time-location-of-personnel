@@ -13,3 +13,13 @@ export const getBreakPoints = function() {
 export const getClientWidth = function() {
   return document.body.clientWidth;
 };
+
+export const getDeviceType = function() {
+  if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { // 判断iPhone|iPad|iPod|iOS
+    return 'ios';
+  } else if (/(Android)/i.test(navigator.userAgent)) { // 判断Android
+    return 'and';
+  } else {
+    return 'else';
+  }
+};
