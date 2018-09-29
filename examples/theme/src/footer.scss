@@ -2,7 +2,7 @@
 @import "common/var";
 
 @include b(footer) {
-  position: fixed;
+  position: absolute;
   box-sizing: inherit;
   bottom: 0;
   right: 0;
@@ -12,32 +12,32 @@
   @include res(ls) {
     width: $--footer-container-ls-width;
     height: $--footer-container-ls-height;
-    line-height: $--footer-container-ls-height;
+    line-height: $--footer-container-ls-lineheight;
   }
 
   @include res(xs) {
     width: $--footer-container-xs-width;
     height: $--footer-container-xs-height;
-    line-height: $--footer-container-xs-height;
+    line-height: $--footer-container-xs-lineheight;
   }
   @include res(sm) {
     width: $--footer-container-sm-width;
     height: $--footer-container-sm-height;
-    line-height: $--footer-container-sm-height;
+    line-height: $--footer-container-sm-lineheight;
   }
   @include res(md) {
     width: $--footer-container-md-width;
     height: $--footer-container-md-height;
-    line-height: $--footer-container-md-height;
+    line-height: $--footer-container-md-lineheight;
   }
   @include res(lg) {
     width: $--footer-container-lg-width;
     height: $--footer-container-lg-height;
-    line-height: $--footer-container-lg-height;
+    line-height: $--footer-container-lg-lineheight;
   }
   @include res(xl) {
     width: $--footer-container-xl-width;
     height: $--footer-container-xl-height;
-    line-height: $--footer-container-xl-height;
+    line-height: $--footer-container-xl-lineheight;
   }
 }

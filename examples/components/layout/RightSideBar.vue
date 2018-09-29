@@ -5,8 +5,8 @@
       <rp-button-group direction="column">
         <rp-button round icon="rp-icon--custom__distance" @click="measureDistance"></rp-button>
         <rp-button round icon="rp-icon--custom__area" @click="measureArea"></rp-button>
-        <rp-button round icon="rp-icon-fullscreen" @click="screenHandle" v-if="getDeviceType() !== 'ios'"></rp-button>
-        <rp-button round icon="rp-icon-scenemode" @click="sceneModeHandle"></rp-button>
+        <rp-button round icon="rp-icon--custom__fullscreen" @click="screenHandle" v-if="deviceType() !== 'ios'"></rp-button>
+        <rp-button round icon="rp-icon--custom__scenemode" @click="sceneModeHandle"></rp-button>
       </rp-button-group>
     </div>
   </div>
@@ -41,6 +41,9 @@ export default {
     },
     measureArea() {
       new DrawHelper(global.viewer.scene).startMeasureArea();
+    },
+    deviceType() {
+      return getDeviceType();
     }
   }
 };
