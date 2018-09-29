@@ -22,7 +22,6 @@ import layerGroupHandle from './layerGroupHandle';
 import MeasureArea from './MeasureArea';
 import MeasureDistance from './MeasureDistance';
 import carToDegrees from 'ex/src/carToDegrees';
-
 const ellipsoid = Ellipsoid.WGS84;
 
 const defaultPolylineOptions = {

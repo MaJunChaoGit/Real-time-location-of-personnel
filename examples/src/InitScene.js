@@ -7,10 +7,7 @@ import {
   Matrix4,
   Cesium3DTileset,
   Cesium3DTileStyle,
-  Color,
-  HorizontalOrigin,
-  VerticalOrigin,
-  Math
+  Color
 } from 'source/index';
 
 import api from '../api/index';
@@ -65,13 +62,13 @@ class InitScene {
         destination: initialPosition,
         duration: 4,
         complete: () => {
+          this.add3dTiles();
           global.viewer.scene.camera.flyTo({
             destination: initialPosition,
             duration: 2,
             orientation: initialOrientation,
             endTransform: Matrix4.IDENTITY,
             complete: () => {
-              this.add3dTiles();
             }
           });
         }
