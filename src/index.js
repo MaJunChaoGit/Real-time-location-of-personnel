@@ -891,6 +891,7 @@ import Core_Fullscreen from 'source/Core/Fullscreen';
 import Scene_changeSceneMode from 'source/Scene/changeSceneMode';
 import DrawHelper_DrawHelper from 'source/DrawHelper/DrawHelper';
 import Core_NameOverlay from 'source/Core/NameOverlay';
+import Core_InforBox from 'source/Core/InforBox';
 
 const _shaders = {
   Shaders_AdjustTranslucentFS,
@@ -1789,7 +1790,8 @@ module.exports = {
   FullScreen: Core_Fullscreen,
   changeSceneMode: Scene_changeSceneMode,
   DrawHelper: DrawHelper_DrawHelper,
-  NameOverlay: Core_NameOverlay
+  NameOverlay: Core_NameOverlay,
+  InforBox: Core_InforBox
 };
 
 module.exports.default = module.exports;

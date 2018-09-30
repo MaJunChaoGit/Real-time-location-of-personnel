@@ -6,5 +6,6 @@
   "changeSceneMode": "'source/Scene/changeSceneMode'",
   "DrawHelper": "'source/DrawHelper/DrawHelper'",
   "NameOverlay": "'source/Core/NameOverlay'",
-  "EventHelper": "'source/Core/EventHelper'"
+  "EventHelper": "'source/Core/EventHelper'",
+  "InforBox": "'source/Core/InforBox'"
 }
