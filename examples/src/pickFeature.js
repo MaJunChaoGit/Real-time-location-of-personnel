@@ -91,8 +91,7 @@ class PickedFeature {
 
     let featureName = pickedFeature.getProperty('name');
     self.selectedEntity.name = featureName;
-    self.selectedEntity.description = 'Loading <div class="el-loding"></div>';
-    self.viewer.selectedEntity = self.selectedEntity;
+    global.viewer.selectedEntity = self.selectedEntity;
     self.selectedEntity.description = '<table class="rp-infobox"><tbody>' +
                                       '<tr><th>BIN</th><td>' + pickedFeature.getProperty('BIN') + '</td></tr>' +
                                       '<tr><th>DOITT ID</th><td>' + pickedFeature.getProperty('DOITT_ID') + '</td></tr>' +

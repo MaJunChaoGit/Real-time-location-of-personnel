@@ -8,7 +8,10 @@
   left: 0;
   padding: 4px;
   color: white;
-  background-color: black;
+  border: 1.7px solid rgba(20,62,141,0.7); 
+  box-shadow: 2px 2px 7px rgba(39,39,39,0.95); 
+  border-radius: 4px; 
+  background:rgba(20,62,141,0.4) url(./images/grid.png) 0 0 no-repeat;
 }
 @include b(infobox) {
   position: fixed;
