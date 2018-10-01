@@ -11,7 +11,7 @@ import {
 } from 'source/index';
 
 import api from '../api/index';
-import PickFeature from './PickFeature.js';
+import PickedFeature from './PickedFeature.js';
 
 class InitScene {
 
@@ -94,7 +94,7 @@ class InitScene {
     });
 
     global.viewer.scene.primitives.add(tileset);
-    let feature = new PickFeature(global.viewer);
+    let feature = new PickedFeature(global.viewer);
   }
 
 }
