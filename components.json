@@ -7,5 +7,5 @@
   "DrawHelper": "'source/DrawHelper/DrawHelper'",
   "NameOverlay": "'source/Core/NameOverlay'",
   "EventHelper": "'source/Core/EventHelper'",
-  "InforBox": "'source/Core/InforBox'"
+  "InfoBox": "'source/Core/InfoBox'"
 }

@@ -1,7 +1,7 @@
 class NameOverlay {
   constructor(className, viewer) {
     this.viewer = viewer;
-    
+
     this.className = className;
 
     this.nameOverlay = this._createElement();

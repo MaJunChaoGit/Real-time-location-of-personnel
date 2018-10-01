@@ -1,6 +1,6 @@
 import NameOverlay from 'source/Core/NameOverlay';
 import EventHelper from 'source/Core/EventHelper';
-import InforBox from 'source/Core/InforBox';
+import InfoBox from 'source/Core/InfoBox';
 import defined from 'cesium/Core/defined';
 import Color from 'cesium/Core/Color';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
@@ -19,8 +19,8 @@ class PickedFeature {
       feature: undefined,
       originalColor: new Color()
     };
-    this.inforBox = new InforBox('rp-inforbox', 'rp-inforbox');
-    window.info = this.inforBox;
+    this.infoBox = new InfoBox(document.querySelector('.rp-infobox__container'));
+    window.info = this.infoBox;
     this.selectedEntity = new Entity();
     this.nameOverlay = new NameOverlay('rp-nameOverlay', global.viewer);
     this.eventHelper = new EventHelper(global.viewer);
@@ -91,20 +91,9 @@ class PickedFeature {
     }
 
     pickedFeature.color = Color.LIME;
-    let featureName = pickedFeature.getProperty('name');
-    // console.log(pickedFeature.getPropertyNames());
-    // self.selectedEntity.name = featureName;
-    // global.viewer.selectedEntity = self.selectedEntity;
-    self.inforBox.setFeature(pickedFeature);
-    // self.selectedEntity.description = '<table class="rp-infobox"><tbody>' +
-    //                                   '<tr><th>BIN</th><td>' + pickedFeature.getProperty('BIN') + '</td></tr>' +
-    //                                   '<tr><th>DOITT ID</th><td>' + pickedFeature.getProperty('DOITT_ID') + '</td></tr>' +
-    //                                   '<tr><th>SOURCE ID</th><td>' + pickedFeature.getProperty('SOURCE_ID') + '</td></tr>' +
-    //                                   '<tr><th>Longitude</th><td>' + pickedFeature.getProperty('longitude') + '</td></tr>' +
-    //                                   '<tr><th>Latitude</th><td>' + pickedFeature.getProperty('latitude') + '</td></tr>' +
-    //                                   '<tr><th>Height</th><td>' + pickedFeature.getProperty('height') + '</td></tr>' +
-    //                                   '<tr><th>Terrain Height (Ellipsoid)</th><td>' + pickedFeature.getProperty('TerrainHeight') + '</td></tr>' +
-    //                                   '</tbody></table>';
+
+    self.infoBox.setFeature(pickedFeature, pickedFeature.getPropertyNames());
+    self.infoBox.show(true);
   }
 }
 export default PickedFeature;
