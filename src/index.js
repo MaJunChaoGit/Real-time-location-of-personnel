@@ -891,6 +891,7 @@ import Core_Fullscreen from 'source/Core/Fullscreen';
 import Scene_changeSceneMode from 'source/Scene/changeSceneMode';
 import DrawHelper_DrawHelper from 'source/DrawHelper/DrawHelper';
 import Core_NameOverlay from 'source/Core/NameOverlay';
+import DrawHelper_CirclePrimitive from 'source/DrawHelper/CirclePrimitive';
 
 const _shaders = {
   Shaders_AdjustTranslucentFS,
@@ -1789,7 +1790,8 @@ module.exports = {
   FullScreen: Core_Fullscreen,
   changeSceneMode: Scene_changeSceneMode,
   DrawHelper: DrawHelper_DrawHelper,
-  NameOverlay: Core_NameOverlay
+  NameOverlay: Core_NameOverlay,
+  CirclePrimitive: DrawHelper_CirclePrimitive
 };
 
 module.exports.default = module.exports;

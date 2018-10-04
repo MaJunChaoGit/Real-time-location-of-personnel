@@ -8,7 +8,6 @@ import ColorGeometryInstanceAttribute from 'cesium/Core/ColorGeometryInstanceAtt
 import PerInstanceColorAppearance from 'cesium/Scene/PerInstanceColorAppearance';
 import optionsFunction from './optionsFunction';
 import Color from 'cesium/Core/Color';
-// import localStorage from 'ex/assets/utils/LocalStorage';
 
 class ChangeablePrimitive {
   constructor(options) {
@@ -19,7 +18,15 @@ class ChangeablePrimitive {
     this.show = defaultValue(options.show, true);
     this.debugShowBoundingVolume = defaultValue(options.debugShowBoundingVolume, false);
     this.color = defaultValue(options.color, 'rgba(253, 128, 69, 0.6)');
-    this.appearance = defaultValue(options.appearance, new PerInstanceColorAppearance());
+    this.appearance = defaultValue(options.appearance, new PerInstanceColorAppearance({
+      flat: true,
+      renderState: {
+        depthTest: {
+          enabled: true
+        },
+        lineWidth: 1.0
+      }
+    }));
     this.rotation = defaultValue(options.rotation, 0);
     optionsFunction.fillOptions(this, options);
 
@@ -32,7 +39,6 @@ class ChangeablePrimitive {
     this._outlinePolygon = undefined;
     this._appendPrimitive = undefined;
   }
-
   setAttribute(name, value) {
     this[name] = value;
     if (name === 'inText') {
@@ -102,6 +108,9 @@ class ChangeablePrimitive {
           appearance: this.appearance,
           asynchronous: this.asynchronous
         });
+      }
+      if (this.getOutlineAppearance) {
+
       }
     }
     this._primitive.update(context, frameState, commandList);

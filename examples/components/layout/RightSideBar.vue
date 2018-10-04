@@ -18,7 +18,8 @@ import { getDeviceType } from '../../utils/dom';
 import {
   Fullscreen,
   changeSceneMode,
-  DrawHelper
+  DrawHelper,
+  CirclePrimitive
 } from 'source/index';
 
 export default {
@@ -37,7 +38,29 @@ export default {
       changeSceneMode(global.viewer.scene);
     },
     measureDistance() {
-      new DrawHelper(global.viewer.scene).startMeasureDistance();
+    new DrawHelper(global.viewer.scene).startMeasureDistance();
+    // new DrawHelper(global.viewer.scene).startDrawingMarker({}, function(position, primitive) {
+        // primitive.removeAll();
+    // });
+
+      // let options = {};
+      // options.center = {
+      //   x: 1333605.1532864072,
+      //   y: -4654559.234664471,
+      //   z: 4137851.4716961407
+      // };
+      // options.radius = 1000;
+      // options.asynchronous = false;
+      // window.abc = new CirclePrimitive(options);
+      // let primitives = viewer.scene.primitives;
+      // primitives.add(window.abc);
+      // primitives.remove(window.abc);
+
+
+      // window.circle = new DrawHelper(global.viewer.scene).startDrawingCircle({}, function(center, radius, primitive) {
+      //   let primitives = viewer.scene.primitives;
+      //   primitives.remove(primitive);
+      // });
     },
     measureArea() {
       new DrawHelper(global.viewer.scene).startMeasureArea();
