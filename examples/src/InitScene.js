@@ -94,7 +94,7 @@ class InitScene {
     });
 
     global.viewer.scene.primitives.add(tileset);
-    // let feature = new PickedFeature(global.viewer);
+    let feature = new PickedFeature(global.viewer);
   }
 
 }
