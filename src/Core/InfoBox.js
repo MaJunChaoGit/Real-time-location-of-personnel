@@ -23,7 +23,7 @@ class InfoBox {
     };
     this.observe(this.feature);
     this.createTable();
-    this.defineInfoBoxReactive();
+    // this.defineInfoBoxReactive();
   }
   /**
    * 控制infoBox的显示或者隐藏
@@ -67,21 +67,33 @@ class InfoBox {
    * @DateTime 2018-10-08
    * @version  1.0.0
    * @param    {Object}   obj   需要劫持的对象
-   * @param    {String}   key   需要劫持的字段
+   * @param    {String}   prop   需要劫持的字段
    * @param    {String}   value 需要被修改的值
    */
-  defineReactive(obj, key, value) {
+  defineReactive(obj, prop, value) {
     let that = this;
-    Object.defineProperty(obj, key, {
+    Object.defineProperty(obj, prop, {
       enumerable: true,
       configurable: true,
       get() {
-        return obj[key];
+        return obj[prop];
       },
       set(newValue) {
         if (newValue !== value) {
+          // 对设置的值进行格式化
+          newValue = that.toFixed(prop, newValue);
+          // 如果没有创建此行数据，那么对table进行插入此行数据操作
+          if (!document.querySelector('.rp-infobox__container table #' + prop)) {
+            let tr = document.createElement('tr');
+            tr.setAttribute('id', prop);
+            that.table.appendChild(tr);
+            tr.innerHTML = '<th>' + prop + '</th><td>' + (newValue ? newValue : '暂无') + '</td>';
+          } else {
+            // 如果已经有这行数据，只进行更新
+            document.querySelector('.rp-infobox__container table #' + prop + '> td').textContent = newValue ? newValue : '暂无';
+          }
           value = newValue;
-          that.infobox[key] = newValue;
+          return true;
         }
       }
     });
@@ -95,34 +107,6 @@ class InfoBox {
   createTable() {
     this.table.setAttribute('class', 'rp-infobox__table');
     this.container.appendChild(this.table);
-  }
-  /**
-   * 对infobox中的内容进行代理，当数据发生变化时自动更新table
-   * @Author   MJC
-   * @DateTime 2018-10-08
-   * @version  1.0.0
-   */
-  defineInfoBoxReactive() {
-    let that = this;
-    /* eslint-disable no-undef*/
-    that.infobox = new Proxy({}, {
-      set: function(obj, prop, value) {
-        // 对设置的值进行格式化
-        value = that.toFixed(prop, value);
-        // 如果没有创建此行数据，那么对table进行插入此行数据操作
-        if (!document.querySelector('.rp-infobox__container table #' + prop)) {
-          let tr = document.createElement('tr');
-          tr.setAttribute('id', prop);
-          that.table.appendChild(tr);
-          tr.innerHTML = '<th>' + prop + '</th><td>' + (value ? value : '暂无') + '</td>';
-        } else {
-          // 如果已经有这行数据，只进行更新
-          document.querySelector('.rp-infobox__container table #' + prop + '> td').textContent = value ? value : '暂无';
-        }
-        obj[prop] = value;
-        return true;
-      }
-    });
   }
   /**
    * 对数据的显示格式进行格式化
