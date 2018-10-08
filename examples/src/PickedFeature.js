@@ -149,6 +149,7 @@ class PickedFeature {
       // 否则记录选中要素原来的颜色
       Color.clone(pickedFeature.color, self.selected.originalColor);
     }
+    // 修改pickBUG
     // 修改要素颜色
     pickedFeature.color = Color.LIME;
     // 设置显示的infobox的内容
