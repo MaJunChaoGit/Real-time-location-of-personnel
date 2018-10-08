@@ -30,7 +30,14 @@ export default (()=>{
 
   }
 
-  // 初始化参数
+  /**
+   * @Author   MJC
+   * @DateTime 2018-10-06
+   * @version  1.0.0
+   * @param    {Object}   scene 整个场景对象
+   * @return   {Null}
+   * 初始化摄像机监听事件
+   */
   function initArgs(scene) {
     _scene = scene ? scene : global.ev.scene;
     _camera = _scene.camera;
@@ -41,9 +48,14 @@ export default (()=>{
     });
   }
 
-  // 设置摄像机参数映射的对象方法
+  /**
+   * @Author   MJC
+   * @DateTime 2018-10-08
+   * @version  1.0.0
+   * 设置摄像机参数映射的对象方法
+   */
   function setOptions() {
-
+    // 摄像机更新必备的4个参数
     let options = {
       position: null,
       direction: _camera.direction.clone(),
@@ -51,11 +63,15 @@ export default (()=>{
       frustum: _camera.saveFrustum(_camera.frustum.clone())
     };
 
+    // 三维模式下直接获取摄像机的世界坐标就好了
     if (_sceneMode === SceneMode.SCENE3D) {
       options.position = _camera.positionWC.clone();
     } else {
+      // 二维模式下需要将摄像机的坐标进行反投影
       var cartographic = _scene.mapProjection.unproject(_camera.position);
+      // 获取的大地坐标高度不对，需要重新计算
       cartographic.height = _camera.getViewHeight();
+      // 将大地坐标转为笛卡尔坐标
       options.position = _scene.mapProjection.ellipsoid.cartographicToCartesian(cartographic);
     }
 

@@ -1,8 +1,5 @@
 import supCamera from 'cesium/Scene/Camera';
 import Cartesian3 from 'cesium/Core/Cartesian3';
-import Cartesian2 from 'cesium/Core/Cartesian2';
-import HorizontalOrigin from 'cesium/Scene/HorizontalOrigin';
-import VerticalOrigin from 'cesium/Scene/VerticalOrigin';
 import createGuid from 'cesium/Core/createGuid';
 import carToDegrees from 'ex/src/carToDegrees';
 class Camera extends supCamera {
@@ -69,11 +66,31 @@ class Camera extends supCamera {
     Object.assign(this.frustum, frustum);
   }
 
+  /**
+   * @Author   MJC
+   * @DateTime 2018-10-08
+   * @version  1.0.0
+   * @param    {String}   id    被删除的定位框的id
+   * @param    {Functon}  event 需要被移除的事件处理方法
+   * @return   {Null}
+   */
   _removeEvent(id, event) {
     global.viewer.entities.removeById(id);
     global.viewer.scene.postUpdate.removeEventListener(event);
   }
 
+  /**
+   * @Author   MJC
+   * @DateTime 2018-10-06
+   * @version  1.0.0
+   * @param    {Number}   options.destination 最终飞行的定位位置，为笛卡尔坐标
+   * @param    {Object}   options.orientation heading,pitch,roll三元数
+   * @param    {Number}   options.duration    飞行经过的时间，单位为秒
+   * @param    {Function} options.complete    飞行结束后的回调函数
+   * @param    {Function} options.cancel      飞行取消时的回调函数
+   * @return   {Null}
+   * 带定位框的飞行定位方法
+   */
   fly({
     destination,
     orientation,
@@ -100,9 +117,10 @@ class Camera extends supCamera {
       let pickPosition = global.viewer.scene.globe.pick(ray, global.viewer.scene);
       // 如果坐标在屏幕外的话，就返回
       if (!pickPosition || !canvasPosition) return;
+      // 判断是否在球的背面方法
       if (Math.abs(pickPosition.x - entityPosition.x) > 2000 ||
-          Math.abs(pickPosition.z - entityPosition.z) > 1000 ||
-          Math.abs(pickPosition.y - entityPosition.y) > 2000) {
+        Math.abs(pickPosition.z - entityPosition.z) > 1000 ||
+        Math.abs(pickPosition.y - entityPosition.y) > 2000) {
         entity.show = false;
       } else {
         entity.show = true;
