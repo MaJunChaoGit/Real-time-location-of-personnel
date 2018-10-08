@@ -4,7 +4,6 @@ import InfoBox from 'source/Core/InfoBox';
 import defined from 'cesium/Core/defined';
 import Color from 'cesium/Core/Color';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
-import Entity from 'cesium/DataSources/Entity';
 let self = {};
 
 class PickedFeature {
@@ -30,10 +29,6 @@ class PickedFeature {
     };
     // 新建infobox对象
     this.infoBox = new InfoBox(document.querySelector('.rp-infobox__container'));
-    // 一会分支删除
-    window.info = this.infoBox;
-    // 一会分支删除
-    this.selectedEntity = new Entity();
     // 新建标牌对象
     this.nameOverlay = new NameOverlay('rp-nameOverlay', global.viewer);
     // 新建事件管理类
