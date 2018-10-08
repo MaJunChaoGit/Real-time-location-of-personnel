@@ -49,12 +49,15 @@ $--button-font-weight: $--font-weight-primary;
 
 /* Loading
 -------------------------- */
+$--loading-content-ls-size: 12vh !default;
 $--loading-content-xs-size: 10vh !default;
 $--loading-content-sm-size: 12vh !default;
 $--loading-content-md-size: 8vw !default;
 $--loading-content-lg-size: 9vw !default;
 $--loading-content-xl-size: 10vw !default;
 
+$--loading-shadow-ls-width: 14vw !default;
+$--loading-shadow-ls-height: 2.5vh !default;
 $--loading-shadow-xs-width: 14vw !default;
 $--loading-shadow-xs-height: 2.5vh !default;
 $--loading-shadow-sm-width: 6vw !default;

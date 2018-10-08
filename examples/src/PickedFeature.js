@@ -5,6 +5,7 @@ import defined from 'cesium/Core/defined';
 import Color from 'cesium/Core/Color';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
 import Entity from 'cesium/DataSources/Entity';
+import Cesium3DTileFeature from 'cesium/Scene/Cesium3DTileFeature';
 let self = {};
 
 class PickedFeature {
@@ -95,6 +96,8 @@ class PickedFeature {
       self.nameOverlay.show(false);
       return;
     }
+    // 如果pick的不是3dTile就返回
+    if (!(pickedFeature instanceof Cesium3DTileFeature)) return;
     // 显示子标牌
     self.nameOverlay.show(true);
     // 根据鼠标位置定位子标牌
@@ -130,10 +133,10 @@ class PickedFeature {
       self.selected.feature.color = self.selected.originalColor;
       self.selected.feature = undefined;
     }
-
     // 根据鼠标位置获取选中的3dTiles要素
     let pickedFeature = self.viewer.scene.pick(movement.position);
-
+    // 如果pick的不是3dTile就返回
+    if (!(pickedFeature instanceof Cesium3DTileFeature)) return;
     // 如果没有选中任何要素
     if (!defined(pickedFeature)) {
       // 重新触发点击事件

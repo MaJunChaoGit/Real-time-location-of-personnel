@@ -38,7 +38,7 @@ export default {
       changeSceneMode(global.viewer.scene);
     },
     measureDistance() {
-    new DrawHelper(global.viewer.scene).startMeasureDistance();
+    // new DrawHelper(global.viewer.scene).startMeasureDistance();
     // new DrawHelper(global.viewer.scene).startDrawingMarker({}, function(position, primitive) {
         // primitive.removeAll();
     // });
@@ -57,10 +57,10 @@ export default {
       // primitives.remove(window.abc);
 
 
-      // window.circle = new DrawHelper(global.viewer.scene).startDrawingCircle({}, function(center, radius, primitive) {
-      //   let primitives = viewer.scene.primitives;
-      //   primitives.remove(primitive);
-      // });
+      window.circle = new DrawHelper(global.viewer.scene).startDrawingCircle({}, function(center, radius, primitive) {
+        // let primitives = viewer.scene.primitives;
+        // primitives.remove(primitive);
+      });
     },
     measureArea() {
       new DrawHelper(global.viewer.scene).startMeasureArea();

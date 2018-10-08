@@ -31,6 +31,11 @@
 
   figure {
     
+    @include res(ls) {
+      width: $--loading-content-ls-size;
+      height: $--loading-content-ls-size;
+    }
+
     @include res(xs) {
       width: $--loading-content-xs-size;
       height: $--loading-content-xs-size;
