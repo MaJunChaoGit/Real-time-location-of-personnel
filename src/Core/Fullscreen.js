@@ -1,6 +1,14 @@
 import Fullscreen from 'cesium/Core/Fullscreen.js';
 import defined from 'cesium/Core/defined';
 
+/**
+ * [fullScreen description]
+ * 全屏功能方法
+ * @Author   Mjc
+ * @DateTime 2018-04-19T15:22:05+0800
+ * @exports
+ * @param    {String}  container 容器的id
+ */
 function fullScreen(container) {
 
   if (!defined(container)) {
