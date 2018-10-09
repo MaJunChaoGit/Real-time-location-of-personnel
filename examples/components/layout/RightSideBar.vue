@@ -7,6 +7,7 @@
         <rp-button round icon="rp-icon--custom__area" @click="measureArea" v-if="deviceType() === 'else'"></rp-button>
         <rp-button round icon="rp-icon--custom__fullscreen" @click="screenHandle" v-if="deviceType() !== 'ios'"></rp-button>
         <rp-button round icon="rp-icon--custom__scenemode" @click="sceneModeHandle"></rp-button>
+        <rp-button round :icon="featureButtonClass" @click="featuresControll"></rp-button>
       </rp-button-group>
     </div>
   </div>
@@ -30,6 +31,13 @@ export default {
     RpButton
   },
 
+  data() {
+    return {
+      featuresShow: false,
+      featureButtonClass: 'rp-icon--custom__show'
+    };
+  },
+
   methods: {
     screenHandle() {
       Fullscreen(document.body);
@@ -38,7 +46,7 @@ export default {
       changeSceneMode(global.viewer.scene);
     },
     measureDistance() {
-    // new DrawHelper(global.viewer.scene).startMeasureDistance();
+      new DrawHelper(global.viewer.scene).startMeasureDistance();
     // new DrawHelper(global.viewer.scene).startDrawingMarker({}, function(position, primitive) {
         // primitive.removeAll();
     // });
@@ -57,17 +65,26 @@ export default {
       // primitives.remove(window.abc);
 
 
-      window.circle = new DrawHelper(global.viewer.scene).startDrawingCircle({}, function(center, radius, primitive) {
+      // window.circle = new DrawHelper(global.viewer.scene).startDrawingCircle({}, function(center, radius, primitive) {
         // let primitives = viewer.scene.primitives;
         // primitives.remove(primitive);
-      });
+      // });
     },
     measureArea() {
       new DrawHelper(global.viewer.scene).startMeasureArea();
     },
     deviceType() {
       return getDeviceType();
+    },
+    featuresControll() {
+      this.featureButtonClass = this.featuresShow ? 'rp-icon--custom__show' : 'rp-icon--custom__hide'
+      this.featuresShow = !global.viewer.features.show(this.featuresShow);
+
+      
     }
+  },
+  mounted() {
+
   }
 };
 </script>

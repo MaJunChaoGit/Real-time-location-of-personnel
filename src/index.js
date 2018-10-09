@@ -860,7 +860,7 @@ import Widgets_Geocoder_GeocoderViewModel from 'cesium/Widgets/Geocoder/Geocoder
 import Widgets_getElement from 'cesium/Widgets/getElement';
 import Widgets_HomeButton_HomeButton from 'cesium/Widgets/HomeButton/HomeButton';
 import Widgets_HomeButton_HomeButtonViewModel from 'cesium/Widgets/HomeButton/HomeButtonViewModel';
-import Widgets_InfoBox_InfoBox from 'source/Core/InfoBox';
+import Widgets_InfoBox_InfoBox from 'cesium/Widgets/InfoBox/InfoBox';
 import Widgets_InfoBox_InfoBoxViewModel from 'cesium/Widgets/InfoBox/InfoBoxViewModel';
 import Widgets_NavigationHelpButton_NavigationHelpButton from 'cesium/Widgets/NavigationHelpButton/NavigationHelpButton';
 import Widgets_NavigationHelpButton_NavigationHelpButtonViewModel from 'cesium/Widgets/NavigationHelpButton/NavigationHelpButtonViewModel';
@@ -890,7 +890,6 @@ import Widgets_Navigation_viewerCesiumNavigationMixin from 'source/Widgets/Navig
 import Core_Fullscreen from 'source/Core/Fullscreen';
 import Scene_changeSceneMode from 'source/Scene/changeSceneMode';
 import DrawHelper_DrawHelper from 'source/DrawHelper/DrawHelper';
-import Core_NameOverlay from 'source/Core/NameOverlay';
 import DrawHelper_CirclePrimitive from 'source/DrawHelper/CirclePrimitive';
 
 const _shaders = {
@@ -1790,7 +1789,6 @@ module.exports = {
   FullScreen: Core_Fullscreen,
   changeSceneMode: Scene_changeSceneMode,
   DrawHelper: DrawHelper_DrawHelper,
-  NameOverlay: Core_NameOverlay,
   CirclePrimitive: DrawHelper_CirclePrimitive
 };
 

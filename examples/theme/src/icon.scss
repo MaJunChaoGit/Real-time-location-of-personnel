@@ -181,6 +181,14 @@
   background: url("./images/getArea.png") no-repeat;
 }
 
+.rp-icon--custom__show {
+  background: url("./images/show.png") no-repeat;
+}
+
+.rp-icon--custom__hide {
+  background: url("./images/hide.png") no-repeat;
+}
+
 [class^="rp-icon--custom"] {
   position: $--custom-icon-position;
   width: $--custom-icon-width;

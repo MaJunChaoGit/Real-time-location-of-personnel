@@ -27,7 +27,7 @@ $--font-weight-primary: 500 !default;
 -------------------------- */
 $--border-width-base: 2px !default;
 $--border-style-base: solid !default;
-$--border-color-base: rgba(20,62,141,0.7) !default;
+$--border-color-base: rgba(20,62,141,0.5) !default;
 $--border-radius-base: 4px !default;
 $--border-base: $--border-width-base $--border-style-base $--border-color-base !default;
 
@@ -37,7 +37,7 @@ $--box-shadow-base: 2px 2px 7px rgba(39,39,39,0.95) !default;
 
 /* Colors
 -------------------------- */
-$--color-primary: rgba(20, 62, 141, 0.7) !default;
+$--color-primary: rgba(20, 62, 141, 0.3) !default;
 $--color-text-primary: #fff !default;
 
 /* Button

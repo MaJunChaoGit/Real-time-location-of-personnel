@@ -1,6 +1,6 @@
-import NameOverlay from 'source/Core/NameOverlay';
+import NameOverlay from './NameOverlay';
 import EventHelper from 'source/Core/EventHelper';
-import InfoBox from 'source/Core/InfoBox';
+import InfoBox from './InfoBox';
 import defined from 'cesium/Core/defined';
 import Color from 'cesium/Core/Color';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
@@ -31,16 +31,12 @@ class PickedFeature {
     };
     // 新建infobox对象
     this.infoBox = new InfoBox(document.querySelector('.rp-infobox__container'));
-    // 一会分支删除
-    window.info = this.infoBox;
-    // 一会分支删除
-    this.selectedEntity = new Entity();
     // 新建标牌对象
     this.nameOverlay = new NameOverlay('rp-nameOverlay', global.viewer);
     // 新建事件管理类
     this.eventHelper = new EventHelper(global.viewer);
     // 初始化事件
-    this._initEvent();
+    this.initEvent();
 
   }
   /**
@@ -49,7 +45,7 @@ class PickedFeature {
    * @DateTime 2018-10-08
    * @version  1.0.0
    */
-  _initEvent() {
+  initEvent() {
     // 初始化鼠标移动事件，鼠标左键点击事件
     this.eventHelper.setEvent(this.onMoveEvent, ScreenSpaceEventType.MOUSE_MOVE);
     this.eventHelper.setEvent(this.onLeftClick, ScreenSpaceEventType.LEFT_CLICK);
@@ -64,6 +60,12 @@ class PickedFeature {
     // 移除鼠标移动事件，鼠标左键点击事件
     this.eventHelper.destory(ScreenSpaceEventType.MOUSE_MOVE);
     this.eventHelper.destory(ScreenSpaceEventType.LEFT_CLICK);
+    // 恢复初始颜色
+
+    if (this.highlighted.feature) this.highlighted.feature.color = this.highlighted.originalColor;
+    if (this.selected.feature) this.selected.feature.color = this.selected.originalColor;
+    this.infoBox.show(false);
+    this.nameOverlay.show(false);
   }
   /**
    * 移除当前类的监听事件

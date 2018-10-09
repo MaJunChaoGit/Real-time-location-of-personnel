@@ -10,12 +10,16 @@
 import InitScene from 'ex/src/InitScene';
 import RpLayout from 'ex/components/layout/Layout';
 import RpLoading from 'ex/components/functionality/Loading';
+import Features from 'ex/src/Features';
 import {
   Cartesian3,
   HorizontalOrigin,
-  VerticalOrigin
+  VerticalOrigin,
+  HeadingPitchRoll,
+  Matrix4
 } from 'source/index.js';
-let initScene = {};
+import api from './api/index';
+
 export default {
   name: 'Entry',
 
@@ -32,13 +36,35 @@ export default {
   },
 
   mounted() {
-    initScene = new InitScene(this.mountedId);
-    this.isReady = true;
+    let initScene = new InitScene(this.mountedId);
+    this.isReady = initScene.isComplete;
   },
 
   methods: {
     loaded() {
-      initScene.initCameraHandle();
+      // initScene.initCameraHandle();
+      // 设置相机的初始位置
+      let initialPosition = Cartesian3.fromDegrees(-74.01881302800248, 40.69114333714821, 753);
+      /* eslint-disable new-cap */
+      let initialOrientation = new HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
+      setTimeout(() => {
+        global.viewer.scene.camera.fly({
+          destination: initialPosition,
+          duration: 4,
+          complete: () => {
+            global.viewer.features = new Features(global.viewer, api.newYork);
+            global.viewer.features.pickUp();
+            global.viewer.scene.camera.flyTo({
+              destination: initialPosition,
+              duration: 2,
+              orientation: initialOrientation,
+              endTransform: Matrix4.IDENTITY,
+              complete: () => {
+              }
+            });
+          }
+        });
+      }, 1000);
     }
   }
 };

@@ -5,8 +5,6 @@
   "FullScreen": "'source/Core/Fullscreen'",
   "changeSceneMode": "'source/Scene/changeSceneMode'",
   "DrawHelper": "'source/DrawHelper/DrawHelper'",
-  "NameOverlay": "'source/Core/NameOverlay'",
   "EventHelper": "'source/Core/EventHelper'",
-  "InfoBox": "'source/Core/InfoBox'",
   "CirclePrimitive": "'source/DrawHelper/CirclePrimitive'"
 }
