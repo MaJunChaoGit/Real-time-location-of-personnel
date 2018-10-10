@@ -151,7 +151,6 @@ class PickedFeature {
     if (self.selected.feature === pickedFeature) {
       return;
     }
-    //
     // 记录高亮目标
     self.selected.feature = pickedFeature;
     // 如果高亮的目标和单击的目标是同一个, 取消其高亮效果
