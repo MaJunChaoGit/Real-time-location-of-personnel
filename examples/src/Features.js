@@ -1,7 +1,9 @@
 import PickedFeature from './PickedFeature.js';
 import Cesium3DTileset from 'cesium/Scene/Cesium3DTileset';
 import Cesium3DTileStyle from 'cesium/Scene/Cesium3DTileStyle';
-
+/**
+ * 对3dTils进行封装,并对其的pick事件进行控制
+ */
 class Features {
   constructor(viewer, url) {
     this.url = url;
@@ -10,6 +12,12 @@ class Features {
     this.feature = null;
     this.add3dTiles();
   }
+  /**
+   * 添加倾斜数据
+   * @Author   MJC
+   * @DateTime 2018-10-10
+   * @version  1.0.0
+   */
   add3dTiles() {
     let self = this;
     // 加载数据
@@ -28,17 +36,38 @@ class Features {
     });
     this.viewer.scene.primitives.add(this.tileset);
   }
+  /**
+   * 开启悬浮与点击事件
+   * @Author   MJC
+   * @DateTime 2018-10-10
+   * @version  1.0.0
+   */
   pickUp() {
+    // 判断您是否是第一次点击
     if (!this.feature) {
       this.feature = new PickedFeature(global.viewer);
     } else {
       this.feature.initEvent();
     }
   }
+  /**
+   * 关闭pick功能
+   * @Author   MJC
+   * @DateTime 2018-10-10
+   * @version  1.0.0
+   */
   pickDown() {
     if (!this.feature) return;
     this.feature.removeEvent();
   }
+
+  /**
+   * 控制倾斜摄影的显示与隐藏
+   * @Author   MJC
+   * @DateTime 2018-10-10
+   * @version  1.0.0
+   * @param    {Boolean}
+   */
   show(isShow) {
     if (isShow) {
       this.pickUp();

@@ -1,6 +1,6 @@
 import NameOverlay from './NameOverlay';
 import EventHelper from 'source/Core/EventHelper';
-import InfoBox from './InfoBox';
+import InfoBox from 'source/Core/InfoBox';
 import defined from 'cesium/Core/defined';
 import Color from 'cesium/Core/Color';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
@@ -30,7 +30,7 @@ class PickedFeature {
       originalColor: new Color()
     };
     // 新建infobox对象
-    this.infoBox = new InfoBox(document.querySelector('.rp-infobox__container'));
+    this.infoBox = new InfoBox('newYork', ['id', 'type', 'height', 'area', 'longitude', 'latitude']);
     // 新建标牌对象
     this.nameOverlay = new NameOverlay('rp-nameOverlay', global.viewer);
     // 新建事件管理类
@@ -159,11 +159,10 @@ class PickedFeature {
       // 否则记录选中要素原来的颜色
       Color.clone(pickedFeature.color, self.selected.originalColor);
     }
-    // 修改pickBUG
-    // 修改要素颜色
-    pickedFeature.color = Color.LIME;
     // 设置显示的infobox的内容
-    self.infoBox.setFeature(pickedFeature, pickedFeature.getPropertyNames());
+    self.infoBox.setFeature(function(key) {
+      return pickedFeature.getProperty(key);
+    });
     // 显示infobox
     self.infoBox.show(true);
   }

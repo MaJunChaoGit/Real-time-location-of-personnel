@@ -6,5 +6,7 @@
   "changeSceneMode": "'source/Scene/changeSceneMode'",
   "DrawHelper": "'source/DrawHelper/DrawHelper'",
   "EventHelper": "'source/Core/EventHelper'",
+  "MovingTarget": "'source/Core/MovingTarget'",
+  "MovingTargetCollection": "'source/Core/MovingTargetCollection'",
   "CirclePrimitive": "'source/DrawHelper/CirclePrimitive'"
 }

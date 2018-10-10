@@ -890,6 +890,8 @@ import Widgets_Navigation_viewerCesiumNavigationMixin from 'source/Widgets/Navig
 import Core_Fullscreen from 'source/Core/Fullscreen';
 import Scene_changeSceneMode from 'source/Scene/changeSceneMode';
 import DrawHelper_DrawHelper from 'source/DrawHelper/DrawHelper';
+import Core_MovingTarget from 'source/Core/MovingTarget';
+import Core_MovingTargetCollection from 'source/Core/MovingTargetCollection';
 import DrawHelper_CirclePrimitive from 'source/DrawHelper/CirclePrimitive';
 
 const _shaders = {
@@ -1789,6 +1791,8 @@ module.exports = {
   FullScreen: Core_Fullscreen,
   changeSceneMode: Scene_changeSceneMode,
   DrawHelper: DrawHelper_DrawHelper,
+  MovingTarget: Core_MovingTarget,
+  MovingTargetCollection: Core_MovingTargetCollection,
   CirclePrimitive: DrawHelper_CirclePrimitive
 };
 

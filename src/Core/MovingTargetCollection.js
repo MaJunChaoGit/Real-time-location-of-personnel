@@ -1,6 +1,7 @@
 import CustomDataSource from 'cesium/DataSources/CustomDataSource';
 import defined from 'cesium/Core/defined';
 import JulianDate from 'cesium/Core/JulianDate';
+import createGuid from 'cesium/Core/createGuid';
 
 /**
  * 该类为动目标管理类，主要功能为
@@ -14,32 +15,69 @@ class MovingTargetCollection {
     if (!defined(viewer)) {
       throw new Error('需要viewer对象');
     }
-
     this._viewer = viewer;
     this._dataSource = new CustomDataSource();
     this._viewer.dataSources.add(this._dataSource);
-
+    this._clock = this._viewer.clock;
     this._entities = this._dataSource.entities;
   }
-
+  /**
+   * 设置动画的播放速率
+   * @param {Number} speed [动画播放速率]
+   */
+  setMutiplier(speed) {
+    this._clock.multiplier = speed ? speed : 5;
+  }
+  /**
+   * 添加实体进入动目标集合
+   * @Author   MJC
+   * @DateTime 2018-10-10
+   * @version  1.0.0
+   * @param    {Entity}
+   */
   add(target) {
-    if (this.collection.indexOf(target) === -1) this.collection.push(target);
+    if (!this._entities.contains(target)) this._entities.add(target);
   }
-
+  /**
+   * 根据实体的id删除实体
+   * @Author   MJC
+   * @DateTime 2018-10-10
+   * @version  1.0.0
+   * @param    {String}
+   */
   removeById(id) {
-    this._entities.removeById(id);
+    return this._entities.removeById(id);
   }
-
+  /**
+   * 删除所有集合内的实体
+   * @Author   MJC
+   * @DateTime 2018-10-10
+   * @version  1.0.0
+   */
   removeAll() {
-    this._entities.removeAll();
+    return this._entities.removeAll();
   }
-
+  /**
+   * 根据实体的id来控制显示隐藏
+   * @Author   MJC
+   * @DateTime 2018-10-10
+   * @version  1.0.0
+   * @param    {String} 实体的ID
+   * @param    {Boolean} 显示还是隐藏
+   */
   visiableById(id, flag) {
     this._entities.getById(id).show = flag;
+    return flag;
   }
-
+  /**
+   * @Author   MJC
+   * @DateTime 2018-10-10
+   * @version  1.0.0
+   * @param    {Boolean} 显示还是隐藏
+   */
   visiableAll(flag) {
     this._dataSource.show = flag;
+    return flag;
   }
 
   /**
