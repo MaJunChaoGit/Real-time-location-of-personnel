@@ -1,7 +1,6 @@
 import PickedFeature from './PickedFeature.js';
 import Cesium3DTileset from 'cesium/Scene/Cesium3DTileset';
 import Cesium3DTileStyle from 'cesium/Scene/Cesium3DTileStyle';
-import Color from 'cesium/Core/Color';
 
 class Features {
   constructor(viewer, url) {
