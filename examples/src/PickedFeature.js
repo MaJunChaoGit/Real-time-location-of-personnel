@@ -4,10 +4,8 @@ import InfoBox from './InfoBox';
 import defined from 'cesium/Core/defined';
 import Color from 'cesium/Core/Color';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
-<<<<<<< HEAD
 import Cesium3DTileFeature from 'cesium/Scene/Cesium3DTileFeature';
-=======
->>>>>>> 6ea1c3a0e82261284f1a274f0ceb97bed05c7f9b
+
 let self = {};
 
 class PickedFeature {
