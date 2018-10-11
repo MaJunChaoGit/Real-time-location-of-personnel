@@ -46,21 +46,33 @@ class MovingTargetCollection {
    * @param    {Entity}
    */
   add(target, isBind) {
+    // 将MovingTarget对象放入集合中方便后期管理
     this.targetCollection.push(target);
+    // 创建实体对象
     let entity = target.createEntity();
+    // 如果实体对象已经被创建那么返回
     if (this._entities.contains(entity)) return;
+    // 将实体加入场景
     let enty = this._entities.add(entity);
+    // 将该实体与该详情标牌关联
     if (isBind) this.bindWithInfobox(enty);
   }
+  /**
+   * 为动目标集合中的目标绑定左键与右键点击事件
+   * @Author   MJC
+   * @DateTime 2018-10-11
+   * @version  1.0.0
+   */
   registerEvent() {
+    // 创建事件管理对象
     this.event = new EventHelper(this._viewer);
-
+    // 设置左键点击处理函数
     this.event.setEvent((movement) => {
       // 获取屏幕的坐标
       let screenPosition = movement.position;
       // 获取屏幕坐标点击后的实体
       let pickEntity = this._viewer.scene.pick(screenPosition);
-      // 如果没有目标被选中则退出
+      // 如果没有目标被选中或者选中的是倾斜摄影则退出
       if (!pickEntity || pickEntity instanceof Cesium3DTileFeature) return;
       // 获取实体
       let entity = pickEntity.id;
@@ -68,28 +80,66 @@ class MovingTargetCollection {
       if (!document.querySelector('#' + entity.id)) {
         // 创建标牌等
         this.infobox = new InfoBox(entity.id, ['type', 'ascription']);
+        // 对标牌数据进行更新 todo 更新坐标或者位置时间
         this.infobox.setFeature((key) => {
           return entity.options[key];
         });
       }
+      // 点击时标牌进行显示
       this.infobox.show(true);
     }, ScreenSpaceEventType.LEFT_CLICK);
-
+    // 设置右键点击处理函数
     this.event.setEvent((movement) => {
+      // 获取屏幕的坐标
       let screenPosition = movement.position;
+      // 获取屏幕坐标点击后的实体
       let pickEntity = this._viewer.scene.pick(screenPosition);
+      // 如果没有目标被选中或者选中的是倾斜摄影则退出
       if (!pickEntity || pickEntity instanceof Cesium3DTileFeature) return;
-      let entity = this._trackedEntity[pickEntity.id.id];
-      if (entity) {
+      // 获取下该实体是否被跟踪
+      if (this.isTrack(pickEntity.id.id)) {
+        // 如果被跟踪并且已经记录上次摄像机的位置时那么就取消跟踪并将摄像机位置重置至右键点击时位置
         if (this.resetPosition) this._viewer.camera.updateCamera(this.resetPosition);
-        this._viewer.trackedEntity = undefined;
-        delete this._trackedEntity[pickEntity.id.id];
+        this.cancelTrack(pickEntity.id.id);
       } else {
-        this._viewer.trackedEntity = pickEntity.id;
-        this._trackedEntity[pickEntity.id.id] = pickEntity.id;
+        // 跟踪目标并记录右键点击时位置
+        this.track(pickEntity.id);
         this.resetPosition = this._viewer.camera.setOptions();
       }
     }, ScreenSpaceEventType.RIGHT_CLICK);
+  }
+  /**
+   * 判断实体目前是否跟踪状态
+   * @Author   MJC
+   * @DateTime 2018-10-11
+   * @version  1.0.0
+   * @param    {String}   id 实体对象的id
+   * @return   {Boolean}     true 跟踪 false 不跟踪
+   */
+  isTrack(id) {
+    return !!this._trackedEntity[id];
+  }
+  /**
+   * 取消目标的跟踪状态
+   * @Author   MJC
+   * @DateTime 2018-10-11
+   * @version  1.0.0
+   * @param    {String}   id 取消跟踪目标
+   */
+  cancelTrack(id) {
+    this._viewer.trackedEntity = undefined;
+    delete this._trackedEntity[id];
+  }
+  /**
+   * 跟踪当前传入的实体目标
+   * @Author   MJC
+   * @DateTime 2018-10-11
+   * @version  1.0.0
+   * @param    {Entity}   entity 跟踪的实体
+   */
+  track(entity) {
+    this._viewer.trackedEntity = entity;
+    this._trackedEntity[entity.id] = entity;
   }
   /**
    * 在添加完实体后就绑定其标牌一起运动
@@ -104,22 +154,27 @@ class MovingTargetCollection {
 
     // 绑定预渲染事件
     this.postUpdate = function() {
-      if (!entity) return;
+      // 获取当前的朱丽叶时间
       let time = that._clock._currentTime;
+      // 获取当前时间下该实体目标的笛卡尔坐标
       let position = entity.position.getValue(time);
-      let canvasPosition = that._viewer.scene.cartesianToCanvasCoordinates(position, scratch);
-
-      if (position && canvasPosition) {
+      // 如果目标还存在时
+      if (position) {
+        // 获取实体目标屏幕坐标
+        let canvasPosition = that._viewer.scene.cartesianToCanvasCoordinates(position, scratch);
+        // 对其详情标牌的位置进行刷新
         InfoBox.setPosition(entity.id, canvasPosition);
-        // let timeText = that.getTime(JulianDate.toDate(time));
-        // 更新div文本中的位置时间信息
-        // htmlOverlay.children[1].children[3].innerText = ('位置时间 : ' + timeText);
       } else {
-        // 若位置点消耗完,则删除div
-        document.getElementById(that.data.id).remove();
-        // 移除绑定
-        this._viewer.scene.postUpdate.removeEventListener(this.postUpdate);
+        // 删除详情标牌
+        document.getElementById(entity.id).remove();
+        // 移除目标的预渲染处理事件
+        that._viewer.scene.postUpdate.removeEventListener(that.postUpdate);
+        // 取消目标的跟踪
+        that.cancelTrack(entity.id);
+        // 移除目标
+        that.removeById(entity.id);
       }
+
     };
     // 在场景中添加绑定
     this._viewer.scene.postUpdate.addEventListener(this.postUpdate);
