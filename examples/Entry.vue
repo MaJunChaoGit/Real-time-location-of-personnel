@@ -135,7 +135,7 @@ export default {
 
                 collection.setLifyCircle(testData.overallStarttime, testData.overallEndtime);
 
-                collection.setMutiplier(5);
+                collection.setMutiplier(105);
 
                 testData.data.forEach(val => {
                   collection.add(new MovingTarget(global.viewer, val), true);

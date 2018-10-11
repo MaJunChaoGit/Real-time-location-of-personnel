@@ -166,7 +166,8 @@ class MovingTargetCollection {
         InfoBox.setPosition(entity.id, canvasPosition);
       } else {
         // 删除详情标牌
-        document.getElementById(entity.id).remove();
+        let container = document.getElementById(entity.id);
+        if (container) container.remove();
         // 移除目标的预渲染处理事件
         that._viewer.scene.postUpdate.removeEventListener(that.postUpdate);
         // 取消目标的跟踪
