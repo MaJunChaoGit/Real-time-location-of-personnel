@@ -13,10 +13,7 @@ import VerticalOrigin from 'cesium/Scene/VerticalOrigin';
 import Cartesian2 from 'cesium/Core/Cartesian2';
 import Color from 'cesium/Core/Color';
 import createGuid from 'cesium/Core/createGuid';
-import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
-import EventHelper from 'source/Core/EventHelper';
-import InfoBox from 'source/Core/InfoBox';
-import Cesium3DTileFeature from 'cesium/Scene/Cesium3DTileFeature';
+
 class MovingTarget {
   constructor(viewer, data) {
     // 必须传入viewer对象
@@ -27,11 +24,7 @@ class MovingTarget {
     this.clock = this._viewer.clock;
     this.data = data;
     this.id = this.data.id;
-    this.event = {};
     this.infobox = {};
-    this._trackedEntity = {};
-    this.resetPosition = {};
-    this.registerEvent();
   }
   /**
    * 线性插值添加采样点
@@ -121,79 +114,5 @@ class MovingTarget {
     return new SampledPositionProperty(REFERENCE);
   }
 
-  registerEvent() {
-    this.event = new EventHelper(this._viewer);
-
-    this.event.setEvent((movement) => {
-      // 获取屏幕的坐标
-      let screenPosition = movement.position;
-      // 获取屏幕坐标点击后的实体
-      let pickEntity = this._viewer.scene.pick(screenPosition);
-      // 如果没有目标被选中则退出
-      if (!pickEntity || pickEntity instanceof Cesium3DTileFeature) return;
-      // 获取实体
-      let entity = pickEntity.id;
-      // 如果该目标没有标牌的话就创建标牌
-      if (!document.querySelector('#' + entity.id)) {
-        // 创建标牌等
-        this.infobox = new InfoBox(entity.id, ['type', 'ascription']);
-        this.infobox.setFeature((key) => {
-          return entity.options[key];
-        });
-        // 绑定标牌和实体
-        // this.bindElement(entity.id);
-      }
-      this.infobox.show(true);
-    }, ScreenSpaceEventType.LEFT_CLICK);
-
-    this.event.setEvent((movement) => {
-      let screenPosition = movement.position;
-
-      let pickEntity = this._viewer.scene.pick(screenPosition);
-
-      if (!pickEntity || pickEntity instanceof Cesium3DTileFeature) return;
-
-      let entity = this._trackedEntity[pickEntity.id.id];
-      if (entity) {
-        if (this.resetPosition) this._viewer.camera.flyTo(this.resetPosition);
-        this._viewer.trackedEntity = undefined;
-
-        // delete this._trackedEntity[pickEntity.id.id];
-      } else {
-        this._viewer.trackedEntity = pickEntity.id;
-        this._trackedEntity[pickEntity.id.id] = pickEntity.id;
-        console.log(this._viewer.camera)
-        this.resetPosition.destination = this._viewer.camera.position;
-        this.resetPosition.orientation = {
-          heading: this._viewer.camera.heading,
-          pitch: this._viewer.camera.pitch,
-          roll: this._viewer.camera.roll
-        };
-
-        _camera.updateCamera(_saveData.camera);
-        // 摄像机更新必备的4个参数
-        this.resetPosition = {
-          position: null,
-          direction: this._viewer.camera.direction.clone(),
-          up: this._viewer.camera.up.clone(),
-          frustum: this._viewer.camera.saveFrustum(this._viewer.camera.frustum.clone())
-        };
-
-        // 三维模式下直接获取摄像机的世界坐标就好了
-        if (this._viewer.scene.mode === SceneMode.SCENE3D) {
-          resetPosition.position = this._viewer.camera.positionWC.clone();
-        } else {
-          // 二维模式下需要将摄像机的坐标进行反投影
-          var cartographic = this._viewer.scene.mapProjection.unproject(this._viewer.camera.position);
-          // 获取的大地坐标高度不对，需要重新计算
-          cartographic.height = this._viewer.camera.getViewHeight();
-          // 将大地坐标转为笛卡尔坐标
-          resetPosition.position = this._viewer.scene.mapProjection.ellipsoid.cartographicToCartesian(cartographic);
-        }
-
-      }
-    }, ScreenSpaceEventType.RIGHT_CLICK);
-
-  }
 };
 export default MovingTarget;

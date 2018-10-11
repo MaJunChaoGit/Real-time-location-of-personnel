@@ -1,9 +1,11 @@
 import CustomDataSource from 'cesium/DataSources/CustomDataSource';
 import defined from 'cesium/Core/defined';
 import JulianDate from 'cesium/Core/JulianDate';
-import createGuid from 'cesium/Core/createGuid';
 import Cartesian2 from 'cesium/Core/Cartesian2';
-import Infobox from 'source/Core/Infobox';
+import InfoBox from 'source/Core/InfoBox';
+import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
+import EventHelper from 'source/Core/EventHelper';
+import Cesium3DTileFeature from 'cesium/Scene/Cesium3DTileFeature';
 
 /**
  * 该类为动目标管理类，主要功能为
@@ -24,6 +26,10 @@ class MovingTargetCollection {
     this._viewer.dataSources.add(this._dataSource);
     this._clock = this._viewer.clock;
     this._entities = this._dataSource.entities;
+    this._trackedEntity = {};
+    this.resetPosition = {};
+    this.event = {};
+    this.registerEvent();
   }
   /**
    * 设置动画的播放速率
@@ -46,6 +52,45 @@ class MovingTargetCollection {
     let enty = this._entities.add(entity);
     if (isBind) this.bindWithInfobox(enty);
   }
+  registerEvent() {
+    this.event = new EventHelper(this._viewer);
+
+    this.event.setEvent((movement) => {
+      // 获取屏幕的坐标
+      let screenPosition = movement.position;
+      // 获取屏幕坐标点击后的实体
+      let pickEntity = this._viewer.scene.pick(screenPosition);
+      // 如果没有目标被选中则退出
+      if (!pickEntity || pickEntity instanceof Cesium3DTileFeature) return;
+      // 获取实体
+      let entity = pickEntity.id;
+      // 如果该目标没有标牌的话就创建标牌
+      if (!document.querySelector('#' + entity.id)) {
+        // 创建标牌等
+        this.infobox = new InfoBox(entity.id, ['type', 'ascription']);
+        this.infobox.setFeature((key) => {
+          return entity.options[key];
+        });
+      }
+      this.infobox.show(true);
+    }, ScreenSpaceEventType.LEFT_CLICK);
+
+    this.event.setEvent((movement) => {
+      let screenPosition = movement.position;
+      let pickEntity = this._viewer.scene.pick(screenPosition);
+      if (!pickEntity || pickEntity instanceof Cesium3DTileFeature) return;
+      let entity = this._trackedEntity[pickEntity.id.id];
+      if (entity) {
+        if (this.resetPosition) this._viewer.camera.updateCamera(this.resetPosition);
+        this._viewer.trackedEntity = undefined;
+        delete this._trackedEntity[pickEntity.id.id];
+      } else {
+        this._viewer.trackedEntity = pickEntity.id;
+        this._trackedEntity[pickEntity.id.id] = pickEntity.id;
+        this.resetPosition = this._viewer.camera.setOptions();
+      }
+    }, ScreenSpaceEventType.RIGHT_CLICK);
+  }
   /**
    * 在添加完实体后就绑定其标牌一起运动
    * @Author   MJC
@@ -59,22 +104,22 @@ class MovingTargetCollection {
 
     // 绑定预渲染事件
     this.postUpdate = function() {
-      // if (!entity) return;
-      // let time = that._clock._currentTime;
-      // let position = entity.position.getValue(time);
-      // let canvasPosition = that._viewer.scene.cartesianToCanvasCoordinates(position, scratch);
+      if (!entity) return;
+      let time = that._clock._currentTime;
+      let position = entity.position.getValue(time);
+      let canvasPosition = that._viewer.scene.cartesianToCanvasCoordinates(position, scratch);
 
-      // if (position && canvasPosition) {
-      //   Infobox.setPosition(entity.id, canvasPosition);
-      //   // let timeText = that.getTime(JulianDate.toDate(time));
-      //   // 更新div文本中的位置时间信息
-      //   // htmlOverlay.children[1].children[3].innerText = ('位置时间 : ' + timeText);
-      // } else {
-      //   // 若位置点消耗完,则删除div
-      //   document.getElementById(that.data.id).remove();
-      //   // 移除绑定
-      //   // scene.postUpdate.removeEventListener(that._tempEventCollection[id]);
-      // }
+      if (position && canvasPosition) {
+        InfoBox.setPosition(entity.id, canvasPosition);
+        // let timeText = that.getTime(JulianDate.toDate(time));
+        // 更新div文本中的位置时间信息
+        // htmlOverlay.children[1].children[3].innerText = ('位置时间 : ' + timeText);
+      } else {
+        // 若位置点消耗完,则删除div
+        document.getElementById(that.data.id).remove();
+        // 移除绑定
+        this._viewer.scene.postUpdate.removeEventListener(this.postUpdate);
+      }
     };
     // 在场景中添加绑定
     this._viewer.scene.postUpdate.addEventListener(this.postUpdate);

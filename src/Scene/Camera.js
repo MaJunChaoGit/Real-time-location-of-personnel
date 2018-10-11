@@ -2,18 +2,51 @@ import supCamera from 'cesium/Scene/Camera';
 import Cartesian3 from 'cesium/Core/Cartesian3';
 import createGuid from 'cesium/Core/createGuid';
 import carToDegrees from 'ex/src/carToDegrees';
+import SceneMode from 'cesium/Scene/SceneMode';
+
 class Camera extends supCamera {
 
   /**
    * Camera构造器函数
    * @Author   Mjc
    * @exports
-   * @param    {[Object]}                 scene
+   * @param    {[Object]}  scene
    */
   constructor(scene) {
     super(scene);
   }
+  /**
+   * @Author   MJC
+   * @DateTime 2018-10-08
+   * @version  1.0.0
+   * 设置摄像机参数映射的对象方法
+   */
+  setOptions() {
+    // 摄像机更新必备的4个参数
+    let options = {
+      position: null,
+      direction: this.direction.clone(),
+      up: this.up.clone(),
+      heading: this.heading,
+      pitch: this.pitch,
+      roll: this.roll,
+      frustum: this.saveFrustum(this.frustum.clone())
+    };
 
+    // 三维模式下直接获取摄像机的世界坐标就好了
+    if (global.viewer.scene.mode === SceneMode.SCENE3D) {
+      options.position = this.positionWC.clone();
+    } else {
+      // 二维模式下需要将摄像机的坐标进行反投影
+      var cartographic = global.viewer.scene.mapProjection.unproject(this.position);
+      // 获取的大地坐标高度不对，需要重新计算
+      cartographic.height = this.getViewHeight();
+      // 将大地坐标转为笛卡尔坐标
+      options.position = global.viewer.scene.mapProjection.ellipsoid.cartographicToCartesian(cartographic);
+    }
+
+    return options;
+  }
   /**
    * 获取当前视角高度的方法
    * @Author   Mjc
@@ -33,11 +66,19 @@ class Camera extends supCamera {
    * @param    {[Object]}                 options [position,direction,up,frustum]
    * @return   {[null]}
    */
-  updateCamera(options) {
-    this.setView({
-      destination: options.position
-    });
-    this.loadFrustum(options.frustum);
+  updateCamera({position, frustum, heading, pitch, roll}) {
+    let options = {
+      destination: position
+    };
+    if (heading && pitch && roll) {
+      options.orientation = {
+        heading: heading,
+        pitch: pitch,
+        roll: roll
+      };
+    }
+    this.setView(options);
+    this.loadFrustum(frustum);
   }
 
   /**

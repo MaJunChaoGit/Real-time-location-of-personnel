@@ -5,6 +5,7 @@ import Cartographic from 'cesium/Core/Cartographic';
 import Cartesian3 from 'cesium/Core/Cartesian3';
 import NavigationControl from './NavigationControl';
 import svgReset from '../SvgPaths/svgReset';
+import HeadingPitchRoll from 'cesium/Core/HeadingPitchRoll';
 /**
      * The model for a zoom in control in the navigation control tool bar
      *
@@ -103,8 +104,14 @@ ResetViewNavigationControl.prototype.resetView = function() {
         }
       }
     } else if (typeof camera.flyHome === 'function') { // 如果camera.flyHome被定义,直接调用camera.flyHome
+      // 设置相机的初始位置
+      let initialPosition = Cartesian3.fromDegrees(-74.01881302800248, 40.69114333714821, 753);
+      /* eslint-disable new-cap */
+      let initialOrientation = new HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
       camera.flyTo({
-        destination: Cartesian3.fromDegrees(110.435314, 37.960521, 15000000.0)
+        destination: initialPosition,
+        duration: 2,
+        orientation: initialOrientation
       });
     } else {
       camera.flyTo({'destination': Camera.DEFAULT_VIEW_RECTANGLE, 'duration': 1});
