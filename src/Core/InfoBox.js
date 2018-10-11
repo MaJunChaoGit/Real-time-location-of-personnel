@@ -145,9 +145,11 @@ class InfoBox {
    * @version  1.0.0
    * @param    {Object}   movement 事件中的movement对象
    */
-  setPostion(movement) {
-    this.container.style.bottom = this.viewer.canvas.clientHeight - movement.endPosition.y + 'px';
-    this.container.style.left = movement.endPosition.x + 'px';
+  static setPosition(id, canvasPosition) {
+    let box = document.querySelector('#' + id);
+    if (!box) return;
+    box.style.top = canvasPosition.y + 'px';
+    box.style.left = canvasPosition.x + 'px';
   }
 };
 

@@ -131,14 +131,14 @@ export default {
                     }
                   ]
                 };
-                window.collection = new MovingTargetCollection(global.viewer);
+                let collection = new MovingTargetCollection(global.viewer);
 
                 collection.setLifyCircle(testData.overallStarttime, testData.overallEndtime);
 
                 collection.setMutiplier(testData.multiplier);
 
                 testData.data.forEach(val => {
-                  collection.add(new MovingTarget(global.viewer, val));
+                  collection.add(new MovingTarget(global.viewer, val), true);
                 });
               }
             });
