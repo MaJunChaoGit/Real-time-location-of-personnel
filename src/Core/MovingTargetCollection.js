@@ -73,7 +73,7 @@ class MovingTargetCollection {
       // 获取屏幕坐标点击后的实体
       let pickEntity = this._viewer.scene.pick(screenPosition);
       // 如果没有目标被选中或者选中的是倾斜摄影则退出
-      if (!pickEntity || pickEntity instanceof Cesium3DTileFeature) return;
+      if (!pickEntity || (pickEntity && !pickEntity.id) || pickEntity instanceof Cesium3DTileFeature) return;
       // 获取实体
       let entity = pickEntity.id;
       // 如果该目标没有标牌的话就创建标牌
@@ -95,7 +95,7 @@ class MovingTargetCollection {
       // 获取屏幕坐标点击后的实体
       let pickEntity = this._viewer.scene.pick(screenPosition);
       // 如果没有目标被选中或者选中的是倾斜摄影则退出
-      if (!pickEntity || pickEntity instanceof Cesium3DTileFeature) return;
+      if (!pickEntity || (pickEntity && !pickEntity.id) || pickEntity instanceof Cesium3DTileFeature) return;
       // 获取下该实体是否被跟踪
       if (this.isTrack(pickEntity.id.id)) {
         // 如果被跟踪并且已经记录上次摄像机的位置时那么就取消跟踪并将摄像机位置重置至右键点击时位置

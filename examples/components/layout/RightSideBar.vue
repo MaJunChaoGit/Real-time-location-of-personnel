@@ -22,7 +22,9 @@ import {
   DrawHelper,
   CirclePrimitive
 } from 'source/index';
-
+import carToDegrees from 'ex/src/carToDegrees';
+import {crtTimeFtt} from 'ex/utils/dom';
+import api from 'ex/api/index'
 export default {
   name: 'RpRightSide',
 
@@ -46,7 +48,30 @@ export default {
       changeSceneMode(global.viewer.scene);
     },
     measureDistance() {
-      new DrawHelper(global.viewer.scene).startMeasureDistance();
+      new DrawHelper(global.viewer.scene).startMeasureDistance((positions, time) => {
+        let movingTarget = {
+          type: '1',
+          phone: '13376090266',
+          ascription: '第一中队',
+          timePositions: []
+        };
+        positions.forEach((val, index) => {
+          let position = carToDegrees(val);
+          position.lon = position.lon + '';
+          position.lat = position.lat + '';
+          position.height = position.height + '';
+          position.time = crtTimeFtt(time[index]);
+          movingTarget.timePositions.push(position);
+        });
+
+        this.$http.post(api.saveMovingTarget, movingTarget)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      });
     },
     measureArea() {
       new DrawHelper(global.viewer.scene).startMeasureArea();

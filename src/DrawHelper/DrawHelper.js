@@ -185,8 +185,8 @@ class DrawHelper {
     this.startDrawingPolyshape(true, {}, true);
   }
 
-  startMeasureDistance() {
-    this.startDrawingPolyshape(false, defaultPolylineOptions, true);
+  startMeasureDistance(callback) {
+    this.startDrawingPolyshape(false, defaultPolylineOptions, true, callback);
   }
   startDrawingCircle(options, callback) {
     options = options || {};
@@ -255,7 +255,7 @@ class DrawHelper {
     return circle;
   }
 
-  startDrawingPolyshape(isPolygon, options, isMeasure) {
+  startDrawingPolyshape(isPolygon, options, isMeasure, callback) {
     options = options || {};
 
     this.startDrawing(
@@ -272,7 +272,7 @@ class DrawHelper {
     let scene = this._scene;
     let primitives = options.collection || scene.primitives;
     let poly;
-
+    let time = [];
     let minPoints = isPolygon ? 3 : 2;
     if (isPolygon) {
       if (isMeasure) {
@@ -310,6 +310,7 @@ class DrawHelper {
           cartesian.y += (1 + Math.random());
           positions.push(cartesian);
           markers.addBillboard(cartesian);
+          time.push(new Date());
         }
       }
     }, ScreenSpaceEventType.LEFT_CLICK);
@@ -342,6 +343,7 @@ class DrawHelper {
         let cartesian = scene.camera.pickEllipsoid(movement.position, ellipsoid);
         if (cartesian) {
           positions.push(cartesian);
+          time.push(new Date());
         }
       }
       if (isPolygon) {
@@ -360,6 +362,7 @@ class DrawHelper {
         }
       }
       primitive.setPositions(positions);
+      if (callback) callback(positions, time);
       _self.registerEditableShape(primitive);
       enhanceWithListeners(primitive);
       primitive._primitives = primitives;
