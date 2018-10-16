@@ -28,9 +28,9 @@ class InfoBox {
    */
   _initContainer() {
     let container = document.querySelector('.rp-infobox').cloneNode(true);
-    container.setAttribute('id', this.id);
+    container.setAttribute('id', 'infobox' + this.id);
     document.body.appendChild(container);
-    document.querySelector('#' + this.id + ' .rp-icon-close').addEventListener('click', () => {
+    document.querySelector('#infobox' + this.id + ' .rp-icon-close').addEventListener('click', () => {
       this.show(false);
     });
     return container;
@@ -45,7 +45,7 @@ class InfoBox {
   _initTable() {
     let table = document.createElement('table');
     table.setAttribute('class', 'rp-infobox__table');
-    document.querySelector('#' + this.id + ' .rp-infobox__container').appendChild(table);
+    document.querySelector('#infobox' + this.id + ' .rp-infobox__container').appendChild(table);
     return table;
   }
   /**
@@ -56,7 +56,7 @@ class InfoBox {
    * @param    {Boolean}  isShow 控制infoBox的显示或者隐藏
    */
   show(isShow) {
-    document.querySelector('#' + this.id).style.display = isShow ? 'block' : 'none';
+    document.querySelector('#infobox' + this.id).style.display = isShow ? 'block' : 'none';
   }
   /**
    * 对this.feature进行劫持
@@ -107,14 +107,14 @@ class InfoBox {
           // 对设置的值进行格式化
           newValue = that.toFixed(prop, newValue);
           // 如果没有创建此行数据，那么对table进行插入此行数据操作
-          if (!document.querySelector('#' + that.id + ' .rp-infobox__container table #' + prop)) {
+          if (!document.querySelector('#infobox' + that.id + ' .rp-infobox__container table #' + prop)) {
             let tr = document.createElement('tr');
             tr.setAttribute('id', prop);
             that.table.appendChild(tr);
             tr.innerHTML = '<th>' + prop + '</th><td>' + (newValue ? newValue : '暂无') + '</td>';
           } else {
             // 如果已经有这行数据，只进行更新
-            document.querySelector('#' + that.id + ' .rp-infobox__container table #' + prop + '> td').textContent = newValue ? newValue : '暂无';
+            document.querySelector('#infobox' + that.id + ' .rp-infobox__container table #' + prop + '> td').textContent = newValue ? newValue : '暂无';
           }
           value = newValue;
           return true;
@@ -146,7 +146,7 @@ class InfoBox {
    * @param    {Object}   movement 事件中的movement对象
    */
   static setPosition(id, canvasPosition) {
-    let box = document.querySelector('#' + id);
+    let box = document.querySelector('#infobox' + id);
     if (!box) return;
     box.style.top = canvasPosition.y + 'px';
     box.style.left = canvasPosition.x + 'px';

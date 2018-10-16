@@ -58,7 +58,7 @@ class MovingTarget {
    */
   createEntity() {
     let data = this.data;
-    let property = this.addSample(data.position);
+    let property = this.addSample(data.timePositions);
     return {
       id: data.id ? data.id : createGuid(),
       options: data.options,
@@ -75,8 +75,9 @@ class MovingTarget {
       },
       model: {
         uri: '../Assets/j11/j11.gltf',
-        minimumPixelSize: 75,
-        maximumScale: 20000,
+        minimumPixelSize: 3,
+        maximumScale: 5,
+        scale: 0.1,
         distanceDisplayCondition: new DistanceDisplayCondition(0, 5e6)
       },
       path: {

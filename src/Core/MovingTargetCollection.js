@@ -30,12 +30,13 @@ class MovingTargetCollection {
     this.resetPosition = {};
     this.event = {};
     this.registerEvent();
+    this.bindWithInfobox();
   }
   /**
    * 设置动画的播放速率
    * @param {Number} speed [动画播放速率]
    */
-  setMutiplier(speed) {
+  setMultiplier(speed) {
     this._clock.multiplier = speed ? speed : 5;
   }
   /**
@@ -45,7 +46,7 @@ class MovingTargetCollection {
    * @version  1.0.0
    * @param    {Entity}
    */
-  add(target, isBind) {
+  add(target) {
     // 将MovingTarget对象放入集合中方便后期管理
     this.targetCollection.push(target);
     // 创建实体对象
@@ -55,7 +56,6 @@ class MovingTargetCollection {
     // 将实体加入场景
     let enty = this._entities.add(entity);
     // 将该实体与该详情标牌关联
-    if (isBind) this.bindWithInfobox(enty);
   }
   /**
    * 为动目标集合中的目标绑定左键与右键点击事件
@@ -77,9 +77,9 @@ class MovingTargetCollection {
       // 获取实体
       let entity = pickEntity.id;
       // 如果该目标没有标牌的话就创建标牌
-      if (!document.querySelector('#' + entity.id)) {
+      if (!document.querySelector('#infobox' + entity.id)) {
         // 创建标牌等
-        this.infobox = new InfoBox(entity.id, ['type', 'ascription']);
+        this.infobox = new InfoBox(entity.id, ['type', 'ascriptions']);
         // 对标牌数据进行更新 todo 更新坐标或者位置时间
         this.infobox.setFeature((key) => {
           return entity.options[key];
@@ -148,7 +148,7 @@ class MovingTargetCollection {
    * @version  1.0.0
    * @param    {Object}   entity 实体对象
    */
-  bindWithInfobox(entity) {
+  bindWithInfobox() {
     let that = this;
     let scratch = new Cartesian2();
 
@@ -156,26 +156,30 @@ class MovingTargetCollection {
     this.postUpdate = function() {
       // 获取当前的朱丽叶时间
       let time = that._clock._currentTime;
-      // 获取当前时间下该实体目标的笛卡尔坐标
-      let position = entity.position.getValue(time);
-      // 如果目标还存在时
-      if (position) {
-        // 获取实体目标屏幕坐标
-        let canvasPosition = that._viewer.scene.cartesianToCanvasCoordinates(position, scratch);
-        // 对其详情标牌的位置进行刷新
-        InfoBox.setPosition(entity.id, canvasPosition);
-      } else {
-        // 删除详情标牌
-        let container = document.getElementById(entity.id);
-        if (container) container.remove();
-        // 移除目标的预渲染处理事件
-        that._viewer.scene.postUpdate.removeEventListener(that.postUpdate);
-        // 取消目标的跟踪
-        that.cancelTrack(entity.id);
-        // 移除目标
-        that.removeById(entity.id);
+      let collection = that._entities._entities._array;
+      for (let i = 0; i < collection.length; i++) {
+        let entity = collection[i];
+        // 获取当前时间下该实体目标的笛卡尔坐标
+        let position = entity.position.getValue(time);
+        // 如果目标还存在时
+        if (position) {
+          // 获取实体目标屏幕坐标
+          let canvasPosition = that._viewer.scene.cartesianToCanvasCoordinates(position, scratch);
+          // 对其详情标牌的位置进行刷新
+          InfoBox.setPosition(entity.id, canvasPosition);
+        };
+        if (JulianDate.compare(time, entity._availability._intervals[0].stop) > 0) {
+          // 删除详情标牌
+          let container = document.getElementById('infobox' + entity.id);
+          if (container) container.remove();
+          // 取消目标的跟踪
+          that.cancelTrack(entity.id);
+          // 移除目标
+          that.removeById(entity.id);
+        }
       }
-
+      // 移除目标的预渲染处理事件
+      if (JulianDate.compare(time, that.stop) > 0) that._viewer.scene.postUpdate.removeEventListener(that.postUpdate);
     };
     // 在场景中添加绑定
     this._viewer.scene.postUpdate.addEventListener(this.postUpdate);
@@ -232,14 +236,12 @@ class MovingTargetCollection {
    */
   setLifyCircle(start, stop) {
     if (!defined(start) && !defined(stop)) throw new Error('需要传入开始字符串,格式为yyyy-mm-dd hh:mm:ss');
-
-    start = JulianDate.fromDate(new Date(start));
-    stop = JulianDate.fromDate(new Date(stop));
-
+    this.start = JulianDate.fromDate(new Date(start));
+    this.stop = JulianDate.fromDate(new Date(stop));
     this._clock.shouldAnimate = true;
-    this._clock.startTime = start.clone();
-    this._clock.currentTime = start.clone();
-    this._clock.endTime = stop.clone();
+    this._clock.startTime = this.start.clone();
+    this._clock.currentTime = this.start.clone();
+    this._clock.endTime = this.stop.clone();
   }
 
   destroy() {
