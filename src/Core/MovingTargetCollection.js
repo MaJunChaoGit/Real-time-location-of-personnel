@@ -6,7 +6,7 @@ import InfoBox from 'source/Core/InfoBox';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
 import EventHelper from 'source/Core/EventHelper';
 import Cesium3DTileFeature from 'cesium/Scene/Cesium3DTileFeature';
-
+import { crtTimeFtt } from 'ex/utils/dom';
 /**
  * 该类为动目标管理类，主要功能为
  * 1.统一存放一组动目标
@@ -30,6 +30,7 @@ class MovingTargetCollection {
     this.resetPosition = {};
     this.event = {};
     this.registerEvent();
+    // 将该实体与该详情标牌关联
     this.bindWithInfobox();
   }
   /**
@@ -54,8 +55,7 @@ class MovingTargetCollection {
     // 如果实体对象已经被创建那么返回
     if (this._entities.contains(entity)) return;
     // 将实体加入场景
-    let enty = this._entities.add(entity);
-    // 将该实体与该详情标牌关联
+    this._entities.add(entity);
   }
   /**
    * 为动目标集合中的目标绑定左键与右键点击事件
@@ -79,14 +79,27 @@ class MovingTargetCollection {
       // 如果该目标没有标牌的话就创建标牌
       if (!document.querySelector('#infobox' + entity.id)) {
         // 创建标牌等
-        this.infobox = new InfoBox(entity.id, ['type', 'ascriptions']);
+        this.infobox = new InfoBox(entity.id, ['id', 'phone', 'type', 'ascriptions', 'time']);
         // 对标牌数据进行更新 todo 更新坐标或者位置时间
         this.infobox.setFeature((key) => {
-          return entity.options[key];
+          switch (key) {
+            case 'id':
+              return entity.options[key].substring(0, 8);
+            default:
+              return entity.options[key];
+          }
+        });
+        // 添加关闭按钮点击事件
+        document.querySelector('#infobox' + entity.id + ' .rp-icon-close').addEventListener('click', () => {
+          this.infobox.show(false);
+          // 隐藏航迹
+          entity.path.show = false;
         });
       }
       // 点击时标牌进行显示
       this.infobox.show(true);
+      // 显示航迹
+      entity.path.show = true;
     }, ScreenSpaceEventType.LEFT_CLICK);
     // 设置右键点击处理函数
     this.event.setEvent((movement) => {
@@ -167,6 +180,11 @@ class MovingTargetCollection {
           let canvasPosition = that._viewer.scene.cartesianToCanvasCoordinates(position, scratch);
           // 对其详情标牌的位置进行刷新
           InfoBox.setPosition(entity.id, canvasPosition);
+          // 更新实体的位置时间
+          let timeLabel = document.querySelector('#infobox' + entity.id + ' table>#time>td');
+          let timeValue = crtTimeFtt(that._clock._currentTime);
+          if (timeLabel) timeLabel.textContent = timeValue;
+          entity.options.time = timeValue;
         };
         if (JulianDate.compare(time, entity._availability._intervals[0].stop) > 0) {
           // 删除详情标牌

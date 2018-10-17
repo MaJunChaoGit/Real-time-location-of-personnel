@@ -23,10 +23,9 @@ import {
   CirclePrimitive
 } from 'source/index';
 import carToDegrees from 'ex/src/carToDegrees';
-import {crtTimeFtt} from 'ex/utils/dom';
 import api from 'ex/api/index';
 import createGuid from 'cesium/Core/createGuid';
-
+import { crtTimeFtt } from 'ex/utils/dom';
 export default {
   name: 'RpRightSide',
 
@@ -60,14 +59,23 @@ export default {
           },
           timePositions: []
         };
+        let offset = 0;
         positions.forEach((val, index) => {
           let position = carToDegrees(val);
           position.lon = position.lon;
           position.lat = position.lat;
           position.height = position.height;
-          position.time = crtTimeFtt(time[index]);
+          let date = new Date(time[index]);
+          offset = date.getMinutes() - new Date().date.getMinutes();
+          date.setTime(date.setMinutes(6 + offset));
+
+          let date1 = new Date('2018-10-17 23:06:00');
+          date1.setMinutes(date.getMinutes());
+          date1.setSeconds(date.getSeconds())
+          position.time = crtTimeFtt(date1);
           movingTarget.timePositions.push(position);
         });
+        console.log(movingTarget.id);
         movingTarget.startTime = movingTarget.timePositions[0].time;
         movingTarget.endTime = movingTarget.timePositions[movingTarget.timePositions.length - 1].time;
         this.$http.post(api.saveMovingTarget, movingTarget)

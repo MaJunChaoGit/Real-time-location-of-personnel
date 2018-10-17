@@ -13,6 +13,7 @@ import VerticalOrigin from 'cesium/Scene/VerticalOrigin';
 import Cartesian2 from 'cesium/Core/Cartesian2';
 import Color from 'cesium/Core/Color';
 import createGuid from 'cesium/Core/createGuid';
+import NearFarScalar from 'cesium/Core/NearFarScalar';
 
 class MovingTarget {
   constructor(viewer, data) {
@@ -70,15 +71,18 @@ class MovingTarget {
       })]),
       point: {
         color: Color.BLUE,
-        pixelSize: 5,
-        distanceDisplayCondition: new DistanceDisplayCondition(5e6, 1e10)
+        pixelSize: 10,
+        distanceDisplayCondition: new DistanceDisplayCondition(1500, 1e10),
+        outlineColor: Color.WHITE,
+        outlineWidth: 3,
+        scaleByDistance: new NearFarScalar(2000, 1.0, 200000, 0.2)
       },
       model: {
         uri: '../Assets/j11/j11.gltf',
         minimumPixelSize: 3,
         maximumScale: 5,
         scale: 0.1,
-        distanceDisplayCondition: new DistanceDisplayCondition(0, 5e6)
+        distanceDisplayCondition: new DistanceDisplayCondition(0, 1500)
       },
       path: {
         resolution: 9999,
@@ -89,17 +93,18 @@ class MovingTarget {
         width: 10,
         leadTime: 0,
         trailTime: 300,
-        distanceDisplayCondition: new DistanceDisplayCondition(0, 0.5e7)
+        distanceDisplayCondition: new DistanceDisplayCondition(0, 200000),
+        show: false
       },
       label: {
         font: '16px 黑体',
-        text: '车辆编号:' + data.id,
+        text: '车辆编号:' + data.id.substring(0, 8),
         fillColor: Color.SKYBLUE,
         outlineColor: Color.BLACK,
         outlineWidth: 2,
         style: LabelStyle.FILL_AND_OUTLINE,
         verticalOrigin: VerticalOrigin.TOP,
-        distanceDisplayCondition: new DistanceDisplayCondition(0, 0.5e7),
+        distanceDisplayCondition: new DistanceDisplayCondition(500, 200000),
         pixelOffset: new Cartesian2(10, -25)
       }
     };

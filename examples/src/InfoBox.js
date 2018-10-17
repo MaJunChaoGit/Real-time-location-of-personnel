@@ -30,9 +30,6 @@ class InfoBox {
     let container = document.querySelector('.rp-infobox').cloneNode(true);
     container.setAttribute('id', this.id);
     document.body.appendChild(container);
-    document.querySelector('#' + this.id + ' .rp-icon-close').addEventListener('click', () => {
-      this.show(false);
-    });
     return container;
   }
   /**

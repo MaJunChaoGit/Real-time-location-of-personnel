@@ -55,23 +55,30 @@ export default {
           destination: initialPosition,
           duration: 4,
           complete: () => {
-
+            // 新建倾斜摄影对象
             global.viewer.features = new Features(global.viewer, api.newYork);
+            // 开启倾斜摄影的pick模式
             global.viewer.features.pickUp();
+            // 定位至倾斜摄影
             global.viewer.scene.camera.flyTo({
-
-              destination: initialPosition,
+              // 目的地
+              destination: initialPosition, 
+              // 飞行时间
               duration: 2,
               orientation: initialOrientation,
               endTransform: Matrix4.IDENTITY,
               complete: () => {
+                // 请求动目标数据
                 this.$http.get(api.movingTargets)
                 .then(response => {
                   let data = response.data;
-                  console.log(data)
+                  // 新建动目标集合
                   let collection = new MovingTargetCollection(global.viewer);
+                  // 设置生命周期
                   collection.setLifyCircle(data.overallStarttime, data.overallEndtime);
-                  collection.setMultiplier(0.2);
+                  // 设置时钟效率
+                  collection.setMultiplier(1);
+                  // 遍历数据添加动目标
                   data.data.forEach(val => {
                     collection.add(new MovingTarget(global.viewer, val));
                   });
