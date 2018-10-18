@@ -15,7 +15,7 @@ import Color from 'cesium/Core/Color';
 import createGuid from 'cesium/Core/createGuid';
 import NearFarScalar from 'cesium/Core/NearFarScalar';
 import TypeEnum from 'source/Core/TypeEnum';
-
+import InfoBox from 'source/Core/InfoBox';
 class MovingTarget {
   constructor(viewer, data) {
     // 必须传入viewer对象
@@ -26,7 +26,8 @@ class MovingTarget {
     this.clock = this._viewer.clock;
     this.data = data;
     this.id = this.data.id;
-    this.infobox = {};
+    // 创建标牌等
+    this.infobox = new InfoBox(this.data.id, ['id', 'phone', 'type', 'ascriptions', 'time']);
   }
   /**
    * 线性插值添加采样点
@@ -60,6 +61,10 @@ class MovingTarget {
    */
   createEntity() {
     let data = this.data;
+    let type = data.options.type;
+    // 翻译一下类型 e.g 1 = 家用车
+    data.options.type = TypeEnum[type].name;
+    // 对坐标位置进行采样点
     let property = this.addSample(data.timePositions);
     return {
       id: data.id ? data.id : createGuid(),
@@ -71,7 +76,7 @@ class MovingTarget {
         stop: JulianDate.fromDate(new Date(data.endTime))
       })]),
       point: {
-        color: TypeEnum[data.options.type].color,
+        color: TypeEnum[type].color,
         pixelSize: 10,
         distanceDisplayCondition: new DistanceDisplayCondition(1500, 1e10),
         outlineColor: Color.WHITE,
@@ -79,17 +84,17 @@ class MovingTarget {
         scaleByDistance: new NearFarScalar(2000, 1.0, 200000, 0.2)
       },
       model: {
-        uri: TypeEnum[data.options.type].uri,
-        minimumPixelSize: TypeEnum[data.options.type].minimumPixelSize,
-        maximumScale: TypeEnum[data.options.type].maximumScale,
-        scale: TypeEnum[data.options.type].scale,
+        uri: TypeEnum[type].uri,
+        minimumPixelSize: TypeEnum[type].minimumPixelSize,
+        maximumScale: TypeEnum[type].maximumScale,
+        scale: TypeEnum[type].scale,
         distanceDisplayCondition: new DistanceDisplayCondition(0, 1500)
       },
       path: {
         resolution: 400,
         material: new PolylineGlowMaterialProperty({
           glowPower: 0.1,
-          color: TypeEnum[data.options.type].color
+          color: TypeEnum[type].color
         }),
         width: 10,
         leadTime: 0,
@@ -100,7 +105,7 @@ class MovingTarget {
       label: {
         font: '16px 黑体',
         text: '车辆编号:' + data.id.substring(0, 8),
-        fillColor: TypeEnum[data.options.type].color,
+        fillColor: TypeEnum[type].color,
         outlineColor: Color.BLACK,
         outlineWidth: 2,
         style: LabelStyle.FILL_AND_OUTLINE,

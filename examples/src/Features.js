@@ -32,7 +32,7 @@ class Features {
     //   }
     // });
     this.tileset.style = new Cesium3DTileStyle({
-      color: "(Number(${id}) % 2 === 0 && Number(${id}) % 3 !== 0 && Number(${id}) % 5 !== 0) ? color('cyan', 0.9) : color('purple', 0.1)"
+      color: "(Number(${id}) % 2 === 0 && Number(${id}) % 3 !== 0 && Number(${id}) % 5 !== 0) ? color('cyan', 0.3) : color('purple', 0.1)"
     });
     this.viewer.scene.primitives.add(this.tileset);
   }

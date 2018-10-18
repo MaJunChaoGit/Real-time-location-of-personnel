@@ -50,41 +50,41 @@ export default {
     },
     measureDistance() {
       new DrawHelper(global.viewer.scene).startMeasureDistance((positions, time) => {
-        let movingTarget = {
-          id: createGuid(),
-          options: {
-            type: '1',
-            phone: '13376090266',
-            ascriptions: '第一中队'
-          },
-          timePositions: []
-        };
-        let offset = 0;
-        positions.forEach((val, index) => {
-          let position = carToDegrees(val);
-          position.lon = position.lon;
-          position.lat = position.lat;
-          position.height = position.height;
-          let date = new Date(time[index]);
-          offset = date.getMinutes() - new Date().date.getMinutes();
-          date.setTime(date.setMinutes(6 + offset));
+        // let movingTarget = {
+        //   id: createGuid(),
+        //   options: {
+        //     type: Math.ceil(Math.random() * 6),
+        //     phone: '13376090266',
+        //     ascriptions: '第一中队'
+        //   },
+        //   timePositions: []
+        // };
+        // let offset = 0;
+        // positions.forEach((val, index) => {
+        //   let position = carToDegrees(val);
+        //   position.lon = position.lon;
+        //   position.lat = position.lat;
+        //   position.height = position.height;
+        //   let date = new Date(time[index]);
+        //   offset = date.getMinutes() - new Date().getMinutes();
+        //   date.setTime(date.setMinutes(6 + offset));
 
-          let date1 = new Date('2018-10-17 23:06:00');
-          date1.setMinutes(date.getMinutes());
-          date1.setSeconds(date.getSeconds());
-          position.time = crtTimeFtt(date1);
-          movingTarget.timePositions.push(position);
-        });
-        console.log(movingTarget.id);
-        movingTarget.startTime = movingTarget.timePositions[0].time;
-        movingTarget.endTime = movingTarget.timePositions[movingTarget.timePositions.length - 1].time;
-        this.$http.post(api.saveMovingTarget, movingTarget)
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+        //   let date1 = new Date('2018-10-17 23:06:00');
+        //   date1.setMinutes(date.getMinutes());
+        //   date1.setSeconds(date.getSeconds());
+        //   position.time = crtTimeFtt(date1);
+        //   movingTarget.timePositions.push(position);
+        // });
+        // console.log(movingTarget.id);
+        // movingTarget.startTime = movingTarget.timePositions[0].time;
+        // movingTarget.endTime = movingTarget.timePositions[movingTarget.timePositions.length - 1].time;
+        // this.$http.post(api.saveMovingTarget, movingTarget)
+        // .then(function(response) {
+        //   console.log(response);
+        // })
+        // .catch(function(error) {
+        //   console.log(error);
+        // });
       });
     },
     measureArea() {

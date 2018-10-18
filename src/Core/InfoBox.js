@@ -13,11 +13,39 @@ class InfoBox {
   constructor(id, props) {
     if (!id) throw new Error('需要传入infobox的ID');
     this.id = id;
-    this.container = this._initContainer();
-    this.table = this._initTable();
+    this.container = {};
+    this.table = {};
     this.feature = {};
     this.props = props;
     this.observe();
+  }
+  /**
+   * 对外调用的初始化HTML元素方法
+   * @Author   MJC
+   * @DateTime 2018-10-18
+   * @version  1.0.0
+   * @return
+   */
+  init() {
+    this.container = this._initContainer();
+    this.table = this._initTable();
+    return this;
+  }
+  /**
+   * 点击关闭按钮时调用方法
+   * @Author   MJC
+   * @DateTime 2018-10-18
+   * @version  1.0.0
+   * @param    {Function} callback 关闭按钮时回调函数
+   * @return   {[type]}            [description]
+   */
+  closeEventListener(callback) {
+    // 添加关闭按钮点击事件
+    document.querySelector('#infobox' + this.id + ' .rp-icon-close').addEventListener('click', () => {
+      // 隐藏标牌
+      this.show(false);
+      callback();
+    }, false);
   }
   /**
    * 初始化标牌的容器
@@ -30,9 +58,6 @@ class InfoBox {
     let container = document.querySelector('.rp-infobox').cloneNode(true);
     container.setAttribute('id', 'infobox' + this.id);
     document.body.appendChild(container);
-    document.querySelector('#infobox' + this.id + ' .rp-icon-close').addEventListener('click', () => {
-      this.show(false);
-    });
     return container;
   }
   /**
@@ -146,6 +171,7 @@ class InfoBox {
    * @param    {Object}   movement 事件中的movement对象
    */
   static setPosition(id, canvasPosition) {
+    if (!canvasPosition) return;
     let box = document.querySelector('#infobox' + id);
     if (!box) return;
     box.style.top = canvasPosition.y + 'px';

@@ -58,6 +58,19 @@ class MovingTargetCollection {
     this._entities.add(entity);
   }
   /**
+   * 根据id查找集合中的MovingTarget对象
+   * @Author   MJC
+   * @DateTime 2018-10-18
+   * @version  1.0.0
+   * @param    {String}         id target的ID
+   * @return   {MovingTarget}      MovingTarget
+   */
+  getById(id) {
+    return this.targetCollection.filter(val => {
+      return val.id === id;
+    })[0];
+  }
+  /**
    * 为动目标集合中的目标绑定左键与右键点击事件
    * @Author   MJC
    * @DateTime 2018-10-11
@@ -66,6 +79,7 @@ class MovingTargetCollection {
   registerEvent() {
     // 创建事件管理对象
     this.event = new EventHelper(this._viewer);
+
     // 设置左键点击处理函数
     this.event.setEvent((movement) => {
       // 获取屏幕的坐标
@@ -78,10 +92,12 @@ class MovingTargetCollection {
       let entity = pickEntity.id;
       // 如果该目标没有标牌的话就创建标牌
       if (!document.querySelector('#infobox' + entity.id)) {
-        // 创建标牌等
-        this.infobox = new InfoBox(entity.id, ['id', 'phone', 'type', 'ascriptions', 'time']);
+        // 标牌获取
+        let infobox = this.getById(entity.id).infobox;
+        // 初始化标牌
+        infobox.init();
         // 对标牌数据进行更新 todo 更新坐标或者位置时间
-        this.infobox.setFeature((key) => {
+        infobox.setFeature((key) => {
           switch (key) {
             case 'id':
               return entity.options[key].substring(0, 8);
@@ -89,15 +105,14 @@ class MovingTargetCollection {
               return entity.options[key];
           }
         });
-        // 添加关闭按钮点击事件
-        document.querySelector('#infobox' + entity.id + ' .rp-icon-close').addEventListener('click', () => {
-          this.infobox.show(false);
+        // 为其标牌添加关闭事件
+        infobox.closeEventListener(() => {
           // 隐藏航迹
           entity.path.show = false;
         });
       }
       // 点击时标牌进行显示
-      this.infobox.show(true);
+      this.getById(entity.id).infobox.show(true);
       // 显示航迹
       entity.path.show = true;
     }, ScreenSpaceEventType.LEFT_CLICK);
