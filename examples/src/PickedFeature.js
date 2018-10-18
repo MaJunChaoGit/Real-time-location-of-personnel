@@ -39,7 +39,6 @@ class PickedFeature {
     this.eventHelper = new EventHelper(global.viewer);
     // 初始化事件
     this.initEvent();
-
   }
   /**
    * 初始化鼠标移动事件，鼠标左键点击事件
