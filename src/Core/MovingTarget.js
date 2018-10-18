@@ -14,6 +14,7 @@ import Cartesian2 from 'cesium/Core/Cartesian2';
 import Color from 'cesium/Core/Color';
 import createGuid from 'cesium/Core/createGuid';
 import NearFarScalar from 'cesium/Core/NearFarScalar';
+import TypeEnum from 'source/Core/TypeEnum';
 
 class MovingTarget {
   constructor(viewer, data) {
@@ -70,7 +71,7 @@ class MovingTarget {
         stop: JulianDate.fromDate(new Date(data.endTime))
       })]),
       point: {
-        color: Color.BLUE,
+        color: TypeEnum[data.options.type].color,
         pixelSize: 10,
         distanceDisplayCondition: new DistanceDisplayCondition(1500, 1e10),
         outlineColor: Color.WHITE,
@@ -78,28 +79,28 @@ class MovingTarget {
         scaleByDistance: new NearFarScalar(2000, 1.0, 200000, 0.2)
       },
       model: {
-        uri: '../Assets/j11/j11.gltf',
-        minimumPixelSize: 3,
-        maximumScale: 5,
-        scale: 0.1,
+        uri: TypeEnum[data.options.type].uri,
+        minimumPixelSize: TypeEnum[data.options.type].minimumPixelSize,
+        maximumScale: TypeEnum[data.options.type].maximumScale,
+        scale: TypeEnum[data.options.type].scale,
         distanceDisplayCondition: new DistanceDisplayCondition(0, 1500)
       },
       path: {
-        resolution: 9999,
+        resolution: 400,
         material: new PolylineGlowMaterialProperty({
           glowPower: 0.1,
-          color: Color.BLUE
+          color: TypeEnum[data.options.type].color
         }),
         width: 10,
         leadTime: 0,
-        trailTime: 300,
+        trailTime: 600,
         distanceDisplayCondition: new DistanceDisplayCondition(0, 200000),
         show: false
       },
       label: {
         font: '16px 黑体',
         text: '车辆编号:' + data.id.substring(0, 8),
-        fillColor: Color.SKYBLUE,
+        fillColor: TypeEnum[data.options.type].color,
         outlineColor: Color.BLACK,
         outlineWidth: 2,
         style: LabelStyle.FILL_AND_OUTLINE,

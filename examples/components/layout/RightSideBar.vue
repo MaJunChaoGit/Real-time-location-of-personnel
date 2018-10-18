@@ -71,7 +71,7 @@ export default {
 
           let date1 = new Date('2018-10-17 23:06:00');
           date1.setMinutes(date.getMinutes());
-          date1.setSeconds(date.getSeconds())
+          date1.setSeconds(date.getSeconds());
           position.time = crtTimeFtt(date1);
           movingTarget.timePositions.push(position);
         });
