@@ -34,7 +34,7 @@ class PickedFeature {
     // 初始化标牌
     this.infoBox.init();
     // 为其标牌添加关闭事件
-    this.infobox.closeEventListener(() => {
+    this.infoBox.closeEventListener(() => {
     });
     // 新建标牌对象
     this.nameOverlay = new NameOverlay('rp-nameOverlay', global.viewer);
