@@ -77,7 +77,7 @@ class MovingTarget {
       })]),
       point: {
         color: TypeEnum[type].color,
-        pixelSize: 10,
+        pixelSize: 5,
         distanceDisplayCondition: new DistanceDisplayCondition(1500, 1e10),
         outlineColor: Color.WHITE,
         outlineWidth: 3,
@@ -88,7 +88,9 @@ class MovingTarget {
         minimumPixelSize: TypeEnum[type].minimumPixelSize,
         maximumScale: TypeEnum[type].maximumScale,
         scale: TypeEnum[type].scale,
-        distanceDisplayCondition: new DistanceDisplayCondition(0, 1500)
+        distanceDisplayCondition: new DistanceDisplayCondition(0, 1500),
+        silhouetteColor: TypeEnum[type].color,
+        silhouetteSize: 2
       },
       path: {
         resolution: 400,
@@ -103,8 +105,8 @@ class MovingTarget {
         show: false
       },
       label: {
-        font: '16px 黑体',
-        text: '车辆编号:' + data.id.substring(0, 8),
+        font: '12px 黑体',
+        text: '编号:' + data.id.substring(0, 8),
         fillColor: TypeEnum[type].color,
         outlineColor: Color.BLACK,
         outlineWidth: 2,

@@ -45,7 +45,9 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
+    i:first-child {
+      margin-left: 5px;
+    }
     .rp-icon-close {
       cursor: pointer;
     }
