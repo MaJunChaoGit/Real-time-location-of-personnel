@@ -41,10 +41,23 @@ class InfoBox {
    */
   closeEventListener(callback) {
     // 添加关闭按钮点击事件
-    document.querySelector('#infobox' + this.id + ' .rp-icon-close').addEventListener('click', () => {
+    document.querySelector('#infobox' + this.id + ' .rp-icon-close').addEventListener('click', (event) => {
       // 隐藏标牌
       this.show(false);
-      callback();
+      callback(event);
+    }, false);
+  }
+  /**
+   * 点击小眼睛按钮时调用方法
+   * @Author   MJC
+   * @DateTime 2018-10-18
+   * @version  1.0.0
+   * @param    {Function} callback 点击按钮时回调函数
+   * @return   {[type]}            [description]
+   */
+  focusEventListener(callback) {
+    document.querySelector('#infobox' + this.id + ' .rp-icon-view').addEventListener('click', (event) => {
+      callback(event);
     }, false);
   }
   /**
@@ -81,7 +94,8 @@ class InfoBox {
    * @param    {Boolean}  isShow 控制infoBox的显示或者隐藏
    */
   show(isShow) {
-    document.querySelector('#infobox' + this.id).style.display = isShow ? 'block' : 'none';
+    let element = document.querySelector('#infobox' + this.id);
+    if (element) element.style.display = isShow ? 'block' : 'none';
   }
   /**
    * 对this.feature进行劫持

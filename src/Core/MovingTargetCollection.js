@@ -110,31 +110,59 @@ class MovingTargetCollection {
           // 隐藏航迹
           entity.path.show = false;
         });
+        infobox.focusEventListener((event) => {
+          let target = event.target;
+          let isTrack = this.trackEntity(entity, {
+            callback: () => {
+              document.querySelectorAll('.rp-icon-view').forEach(val => {
+                val.style.color = 'white';
+              });
+            }
+          });
+          isTrack ? target.style.color = 'yellow' : target.style.color = 'rgba(255, 255, 255, 1)';
+        });
       }
       // 点击时标牌进行显示
       this.getById(entity.id).infobox.show(true);
       // 显示航迹
       entity.path.show = true;
     }, ScreenSpaceEventType.LEFT_CLICK);
-    // 设置右键点击处理函数
-    this.event.setEvent((movement) => {
-      // 获取屏幕的坐标
-      let screenPosition = movement.position;
-      // 获取屏幕坐标点击后的实体
-      let pickEntity = this._viewer.scene.pick(screenPosition);
-      // 如果没有目标被选中或者选中的是倾斜摄影则退出
-      if (!pickEntity || (pickEntity && !pickEntity.id) || pickEntity instanceof Cesium3DTileFeature) return;
-      // 获取下该实体是否被跟踪
-      if (this.isTrack(pickEntity.id.id)) {
-        // 如果被跟踪并且已经记录上次摄像机的位置时那么就取消跟踪并将摄像机位置重置至右键点击时位置
-        if (this.resetPosition) this._viewer.camera.updateCamera(this.resetPosition);
-        this.cancelTrack(pickEntity.id.id);
-      } else {
-        // 跟踪目标并记录右键点击时位置
-        this.track(pickEntity.id);
-        this.resetPosition = this._viewer.camera.setOptions();
-      }
-    }, ScreenSpaceEventType.RIGHT_CLICK);
+    // // 设置右键点击处理函数
+    // this.event.setEvent((movement) => {
+    //   // 获取屏幕的坐标
+    //   let screenPosition = movement.position;
+    //   // 获取屏幕坐标点击后的实体
+    //   let pickEntity = this._viewer.scene.pick(screenPosition);
+    //   // 如果没有目标被选中或者选中的是倾斜摄影则退出
+    //   if (!pickEntity || (pickEntity && !pickEntity.id) || pickEntity instanceof Cesium3DTileFeature) return;
+    //   // 跟踪实体的方法
+    //   this.trackEntity(pickEntity.id);
+    // }, ScreenSpaceEventType.RIGHT_CLICK);
+  }
+  /**
+   * 跟踪或者取消跟踪实体的方法
+   * @Author   MJC
+   * @DateTime 2018-10-21
+   * @version  1.0.0
+   * @param    {Entity}   entity 实体对象
+   */
+  trackEntity(entity, { callback = () => {}, cancel = () => {}}) {
+    // 获取下该实体是否被跟踪
+    if (this.isTrack(entity.id)) {
+      // 如果被跟踪并且已经记录上次摄像机的位置时那么就取消跟踪并将摄像机位置重置至右键点击时位置
+      if (this.resetPosition) this._viewer.camera.updateCamera(this.resetPosition);
+      // 取消追踪方法
+      this.cancelTrack();
+      cancel();
+      return false;
+    } else {
+      // 跟踪目标并记录右键点击时位置
+      this.track(entity);
+      // 记录上次的摄像机位置
+      this.resetPosition = this._viewer.camera.setOptions();
+      callback();
+      return true;
+    }
   }
   /**
    * 判断实体目前是否跟踪状态
@@ -145,7 +173,8 @@ class MovingTargetCollection {
    * @return   {Boolean}     true 跟踪 false 不跟踪
    */
   isTrack(id) {
-    return !!this._trackedEntity[id];
+    if (this._trackedEntity) return this._trackedEntity.id === id;
+    return false;
   }
   /**
    * 取消目标的跟踪状态
@@ -154,9 +183,9 @@ class MovingTargetCollection {
    * @version  1.0.0
    * @param    {String}   id 取消跟踪目标
    */
-  cancelTrack(id) {
+  cancelTrack() {
     this._viewer.trackedEntity = undefined;
-    delete this._trackedEntity[id];
+    this._trackedEntity = null;
   }
   /**
    * 跟踪当前传入的实体目标
@@ -167,7 +196,7 @@ class MovingTargetCollection {
    */
   track(entity) {
     this._viewer.trackedEntity = entity;
-    this._trackedEntity[entity.id] = entity;
+    this._trackedEntity = entity;
   }
   /**
    * 在添加完实体后就绑定其标牌一起运动
@@ -191,8 +220,12 @@ class MovingTargetCollection {
         let position = entity.position.getValue(time);
         // 如果目标还存在时
         if (position) {
+          // 获取标牌
+          let infobox = that.getById(entity.id).infobox;
           // 获取实体目标屏幕坐标
           let canvasPosition = that._viewer.scene.cartesianToCanvasCoordinates(position, scratch);
+          // 如果目标实体不在屏幕内就隐藏标牌
+          if (!canvasPosition) infobox.show(false);
           // 对其详情标牌的位置进行刷新
           InfoBox.setPosition(entity.id, canvasPosition);
           // 更新实体的位置时间
