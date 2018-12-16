@@ -62,10 +62,10 @@ class InitScene {
               viewer.scene.skyAtmosphere.show = false;
               this.isComplete = true;
               clearTimeout(t);
-              // let feature = new Features(viewer, api.newYork);
+              let feature = new Features(viewer, api.newYork);
               resolve({
                 status: this.isComplete,
-                entity: null
+                entity: feature
               });
             }
           });

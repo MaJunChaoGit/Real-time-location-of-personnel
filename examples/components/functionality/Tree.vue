@@ -76,39 +76,6 @@
           </el-switch>
         </el-col>
       </el-row>
-       <!-- <el-row type="flex" align="middle" v-if="deviceType() === 'else'">
-        <el-col :span="24">
-          <h4>风格设置</h4>
-        </el-col>
-      </el-row>
-      <el-row type="flex" align="middle" v-if="deviceType() === 'else'">
-        <el-col :span="4" :offset="1">
-          <label>建筑:</label>
-        </el-col>
-        <el-col :span="7">
-          <el-select v-model="buildStyle" placeholder="请选择风格" size="mini" @change="buildStyleControl">
-            <el-option
-                v-for="item in buildStyleOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-            </el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="4" :offset="1">
-          <label>地图:</label>
-        </el-col>
-        <el-col :span="7">
-          <el-select v-model="mapStyle" placeholder="请选择风格" size="mini" @change="mapStyleControl">
-            <el-option
-                v-for="item in mapStyleOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-            </el-option>
-          </el-select>
-        </el-col>
-      </el-row> -->
     </div>
   </div>
 </template>
@@ -126,9 +93,6 @@ export default {
 
   data() {
     return {
-      min: -6,
-      max: 6,
-      step: 0.1,
       buildStyle: '1',
       buildStyleOptions: [{
         value: '0',
@@ -212,7 +176,6 @@ export default {
           }, 1);
         });
       }
-      
     },
     // 获取热力图数据
     getHeatMapData(currentData) {

@@ -106,7 +106,7 @@ class Clustering {
         cluster.billboard.image = this.pinBuilder.fromText(clusteredEntities.length.toString(), this.color, 48).toDataURL();
       });
     }
-    // 重置下融合命令
+    // 强行重置下融合
     let pixelRange = this.dataSource.clustering.pixelRange;
     this.setPixelRange(0);
     this.setPixelRange(pixelRange);

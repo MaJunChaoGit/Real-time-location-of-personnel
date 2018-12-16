@@ -7,7 +7,7 @@ import store from './vuex/store';
 
 import './theme/src/index.scss';
 import 'element-ui/lib/theme-chalk/index.css';
-import { Row, Col, Select, Option, Switch, Slider } from 'element-ui';
+import { Row, Col, Select, Option, Switch } from 'element-ui';
 
 Vue.use(Vuex);
 Vue.config.productionTip = false;
@@ -17,7 +17,6 @@ Vue.component(Col.name, Col);
 Vue.component(Select.name, Select);
 Vue.component(Option.name, Option);
 Vue.component(Switch.name, Switch);
-Vue.component(Slider.name, Slider);
 Vue.prototype.$http = axios;
 Vue.prototype.$api = api;
 /* eslint-disable no-new */

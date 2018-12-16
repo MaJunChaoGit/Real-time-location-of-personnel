@@ -46,9 +46,9 @@ export default {
       })
       .then(feature => {
         // 再复制INFOBOX,开启pickUp功能
-        // feature.pickUp();
+        feature.pickUp();
         // 存下feature后面用
-        // this.$store.commit('SET_BUILD', feature);
+        this.$store.commit('SET_BUILD', feature);
         // 现加载页面HTML
         this.isReady = true;
       });
