@@ -1,6 +1,6 @@
 /**
- * [EventHelper description]
- * 事件管理类
+ * [NameOverlay description]
+ * 标牌控制类
  * @Author   Mjc
  * @DateTime 2018-10-08
  * @exports

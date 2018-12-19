@@ -1,6 +1,5 @@
 import supViewer from 'cesium/Widgets/Viewer/Viewer';
 import Camera from 'source/Scene/Camera';
-import Cartesian3 from 'cesium/Core/Cartesian3';
 
 /* eslint-disable no-undef */
 // 初始化摄像机Symbol
@@ -24,7 +23,7 @@ class Viewer extends supViewer {
   }
 
   /**
-   *
+   * 设置一下继承关系
    */
   [initializeCamera]() {
     Object.setPrototypeOf(this.camera, Camera.prototype);
