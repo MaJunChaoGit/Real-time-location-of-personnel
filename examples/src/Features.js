@@ -37,7 +37,6 @@ class Features {
     /* eslint-disable no-undef */
     return new Promise((resolve) => {
       this.tileset.readyPromise.then(tileset => {
-        console.log(1);
         this.viewer.scene.primitives.add(tileset);
         resolve(self);
       });

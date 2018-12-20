@@ -19,6 +19,7 @@ class InitScene {
         .then(viewer => {
           global.viewer = viewer;
           if (process.env.NODE_ENV === 'development') viewer.scene.debugShowFramesPerSecond = true;
+
           this.focusScene(viewer, resolve);
         });
     });
@@ -44,7 +45,7 @@ class InitScene {
       // 飞行时间
       duration: 3,
       complete: () => {
-        setTimeout(() => {
+        let t = setTimeout(() => {
           global.viewer.scene.camera.flyTo({
             // 目的地
             destination: initialPosition,
@@ -53,16 +54,12 @@ class InitScene {
             orientation: initialOrientation,
             endTransform: Matrix4.IDENTITY,
             complete: () => {
-              // 设置图层颜色
-              viewer.setLayersStyles({
-                saturation: 0,
-                brightness: 0.36
-              });
               // 设置高光效果
               viewer.setBloomStyles({});
               // 开启光照效果
               viewer.scene.globe.enableLighting = true;
-              this.isComplete = false;
+              this.isComplete = true;
+              clearTimeout(t);
               resolve(this.isComplete);
             }
           });
@@ -97,7 +94,9 @@ class InitScene {
         automaticallyTrackDataSourceClocks: true, // 自动追踪最近添加的数据源的时钟设置
         contextOptions: undefined, // 传递给Scene对象的上下文参数（scene.options）
         showRenderLoopErrors: true, // 如果设为true，将在一个HTML面板中显示错误信息
-        imageryProvider: new IonImageryProvider({ assetId: 4 })
+        imageryProvider: new IonImageryProvider({ assetId: 4 }),
+        requestRenderMode: true,
+        maximumRenderTimeChange: Infinity
       });
     } catch (e) {
       // statements
@@ -105,14 +104,15 @@ class InitScene {
     }
     // 隐藏版权信息
     viewer.creditControll();
-
-    try {
-      // 新建倾斜摄影对象
-      const feature = new Features(viewer, api.newYork);
-    } catch (e) {
-      // statements
-      console.log('加载倾斜摄影出现BUG');
-    }
+    // 设置图层颜色
+    viewer.setLayersStyles({
+      brightness: 0.7,
+      contrast: 0.24,
+      hue: 0.26,
+      saturation: 0.64,
+      gamma: 0.36
+    });
+    let feature = new Features(viewer, api.newYork);
     return viewer;
   }
 
