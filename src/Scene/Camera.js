@@ -140,7 +140,6 @@ class Camera extends supCamera {
     cancel = () => {}
   }) {
     if (!destination) return;
-
     let _self = this;
     // 创建飞行定位框的id, 方便后续取消时的删除
     let id = createGuid();

@@ -10,7 +10,7 @@ class Features {
     this.viewer = viewer;
     this.tileset = null;
     this.feature = null;
-    this.add3dTiles();
+    return this.add3dTiles();
   }
   /**
    * 添加倾斜数据
@@ -34,8 +34,14 @@ class Features {
     this.tileset.style = new Cesium3DTileStyle({
       color: "(Number(${id}) % 2 === 0 && Number(${id}) % 3 !== 0 && Number(${id}) % 5 !== 0) ? color('cyan', 0.3) : color('purple', 0.1)"
     });
-    console.log(this.tileset.readyPromise.then);
-    this.viewer.scene.primitives.add(this.tileset);
+    /* eslint-disable no-undef */
+    return new Promise((resolve) => {
+      this.tileset.readyPromise.then(tileset => {
+        console.log(1);
+        this.viewer.scene.primitives.add(tileset);
+        resolve(self);
+      });
+    });
   }
   /**
    * 开启悬浮与点击事件
