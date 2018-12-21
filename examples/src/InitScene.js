@@ -19,8 +19,10 @@ class InitScene {
         .then(viewer => {
           global.viewer = viewer;
           if (process.env.NODE_ENV === 'development') viewer.scene.debugShowFramesPerSecond = true;
-
-          this.focusScene(viewer, resolve);
+          setTimeout(() => {
+            let feature = new Features(viewer, api.newYork);
+            this.focusScene(viewer, resolve);
+          }, 1000);
         });
     });
   }
@@ -50,14 +52,14 @@ class InitScene {
             // 目的地
             destination: initialPosition,
             // 飞行时间
-            duration: 2,
+            duration: 1,
             orientation: initialOrientation,
             endTransform: Matrix4.IDENTITY,
             complete: () => {
               // 设置高光效果
               viewer.setBloomStyles({});
-              // 开启光照效果
-              viewer.scene.globe.enableLighting = true;
+              // 关闭大气效果
+              viewer.scene.skyAtmosphere.show = false;
               this.isComplete = true;
               clearTimeout(t);
               resolve(this.isComplete);
@@ -94,9 +96,9 @@ class InitScene {
         automaticallyTrackDataSourceClocks: true, // 自动追踪最近添加的数据源的时钟设置
         contextOptions: undefined, // 传递给Scene对象的上下文参数（scene.options）
         showRenderLoopErrors: true, // 如果设为true，将在一个HTML面板中显示错误信息
-        imageryProvider: new IonImageryProvider({ assetId: 4 }),
-        requestRenderMode: true,
-        maximumRenderTimeChange: Infinity
+        imageryProvider: new IonImageryProvider({ assetId: 4 })
+        // requestRenderMode: true,
+        // maximumRenderTimeChange: Infinity
       });
     } catch (e) {
       // statements
@@ -104,15 +106,16 @@ class InitScene {
     }
     // 隐藏版权信息
     viewer.creditControll();
+    // 开启光照效果
+    viewer.scene.globe.enableLighting = true;
     // 设置图层颜色
     viewer.setLayersStyles({
-      brightness: 0.7,
-      contrast: 0.24,
-      hue: 0.26,
-      saturation: 0.64,
-      gamma: 0.36
+      brightness: 0.8,
+      contrast: 0.76,
+      hue: 0.08,
+      saturation: 0.52,
+      gamma: 0.06
     });
-    let feature = new Features(viewer, api.newYork);
     return viewer;
   }
 

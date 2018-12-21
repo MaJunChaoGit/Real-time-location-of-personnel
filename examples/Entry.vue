@@ -37,7 +37,7 @@ export default {
     let initScene = new InitScene(this.mountedId);
     // 2、调整代码结构，使用promise进行异步处理
     initScene.then(ready => {
-      this.isReady = false;
+      this.isReady = true;
     });
   },
 

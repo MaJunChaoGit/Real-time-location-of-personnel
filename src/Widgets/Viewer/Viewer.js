@@ -46,12 +46,12 @@ class Viewer extends supViewer {
     saturation = 1,
     gamma = 1
   }, layer = 0) {
-    this.imageryLayers.get(Number(layer)).saturation = Number(saturation);
-    this.imageryLayers.get(Number(layer)).brightness = Number(brightness);
-    this.imageryLayers.get(Number(layer)).contrast = Number(contrast);
-    this.imageryLayers.get(Number(layer)).hue = Number(hue);
-    this.imageryLayers.get(Number(layer)).saturation = Number(saturation);
-    this.imageryLayers.get(Number(layer)).gamma = Number(gamma);
+    this.imageryLayers.get(parseFloat(layer)).saturation = parseFloat(saturation);
+    this.imageryLayers.get(parseFloat(layer)).brightness = parseFloat(brightness);
+    this.imageryLayers.get(parseFloat(layer)).contrast = parseFloat(contrast);
+    this.imageryLayers.get(parseFloat(layer)).hue = parseFloat(hue);
+    this.imageryLayers.get(parseFloat(layer)).saturation = parseFloat(saturation);
+    this.imageryLayers.get(parseFloat(layer)).gamma = parseFloat(gamma);
   }
 
   /**
@@ -73,21 +73,21 @@ class Viewer extends supViewer {
   setBloomStyles({
     show = true,
     glowOnly = false,
-    contrast = 100,
-    brightness = -0.15,
-    delta = 1.0,
-    sigma = 3.78,
-    stepSize = 5.0
+    contrast = 128,
+    brightness = 0.2,
+    delta = 1.5,
+    sigma = 2,
+    stepSize = 1.5
   }) {
 
     let bloom = this.scene.postProcessStages.bloom;
     bloom.enabled = Boolean(show);
     bloom.uniforms.glowOnly = Boolean(glowOnly);
-    bloom.uniforms.contrast = Number(contrast);
-    bloom.uniforms.brightness = Number(brightness);
-    bloom.uniforms.delta = Number(delta);
-    bloom.uniforms.sigma = Number(sigma);
-    bloom.uniforms.stepSize = Number(stepSize);
+    bloom.uniforms.contrast = parseFloat(contrast);
+    bloom.uniforms.brightness = parseFloat(brightness);
+    bloom.uniforms.delta = parseFloat(delta);
+    bloom.uniforms.sigma = parseFloat(sigma);
+    bloom.uniforms.stepSize = parseFloat(stepSize);
   }
 };
 export default Viewer;
