@@ -77,7 +77,7 @@ class MovingTarget {
       })]),
       point: {
         color: TypeEnum[type].color,
-        pixelSize: 5,
+        pixelSize: 15,
         distanceDisplayCondition: new DistanceDisplayCondition(1500, 1e10),
         outlineColor: Color.WHITE,
         outlineWidth: 3,

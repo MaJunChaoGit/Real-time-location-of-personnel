@@ -105,9 +105,9 @@ ResetViewNavigationControl.prototype.resetView = function() {
       }
     } else if (typeof camera.flyHome === 'function') { // 如果camera.flyHome被定义,直接调用camera.flyHome
       // 设置相机的初始位置
-      let initialPosition = Cartesian3.fromDegrees(-74.01881302800248, 40.69114333714821, 753);
+      let initialPosition = Cartesian3.fromDegrees(-74.04476815709386, 40.71671929589706, 1400);
       /* eslint-disable new-cap */
-      let initialOrientation = new HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
+      let initialOrientation = new HeadingPitchRoll.fromDegrees(90, -21, 0);
       camera.flyTo({
         destination: initialPosition,
         duration: 2,

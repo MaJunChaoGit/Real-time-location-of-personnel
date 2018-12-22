@@ -38,12 +38,14 @@ export default {
     // 2、调整代码结构，使用promise进行异步处理
     initScene
       .then(resolve => {
+        // 现加载页面HTML
         this.isReady = resolve.status;
         return resolve.entity;
       })
       .then(feature => {
+        // 再复制INFOBOX,开启pickUp功能
         feature.pickUp();
-      })
+      });
   },
 
   methods: {
@@ -57,7 +59,7 @@ export default {
         // 设置生命周期
         collection.setLifyCircle(data.overallStarttime, data.overallEndtime);
         // 设置时钟效率
-        collection.setMultiplier(0.1);
+        collection.setMultiplier(0.3);
         // 遍历数据添加动目标
         data.data.forEach(val => {
           collection.add(new MovingTarget(global.viewer, val));
