@@ -103,18 +103,18 @@ class MovingTarget {
         trailTime: 600,
         distanceDisplayCondition: new DistanceDisplayCondition(0, 200000),
         show: false
-      },
-      label: {
-        font: '12px 黑体',
-        text: '编号:' + data.id.substring(0, 8),
-        fillColor: TypeEnum[type].color,
-        outlineColor: Color.BLACK,
-        outlineWidth: 2,
-        style: LabelStyle.FILL_AND_OUTLINE,
-        verticalOrigin: VerticalOrigin.TOP,
-        distanceDisplayCondition: new DistanceDisplayCondition(500, 200000),
-        pixelOffset: new Cartesian2(10, -25)
       }
+      // label: {
+      //   font: '12px 黑体',
+      //   text: '编号:' + data.id.substring(0, 8),
+      //   fillColor: TypeEnum[type].color,
+      //   outlineColor: Color.BLACK,
+      //   outlineWidth: 2,
+      //   style: LabelStyle.FILL_AND_OUTLINE,
+      //   verticalOrigin: VerticalOrigin.TOP,
+      //   distanceDisplayCondition: new DistanceDisplayCondition(500, 200000),
+      //   pixelOffset: new Cartesian2(10, -25)
+      // }
     };
   }
   /**

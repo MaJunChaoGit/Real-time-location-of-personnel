@@ -6,6 +6,7 @@ import InfoBox from 'source/Core/InfoBox';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
 import EventHelper from 'source/Core/EventHelper';
 import Cesium3DTileFeature from 'cesium/Scene/Cesium3DTileFeature';
+import Clustering from './Clustering';
 import { crtTimeFtt } from 'ex/utils/dom';
 /**
  * 该类为动目标管理类，主要功能为
@@ -32,17 +33,10 @@ class MovingTargetCollection {
     this.registerEvent();
     // 将该实体与该详情标牌关联
     this.bindWithInfobox();
-    console.log(this._dataSource);
-    // this._dataSource.then(function(ds) {
-    //   console.log(ds);
-    // });
-  }
-  /**
-   * 设置动画的播放速率
-   * @param {Number} speed [动画播放速率]
-   */
-  setMultiplier(speed) {
-    this._clock.multiplier = speed ? speed : 5;
+    let custering = new Clustering({
+      dataSource: this._dataSource
+    });
+    custering.enable(true);
   }
   /**
    * 添加实体进入动目标集合
@@ -249,7 +243,7 @@ class MovingTargetCollection {
         }
       }
       // 移除目标的预渲染处理事件
-      if (JulianDate.compare(time, that.stop) > 0) that._viewer.scene.postUpdate.removeEventListener(that.postUpdate);
+      if (JulianDate.compare(time, global.viewer.clock.endTime) > 0) that._viewer.scene.postUpdate.removeEventListener(that.postUpdate);
     };
     // 在场景中添加绑定
     this._viewer.scene.postUpdate.addEventListener(this.postUpdate);
@@ -294,24 +288,6 @@ class MovingTargetCollection {
   visiableAll(flag) {
     this._dataSource.show = flag;
     return flag;
-  }
-
-  /**
-   * 这里设置了动目标集合的生命周期时间，如果有第二个动目标集合的话，设置生命周期时以并集为主
-   * @Author   MJC
-   * @DateTime 2018-10-10
-   * @version  1.0.0
-   * @param    {StringDate} start 整个MovingCollection的起始时间 e.g '2018-06-01 16:22:00'
-   * @param    {StringDate} stop  整个MovingCollection的结束时间 e.g '2019-06-01 16:22:00'
-   */
-  setLifyCircle(start, stop) {
-    if (!defined(start) && !defined(stop)) throw new Error('需要传入开始字符串,格式为yyyy-mm-dd hh:mm:ss');
-    this.start = JulianDate.fromDate(new Date(start));
-    this.stop = JulianDate.fromDate(new Date(stop));
-    this._clock.shouldAnimate = true;
-    this._clock.startTime = this.start.clone();
-    this._clock.currentTime = this.start.clone();
-    this._clock.endTime = this.stop.clone();
   }
 
   destroy() {
