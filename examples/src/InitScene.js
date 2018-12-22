@@ -20,7 +20,6 @@ class InitScene {
           global.viewer = viewer;
           if (process.env.NODE_ENV === 'development') viewer.scene.debugShowFramesPerSecond = true;
           setTimeout(() => {
-            let feature = new Features(viewer, api.newYork);
             this.focusScene(viewer, resolve);
           }, 1000);
         });
@@ -62,7 +61,11 @@ class InitScene {
               viewer.scene.skyAtmosphere.show = false;
               this.isComplete = true;
               clearTimeout(t);
-              resolve(this.isComplete);
+              let feature = new Features(viewer, api.newYork);
+              resolve({
+                status: this.isComplete,
+                entity: feature
+              });
             }
           });
         }, 300);

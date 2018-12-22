@@ -1,20 +1,34 @@
 import PickedFeature from './PickedFeature.js';
-import Cartesian3 from 'cesium/Core/Cartesian3';
-import Cartesian2 from 'cesium/Core/Cartesian2';
 import ShadowMode from 'cesium/Scene/ShadowMode';
 import Cesium3DTileset from 'cesium/Scene/Cesium3DTileset';
 import Cesium3DTileStyle from 'cesium/Scene/Cesium3DTileStyle';
 /**
  * 对3dTils进行封装,并对其的pick事件进行控制
  */
+// 由于需要在不同组件中调用,为了提高效率,将其存下来
+const featuresCollection = [];
+
 class Features {
   constructor(viewer, url) {
     this.url = url;
     this.viewer = viewer;
     this.tileset = null;
     this.feature = null;
+    featuresCollection.push(this);
     return this.add3dTiles();
   }
+
+  /**
+   * @Author   MJC
+   * @DateTime 2018-12-22
+   * @version  1.0.0
+   * @param    {Number}   index 该倾斜摄影的缩影
+   * @return   {Features}       该类的实例
+   */
+  static getFeatures(index = 0) {
+    return featuresCollection[index];
+  }
+
   /**
    * 添加倾斜数据
    * @Author   MJC
@@ -41,7 +55,6 @@ class Features {
       // lightColor: new Cartesian3(0, 0, 0)
       shadows: ShadowMode.DISABLED
     });
-    window.t = this.tileset;
     // 设置3dtiles的颜色
     this.tileset.style = new Cesium3DTileStyle({
       color: {
@@ -91,7 +104,6 @@ class Features {
     if (!this.feature) return;
     this.feature.removeEvent();
   }
-
   /**
    * 控制倾斜摄影的显示与隐藏
    * @Author   MJC

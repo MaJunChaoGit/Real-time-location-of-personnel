@@ -36,9 +36,14 @@ export default {
     // 1.优化加载顺序
     let initScene = new InitScene(this.mountedId);
     // 2、调整代码结构，使用promise进行异步处理
-    initScene.then(ready => {
-      this.isReady = true;
-    });
+    initScene
+      .then(resolve => {
+        this.isReady = resolve.status;
+        return resolve.entity;
+      })
+      .then(feature => {
+        feature.pickUp();
+      })
   },
 
   methods: {
