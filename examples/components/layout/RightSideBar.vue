@@ -15,17 +15,18 @@
 <script>
 import RpButtonGroup from './ButtonGroup';
 import RpButton from '../functionality/Button';
+import Features from 'ex/src/Features';
 import { getDeviceType } from '../../utils/dom';
 import {
   Fullscreen,
   changeSceneMode,
-  DrawHelper,
-  CirclePrimitive
+  DrawHelper
+  // CirclePrimitive
 } from 'source/index';
-import carToDegrees from 'ex/src/carToDegrees';
+// import carToDegrees from 'ex/src/carToDegrees';
 import api from 'ex/api/index';
-import createGuid from 'cesium/Core/createGuid';
-import { crtTimeFtt } from 'ex/utils/dom';
+// import createGuid from 'cesium/Core/createGuid';
+// import { crtTimeFtt } from 'ex/utils/dom';
 export default {
   name: 'RpRightSide',
 
@@ -49,7 +50,12 @@ export default {
       changeSceneMode(global.viewer.scene);
     },
     measureDistance() {
-      new DrawHelper(global.viewer.scene).startMeasureDistance((positions, time) => {
+      Features.getFeatures().pickDown();
+      new DrawHelper(global.viewer.scene).startMeasureDistance(() => {
+        Features.getFeatures().pickUp();
+      });
+      // 下面是保存数据的方法
+      // new DrawHelper(global.viewer.scene).startMeasureDistance((positions, time) => {
         // let movingTarget = {
         //   id: createGuid(),
         //   options: {
@@ -85,17 +91,20 @@ export default {
         // .catch(function(error) {
         //   console.log(error);
         // });
-      });
+      // });
     },
     measureArea() {
-      new DrawHelper(global.viewer.scene).startMeasureArea();
+      Features.getFeatures().pickDown();
+      new DrawHelper(global.viewer.scene).startMeasureArea(() => {
+        Features.getFeatures().pickUp();
+      });
     },
     deviceType() {
       return getDeviceType();
     },
     featuresControll() {
       this.featureButtonClass = this.featuresShow ? 'rp-icon--custom__show' : 'rp-icon--custom__hide';
-      this.featuresShow = !global.viewer.features.show(this.featuresShow);
+      this.featuresShow = !Features.getFeatures().show(this.featuresShow);
     }
   },
   mounted() {

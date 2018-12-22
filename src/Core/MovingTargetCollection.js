@@ -32,6 +32,10 @@ class MovingTargetCollection {
     this.registerEvent();
     // 将该实体与该详情标牌关联
     this.bindWithInfobox();
+    console.log(this._dataSource);
+    // this._dataSource.then(function(ds) {
+    //   console.log(ds);
+    // });
   }
   /**
    * 设置动画的播放速率

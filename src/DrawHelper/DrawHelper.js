@@ -181,8 +181,8 @@ class DrawHelper {
     this.startDrawingPolyshape(false, defaultPolylineOptions);
   }
 
-  startMeasureArea() {
-    this.startDrawingPolyshape(true, {}, true);
+  startMeasureArea(callback) {
+    this.startDrawingPolyshape(true, {}, true, callback);
   }
 
   startMeasureDistance(callback) {
