@@ -54,16 +54,28 @@ export default {
       this.$http.get(api.movingTargets)
       .then(response => {
         let data = response.data;
-        // 新建动目标集合
-        let collection = new MovingTargetCollection(global.viewer);
-        // 设置生命周期
-        collection.setLifyCircle(data.overallStarttime, data.overallEndtime);
+        // 设置动画声明周期
+        global.viewer.setLifyCircle(data.overallStarttime, data.overallEndtime);
         // 设置时钟效率
-        collection.setMultiplier(0.3);
-        // 遍历数据添加动目标
+        global.viewer.setMultiplier(0.1);
+        // 设置一个分类对象, 便于之后的集群操作
+        let classification = {};
+        // 遍历数据添分类动目标
         data.data.forEach(val => {
-          collection.add(new MovingTarget(global.viewer, val));
+          // 获取当前分类数组, 如果没有定义的话就定义一个, 之后开始填充数据
+          if (!classification[val.options.type]) classification[val.options.type] = [];
+          classification[val.options.type].push(val);
         });
+        // 遍历分类对象
+        for (let key in classification) {
+          // 新建动目标集合
+          let collection = new MovingTargetCollection(global.viewer);
+          classification[key].forEach(val => {
+            collection.add(new MovingTarget(global.viewer, val));
+          });
+        }
+        MovingTargetCollection.registerLeftClickEvent();
+        MovingTargetCollection.bindWithInfobox();
       })
       .catch(function(error) {
         console.log(error);

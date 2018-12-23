@@ -13,6 +13,7 @@ class InfoBox {
   constructor(id, props) {
     if (!id) throw new Error('需要传入infobox的ID');
     this.id = id;
+    this.status;
     this.container = {};
     this.table = {};
     this.feature = {};
@@ -96,6 +97,7 @@ class InfoBox {
   show(isShow) {
     let element = document.querySelector('#infobox' + this.id);
     if (element) element.style.display = isShow ? 'block' : 'none';
+    this.status = isShow ? 'open' : 'close';
   }
   /**
    * 对this.feature进行劫持

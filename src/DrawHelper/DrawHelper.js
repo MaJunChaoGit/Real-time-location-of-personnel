@@ -256,6 +256,7 @@ class DrawHelper {
   }
 
   startDrawingPolyshape(isPolygon, options, isMeasure, callback) {
+    let oldTime = new Date();
     options = options || {};
 
     this.startDrawing(
@@ -310,7 +311,9 @@ class DrawHelper {
           cartesian.y += (1 + Math.random());
           positions.push(cartesian);
           markers.addBillboard(cartesian);
-          time.push(new Date());
+          let newTime = new Date();
+          time.push(newTime - oldTime);
+          oldTime = newTime;
         }
       }
     }, ScreenSpaceEventType.LEFT_CLICK);
@@ -343,7 +346,8 @@ class DrawHelper {
         let cartesian = scene.camera.pickEllipsoid(movement.position, ellipsoid);
         if (cartesian) {
           positions.push(cartesian);
-          time.push(new Date());
+          let newTime = new Date();
+          time.push(newTime - oldTime);
         }
       }
       if (isPolygon) {
