@@ -21,12 +21,11 @@ import {
   Fullscreen,
   changeSceneMode,
   DrawHelper
-  // CirclePrimitive
 } from 'source/index';
-// import carToDegrees from 'ex/src/carToDegrees';
+import carToDegrees from 'ex/src/carToDegrees';
 import api from 'ex/api/index';
-// import createGuid from 'cesium/Core/createGuid';
-// import { crtTimeFtt } from 'ex/utils/dom';
+import createGuid from 'cesium/Core/createGuid';
+import { crtTimeFtt } from 'ex/utils/dom';
 export default {
   name: 'RpRightSide',
 
@@ -50,48 +49,47 @@ export default {
       changeSceneMode(global.viewer.scene);
     },
     measureDistance() {
-      Features.getFeatures().pickDown();
-      new DrawHelper(global.viewer.scene).startMeasureDistance(() => {
-        Features.getFeatures().pickUp();
-      });
-      // 下面是保存数据的方法
-      // new DrawHelper(global.viewer.scene).startMeasureDistance((positions, time) => {
-        // let movingTarget = {
-        //   id: createGuid(),
-        //   options: {
-        //     type: Math.ceil(Math.random() * 6),
-        //     phone: '13376090266',
-        //     ascriptions: '第一中队'
-        //   },
-        //   timePositions: []
-        // };
-        // let offset = 0;
-        // positions.forEach((val, index) => {
-        //   let position = carToDegrees(val);
-        //   position.lon = position.lon;
-        //   position.lat = position.lat;
-        //   position.height = position.height;
-        //   let date = new Date(time[index]);
-        //   offset = date.getMinutes() - new Date().getMinutes();
-        //   date.setTime(date.setMinutes(6 + offset));
-
-        //   let date1 = new Date('2018-10-17 23:06:00');
-        //   date1.setMinutes(date.getMinutes());
-        //   date1.setSeconds(date.getSeconds());
-        //   position.time = crtTimeFtt(date1);
-        //   movingTarget.timePositions.push(position);
-        // });
-        // console.log(movingTarget.id);
-        // movingTarget.startTime = movingTarget.timePositions[0].time;
-        // movingTarget.endTime = movingTarget.timePositions[movingTarget.timePositions.length - 1].time;
-        // this.$http.post(api.saveMovingTarget, movingTarget)
-        // .then(function(response) {
-        //   console.log(response);
-        // })
-        // .catch(function(error) {
-        //   console.log(error);
-        // });
-      // });
+      
+      if (process.env.NODE_ENV === 'development') {
+        // 下面是保存数据的方法
+        new DrawHelper(global.viewer.scene).startMeasureDistance((positions, time) => {
+          let movingTarget = {
+            id: createGuid(),
+            options: {
+              type: Math.ceil(Math.random() * 6),
+              phone: '13376090266',
+              ascriptions: '第一中队'
+            },
+            timePositions: []
+          };
+          let date = new Date('2018-10-17 23:06:00');
+          positions.forEach((val, index) => {
+            let position = carToDegrees(val);
+            position.lon = position.lon;
+            position.lat = position.lat;
+            position.height = position.height;
+            if (index !== 0) date.setMilliseconds(time[index] + 5000);
+            position.time = crtTimeFtt(date);     
+            movingTarget.timePositions.push(position);
+          });
+          console.log(movingTarget.id);
+          console.log(movingTarget.timePositions);
+          movingTarget.startTime = movingTarget.timePositions[0].time;
+          movingTarget.endTime = movingTarget.timePositions[movingTarget.timePositions.length - 1].time;
+          this.$http.post(api.saveMovingTarget, movingTarget)
+          .then(function(response) {
+            console.log(response);
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+        });
+      } else {
+        Features.getFeatures().pickDown();
+        new DrawHelper(global.viewer.scene).startMeasureDistance(() => {
+          Features.getFeatures().pickUp();
+        });
+      }
     },
     measureArea() {
       Features.getFeatures().pickDown();

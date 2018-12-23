@@ -57,13 +57,13 @@ export default {
         // 设置动画声明周期
         global.viewer.setLifyCircle(data.overallStarttime, data.overallEndtime);
         // 设置时钟效率
-        global.viewer.setMultiplier(0.3);
+        global.viewer.setMultiplier(0.1);
         // 设置一个分类对象, 便于之后的集群操作
         let classification = {};
         // 遍历数据添分类动目标
         data.data.forEach(val => {
           // 获取当前分类数组, 如果没有定义的话就定义一个, 之后开始填充数据
-          if(!classification[val.options.type]) classification[val.options.type] = [];
+          if (!classification[val.options.type]) classification[val.options.type] = [];
           classification[val.options.type].push(val);
         });
         // 遍历分类对象
@@ -74,6 +74,8 @@ export default {
             collection.add(new MovingTarget(global.viewer, val));
           });
         }
+        MovingTargetCollection.registerLeftClickEvent();
+        MovingTargetCollection.bindWithInfobox();
       })
       .catch(function(error) {
         console.log(error);
