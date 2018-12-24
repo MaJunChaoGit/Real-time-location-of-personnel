@@ -10,14 +10,17 @@ class InfoBox {
    * @param    {[type]}   container [description]
    * @return   {[type]}             [description]
    */
-  constructor(id, props) {
+  constructor(id, keys, icons = [], follow = false) {
     if (!id) throw new Error('需要传入infobox的ID');
     this.id = id;
     this.status;
     this.container = {};
+    this.icons = icons;
+    this.follow = follow;
     this.table = {};
     this.feature = {};
-    this.props = props;
+    this.keys = keys;
+    this.init();
     this.observe();
   }
   /**
@@ -28,8 +31,12 @@ class InfoBox {
    * @return
    */
   init() {
+    // 初始化容器
     this.container = this._initContainer();
+    // 初始化表格
     this.table = this._initTable();
+    // 初始化icons
+    this._iconsEventListener();
     return this;
   }
   /**
@@ -56,10 +63,25 @@ class InfoBox {
    * @param    {Function} callback 点击按钮时回调函数
    * @return   {[type]}            [description]
    */
-  focusEventListener(callback) {
-    document.querySelector('#infobox' + this.id + ' .rp-icon-view').addEventListener('click', (event) => {
-      callback(event);
-    }, false);
+  _iconsEventListener() {
+    this.icons.forEach(icon => {
+      this._initIcon(icon.name);
+      document.querySelector('#infobox' + this.id + ' .' + icon.name).addEventListener('click', (event) => {
+        icon.callback(event);
+      }, false);
+    });
+  }
+  /**
+   * 初始化左上角小图标
+   * @Author   MJC
+   * @DateTime 2018-12-24
+   * @version  1.0.0
+   * @param    {String}   name 小图标的class名字
+   */
+  _initIcon(name) {
+    let icon = document.createElement('i');
+    icon.setAttribute('class', name);
+    document.querySelector('#infobox' + this.id + ' .rp-infobox__header').prepend(icon);
   }
   /**
    * 初始化标牌的容器
@@ -107,7 +129,7 @@ class InfoBox {
    * @param    {Object}   feature 需要劫持的对象
    */
   observe() {
-    this.props.forEach(key => {
+    this.keys.forEach(key => {
       this.feature[key] = '';
       this.defineReactive(this.feature, key, this.feature[key]);
     });
@@ -192,6 +214,18 @@ class InfoBox {
     if (!box) return;
     box.style.top = canvasPosition.y + 'px';
     box.style.left = canvasPosition.x + 'px';
+  }
+
+  /**
+   * 查询当前标牌是否存在
+   * @Author   MJC
+   * @DateTime 2018-12-24
+   * @version  [1.0.0]
+   * @param    {String}   id 标牌的id
+   * @return   {Boolean}     是否存在, true or false
+   */
+  static isExist(id) {
+    return !!document.querySelector('#infobox' + id);
   }
 };
 

@@ -19,14 +19,30 @@ class Clustering {
     this.dataSource = dataSource;
     // 标识图标的Builder
     this.pinBuilder = new PinBuilder();
-    // 是否开启集群功能
+    // 默认直接开启集群功能
     this.enable(enabled);
+    // 集群标识的颜色, 默认天空蓝
+    this.color = Color.SKYBLUE;
     // 集群最小融合像素
     this.setPixelRange(pixelRange);
     // 集群最小数目
     this.setMinimumClusterSize(minimumClusterSize);
     // 移除集群事件
     this.removeListener = null;
+    // 开启集群处理事件
+    this.clusteringHandle();
+  }
+
+  /**
+   * 设置集群标识的的颜色
+   * @Author   MJC
+   * @DateTime 2018-12-24
+   * @version  1.0.0
+   * @param    {Color}   color 集群标识的颜色值
+   */
+  setPinColor(color) {
+    if (!color) throw new Error('请传入正确颜色值');
+    this.color = color;
   }
   /**
    * 开启集群和关闭集群功能
@@ -72,7 +88,7 @@ class Clustering {
    * @version  1.0.0
    * @param    {Color}   color 设置融合小标识的颜色
    */
-  setStyle(color = Color.SKYBLUE) {
+  clusteringHandle() {
     if (defined(this.removeListener)) {
       this.removeListener();
       this.removeListener = null;
@@ -87,7 +103,7 @@ class Clustering {
         // 设置垂直底部居中
         cluster.billboard.verticalOrigin = VerticalOrigin.BOTTOM;
         // 设置标识小标志
-        cluster.billboard.image = this.pinBuilder.fromText(clusteredEntities.length.toString(), color, 48).toDataURL();
+        cluster.billboard.image = this.pinBuilder.fromText(clusteredEntities.length.toString(), this.color, 48).toDataURL();
       });
     }
     // 重置下融合命令

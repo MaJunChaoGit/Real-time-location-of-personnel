@@ -911,6 +911,8 @@ import Scene_changeSceneMode from 'source/Scene/changeSceneMode';
 import DrawHelper_DrawHelper from 'source/DrawHelper/DrawHelper';
 import Core_MovingTarget from 'source/Core/MovingTarget';
 import Core_MovingTargetCollection from 'source/Core/MovingTargetCollection';
+import Core_TypeEnum from 'source/Core/TypeEnum';
+import Core_Clustering from 'source/Core/Clustering';
 import DrawHelper_CirclePrimitive from 'source/DrawHelper/CirclePrimitive';
 
 const _shaders = {
@@ -1831,6 +1833,8 @@ module.exports = {
   DrawHelper: DrawHelper_DrawHelper,
   MovingTarget: Core_MovingTarget,
   MovingTargetCollection: Core_MovingTargetCollection,
+  TypeEnum: Core_TypeEnum,
+  Clustering: Core_Clustering,
   CirclePrimitive: DrawHelper_CirclePrimitive
 };
 

@@ -1,10 +1,10 @@
 import NameOverlay from './NameOverlay';
 import EventHelper from 'source/Core/EventHelper';
-import InfoBox from 'source/Core/InfoBox';
 import defined from 'cesium/Core/defined';
 import Color from 'cesium/Core/Color';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
 import Cesium3DTileFeature from 'cesium/Scene/Cesium3DTileFeature';
+import InfoBoxManager from 'source/Core/InfoBoxManager';
 
 let self = {};
 
@@ -29,13 +29,23 @@ class PickedFeature {
       feature: undefined,
       originalColor: new Color()
     };
-    // 新建infobox对象
-    this.infoBox = new InfoBox('newYork', ['id', 'type', 'height', 'area', 'longitude', 'latitude']);
-    // 初始化标牌
-    this.infoBox.init();
-    // 为其标牌添加关闭事件
-    this.infoBox.closeEventListener(() => {
+    this.infoBoxManager = new InfoBoxManager({
+      id: 'PickFeature',
+      type: Cesium3DTileFeature,
+      props: 'getProperty',
+      keys: ['id', 'type', 'height', 'area', 'longitude', 'latitude'],
+      icons: [{
+        name: 'rp-icon-view',
+        callback: () => { console.log(1); }
+      }]
     });
+    // // 新建infobox对象
+    // this.infoBox = new InfoBox('newYork', ['id', 'type', 'height', 'area', 'longitude', 'latitude']);
+    // // 初始化标牌
+    // this.infoBox.init();
+    // // 为其标牌添加关闭事件
+    // this.infoBox.closeEventListener(() => {
+    // });
     // 新建标牌对象
     this.nameOverlay = new NameOverlay('rp-nameOverlay', global.viewer);
     // 新建事件管理类
@@ -53,6 +63,7 @@ class PickedFeature {
     // 初始化鼠标移动事件，鼠标左键点击事件
     this.eventHelper.setEvent(this.onMoveEvent, ScreenSpaceEventType.MOUSE_MOVE);
     this.eventHelper.setEvent(this.onLeftClick, ScreenSpaceEventType.LEFT_CLICK);
+    this.infoBoxManager.initTriggerEvent();
   }
   /**
    * 移除鼠标移动事件，鼠标左键点击事件
@@ -68,7 +79,8 @@ class PickedFeature {
 
     if (this.highlighted.feature) this.highlighted.feature.color = this.highlighted.originalColor;
     if (this.selected.feature) this.selected.feature.color = this.selected.originalColor;
-    this.infoBox.show(false);
+    this.infoBoxManager.removeTriggerEvent();
+    this.infoBoxManager.infobox.show(false);
     this.nameOverlay.show(false);
   }
   /**
@@ -166,12 +178,12 @@ class PickedFeature {
     // 修改pickBUG
     // 修改要素颜色
     pickedFeature.color = Color.LIME;
-    // 设置显示的infobox的内容
-    self.infoBox.setFeature(function(key) {
-      return pickedFeature.getProperty(key);
-    });
-    // 显示infobox
-    self.infoBox.show(true);
+    // // 设置显示的infobox的内容
+    // self.infoBox.setFeature(function(key) {
+    //   return pickedFeature.getProperty(key);
+    // });
+    // // 显示infobox
+    // self.infoBox.show(true);
   }
 }
 export default PickedFeature;

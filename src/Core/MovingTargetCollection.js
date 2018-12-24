@@ -47,7 +47,7 @@ class MovingTargetCollection {
     // 如果实体对象已经被创建那么返回
     if (this._entities.contains(entity)) return;
     // 将实体加入场景
-    this._entities.add(entity);
+    window.s = this._entities.add(entity);
   }
   /**
    * 根据id查找集合中的MovingTarget对象
