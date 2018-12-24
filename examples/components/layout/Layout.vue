@@ -17,7 +17,7 @@ export default {
   name: 'RpLayout',
 
   mounted() {
-    viewerCesiumNavigationMixin.mixinWidget(window.viewer, {}, {
+    viewerCesiumNavigationMixin.mixinWidget(global.viewer, {}, {
       distance: 'rp-distance-legend',
       outring: 'rp-outring'
     });
