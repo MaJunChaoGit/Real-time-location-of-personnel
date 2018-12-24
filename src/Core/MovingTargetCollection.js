@@ -6,7 +6,6 @@ import InfoBox from 'source/Core/InfoBox';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
 import EventHelper from 'source/Core/EventHelper';
 import Cesium3DTileFeature from 'cesium/Scene/Cesium3DTileFeature';
-import Clustering from './Clustering';
 import { crtTimeFtt } from 'ex/utils/dom';
 /**
  * 该类为动目标管理类，主要功能为
@@ -30,10 +29,7 @@ class MovingTargetCollection {
     this._entities = this._dataSource.entities;
     this._trackedEntity = {};
     this.resetPosition = {};
-    let custering = new Clustering({
-      dataSource: this._dataSource
-    });
-    custering.enable(true);
+
     dataSourceCollection.push(this);
   }
   /**

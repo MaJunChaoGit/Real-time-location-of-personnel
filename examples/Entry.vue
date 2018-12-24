@@ -14,7 +14,9 @@ import api from './api/index';
 
 import {
   MovingTarget,
-  MovingTargetCollection
+  MovingTargetCollection,
+  Clustering,
+  TypeEnum
 } from 'source/index.js';
 
 export default {
@@ -52,34 +54,40 @@ export default {
     loaded() {
       // 请求动目标数据
       this.$http.get(api.movingTargets)
-      .then(response => {
-        let data = response.data;
-        // 设置动画声明周期
-        global.viewer.setLifyCircle(data.overallStarttime, data.overallEndtime);
-        // 设置时钟效率
-        global.viewer.setMultiplier(0.1);
-        // 设置一个分类对象, 便于之后的集群操作
-        let classification = {};
-        // 遍历数据添分类动目标
-        data.data.forEach(val => {
-          // 获取当前分类数组, 如果没有定义的话就定义一个, 之后开始填充数据
-          if (!classification[val.options.type]) classification[val.options.type] = [];
-          classification[val.options.type].push(val);
-        });
-        // 遍历分类对象
-        for (let key in classification) {
-          // 新建动目标集合
-          let collection = new MovingTargetCollection(global.viewer);
-          classification[key].forEach(val => {
-            collection.add(new MovingTarget(global.viewer, val));
+        .then(response => {
+          let data = response.data;
+          // 设置动画声明周期
+          global.viewer.setLifyCircle(data.overallStarttime, data.overallEndtime);
+          // 设置时钟效率
+          global.viewer.setMultiplier(0.1);
+          // 设置一个分类对象, 便于之后的集群操作
+          let classification = {};
+          // 遍历数据添分类动目标
+          data.data.forEach(val => {
+            // 获取当前分类数组, 如果没有定义的话就定义一个, 之后开始填充数据
+            if (!classification[val.options.type]) classification[val.options.type] = [];
+            classification[val.options.type].push(val);
           });
-        }
-        MovingTargetCollection.registerLeftClickEvent();
-        MovingTargetCollection.bindWithInfobox();
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+          // 遍历分类对象
+          for (let key in classification) {
+            // 新建动目标集合
+            let collection = new MovingTargetCollection(global.viewer);
+            // 循环该分类下的数据，添加到动目标分组内
+            classification[key].forEach(val => {
+              collection.add(new MovingTarget(global.viewer, val));
+            });
+            // 开启动目标融合功能
+            let custering = new Clustering({
+              dataSource: collection._dataSource
+            });
+            custering.setStyle(TypeEnum[classification[key]].color);
+          }
+          MovingTargetCollection.registerLeftClickEvent();
+          MovingTargetCollection.bindWithInfobox();
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };

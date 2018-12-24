@@ -7,6 +7,7 @@ import {
   HeadingPitchRoll,
   IonImageryProvider
 } from 'source/index';
+
 import Features from 'ex/src/Features';
 
 class InitScene {
