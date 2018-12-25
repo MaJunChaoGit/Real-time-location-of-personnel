@@ -1,5 +1,6 @@
 import Math from 'cesium/Core/Math';
-
+import Cartesian2 from 'cesium/Core/Cartesian2';
+import { crtTimeFtt } from 'ex/utils/dom';
 class InfoBox {
   /**
    * 在用户调用了setFeature方法后会触发this.feature的响应式
@@ -13,7 +14,7 @@ class InfoBox {
   constructor(id, keys, icons = [], follow = false) {
     if (!id) throw new Error('需要传入infobox的ID');
     this.id = id;
-    this.status;
+    this.status = 'pending';
     this.container = {};
     this.icons = icons;
     this.follow = follow;
@@ -21,7 +22,6 @@ class InfoBox {
     this.feature = {};
     this.keys = keys;
     this.init();
-    this.observe();
   }
   /**
    * 对外调用的初始化HTML元素方法
@@ -31,6 +31,8 @@ class InfoBox {
    * @return
    */
   init() {
+    // 先劫持所有的数据
+    this.observe();
     // 初始化容器
     this.container = this._initContainer();
     // 初始化表格
@@ -38,6 +40,45 @@ class InfoBox {
     // 初始化icons
     this._iconsEventListener();
     return this;
+  }
+  /**
+   * 绑定下实体，方便之后操作
+   * @Author   MJC
+   * @DateTime 2018-12-25
+   * @version  1.0.0
+   * @param    {Entity}   entity 绑定的实体
+   * @return   {[type]}          [description]
+   */
+  bindEntity(entity) {
+    let self = this;
+    this.entity = entity;
+    let scratch = new Cartesian2();
+    // 绑定预渲染事件
+    let postUpdate = function() {
+      // 获取当前的朱丽叶时间
+      let time = global.viewer.clock._currentTime;
+      // 如果创建了标牌,并且标牌为打开状态
+      if (self.status === 'open') {
+        // 获取当前时间下该实体目标的笛卡尔坐标
+        let position = entity.position.getValue(time);
+        // 如果目标还存在时
+        if (position) {
+          // 获取实体目标屏幕坐标
+          let canvasPosition = global.viewer.scene.cartesianToCanvasCoordinates(position, scratch);
+          // 对其详情标牌的位置进行刷新
+          InfoBox.setPosition(entity.id, canvasPosition);
+          // 更新实体的位置时间
+          let timeValue = crtTimeFtt(time);
+          entity.options.time = timeValue;
+          let timeLabel = document.querySelector('#infobox' + self.entity.id + ' table>#time>td');
+          if (timeLabel) timeLabel.textContent = timeValue;
+        }
+      }
+      // 如果当前时间超过了时钟设置的总的结束时间, 移除目标的预渲染处理事件
+      if (!InfoBox.isExist(self.entity.id)) global.viewer.scene.postUpdate.removeEventListener(postUpdate);
+    };
+    // 在场景中添加绑定
+    global.viewer.scene.postUpdate.addEventListener(postUpdate);
   }
   /**
    * 点击关闭按钮时调用方法
@@ -48,12 +89,24 @@ class InfoBox {
    * @return   {[type]}            [description]
    */
   closeEventListener(callback) {
+    this.closeHandle = callback;
     // 添加关闭按钮点击事件
     document.querySelector('#infobox' + this.id + ' .rp-icon-close').addEventListener('click', (event) => {
       // 隐藏标牌
       this.show(false);
-      callback(event);
+      callback(this.entity, event);
     }, false);
+  }
+  /**
+   * 打开标牌触发的事件
+   * @Author   MJC
+   * @DateTime 2018-12-25
+   * @version  1.0.0
+   * @param    {Function} callback [description]
+   * @return   {[type]}            [description]
+   */
+  openEventListener(callback) {
+    this.openHandle = callback;
   }
   /**
    * 点击小眼睛按钮时调用方法
@@ -104,9 +157,19 @@ class InfoBox {
    * @param    {String} 容器infobox组件的id
    */
   _initTable() {
+    // 创建表格
     let table = document.createElement('table');
     table.setAttribute('class', 'rp-infobox__table');
     document.querySelector('#infobox' + this.id + ' .rp-infobox__container').appendChild(table);
+    // 创建tr
+    Object.keys(this.feature).forEach(prop => {
+      if (!document.querySelector('#infobox' + this.id + ' .rp-infobox__container table #' + prop)) {
+        let tr = document.createElement('tr');
+        tr.setAttribute('id', prop);
+        table.appendChild(tr);
+        tr.innerHTML = '<th>' + prop + '</th><td>' + (this.feature[prop] ? this.feature[prop] : '暂无') + '</td>';
+      }
+    });
     return table;
   }
   /**
@@ -118,8 +181,16 @@ class InfoBox {
    */
   show(isShow) {
     let element = document.querySelector('#infobox' + this.id);
-    if (element) element.style.display = isShow ? 'block' : 'none';
-    this.status = isShow ? 'open' : 'close';
+    if (!element) return;
+    if (isShow) {
+      element.style.display = 'block';
+      this.status = 'open';
+      this.openHandle(this.entity);
+    } else {
+      element.style.display = 'none';
+      this.status = 'close';
+      this.closeHandle(this.entity);
+    }
   }
   /**
    * 对this.feature进行劫持
@@ -163,22 +234,14 @@ class InfoBox {
       enumerable: true,
       configurable: true,
       get() {
-        return obj[prop];
+        return value;
       },
       set(newValue) {
         if (newValue !== value) {
           // 对设置的值进行格式化
           newValue = that.toFixed(prop, newValue);
-          // 如果没有创建此行数据，那么对table进行插入此行数据操作
-          if (!document.querySelector('#infobox' + that.id + ' .rp-infobox__container table #' + prop)) {
-            let tr = document.createElement('tr');
-            tr.setAttribute('id', prop);
-            that.table.appendChild(tr);
-            tr.innerHTML = '<th>' + prop + '</th><td>' + (newValue ? newValue : '暂无') + '</td>';
-          } else {
-            // 如果已经有这行数据，只进行更新
-            document.querySelector('#infobox' + that.id + ' .rp-infobox__container table #' + prop + '> td').textContent = newValue ? newValue : '暂无';
-          }
+          // 如果已经有这行数据，只进行更新
+          document.querySelector('#infobox' + that.id + ' .rp-infobox__container table #' + prop + '> td').textContent = newValue ? newValue : '暂无';
           value = newValue;
           return true;
         }

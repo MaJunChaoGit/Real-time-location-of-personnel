@@ -1,19 +1,15 @@
 import CustomDataSource from 'cesium/DataSources/CustomDataSource';
 import defined from 'cesium/Core/defined';
 import JulianDate from 'cesium/Core/JulianDate';
-import Cartesian2 from 'cesium/Core/Cartesian2';
-import InfoBox from 'source/Core/InfoBox';
-import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
-import EventHelper from 'source/Core/EventHelper';
-import Cesium3DTileFeature from 'cesium/Scene/Cesium3DTileFeature';
-import { crtTimeFtt } from 'ex/utils/dom';
+import MovingTarget from './MovingTarget';
+import InfoBoxManager from './InfoBoxManager';
 /**
  * 该类为动目标管理类，主要功能为
  * 1.统一存放一组动目标
  * 2.统一进行删除，显示隐藏操作
  * 3.通过id索引出具体动目标
  */
-
+let info = null;
 const dataSourceCollection = []; // 保存所有MovingTargetCollection的大集合
 class MovingTargetCollection {
   constructor(viewer) {
@@ -43,11 +39,11 @@ class MovingTargetCollection {
     // 将MovingTarget对象放入集合中方便后期管理
     this.targetCollection.push(target);
     // 创建实体对象
-    let entity = target.createEntity();
+    // let entity = target.createEntity();
     // 如果实体对象已经被创建那么返回
-    if (this._entities.contains(entity)) return;
+    if (this._entities.contains(target)) return;
     // 将实体加入场景
-    window.s = this._entities.add(entity);
+    this._entities.add(target);
   }
   /**
    * 根据id查找集合中的MovingTarget对象
@@ -86,60 +82,85 @@ class MovingTargetCollection {
    * @version  1.0.0
    */
   static registerLeftClickEvent() {
-    // 创建事件管理对象
-    let event = new EventHelper(global.viewer);
+    info = new InfoBoxManager({
+      id: 'MovingTarget',
+      valid: {
+        validProps: 'id',
+        validType: MovingTarget
+      },
+      props: 'options',
+      keys: ['id', 'phone', 'type', 'ascriptions', 'time'],
+      icons: [{
+        name: 'rp-icon-view',
+        callback: () => {
 
-    // 设置左键点击处理函数
-    event.setEvent((movement) => {
-      // 获取屏幕的坐标
-      let screenPosition = movement.position;
-      // 获取屏幕坐标点击后的实体
-      let pickEntity = global.viewer.scene.pick(screenPosition);
-      // 如果没有目标被选中或者选中的是倾斜摄影则退出
-      if (!pickEntity || (pickEntity && !pickEntity.id) || pickEntity instanceof Cesium3DTileFeature) return;
-      // 获取实体
-      let entity = pickEntity.id;
-      // 获取当前实体所属的动目标集合
-      let self = MovingTargetCollection.getCurrentCollection(entity.id);
-      // 如果该目标没有标牌的话就创建标牌
-      if (!document.querySelector('#infobox' + entity.id)) {
-        // 标牌获取
-        let infobox = self.getById(entity.id).infobox;
-        // 初始化标牌
-        infobox.init();
-        // 对标牌数据进行更新 todo 更新坐标或者位置时间
-        infobox.setFeature((key) => {
-          switch (key) {
-            case 'id':
-              return entity.options[key].substring(0, 8);
-            default:
-              return entity.options[key];
-          }
-        });
-        // 为其标牌添加关闭事件
-        infobox.closeEventListener(() => {
-          infobox.show(false);
-          // 隐藏航迹
-          entity.path.show = false;
-        });
-        // 点击小眼睛按钮触发跟踪实体, 并修改按钮颜色
-        infobox.focusEventListener((event) => {
-          let target = event.target;
-          let isTrack = self.trackEntity(entity, {
-            callback: () => {
-              document.querySelectorAll('.rp-icon-view').forEach(val => {
-                val.style.color = 'white';
-              });
-            }
-          });
-          isTrack ? target.style.color = 'yellow' : target.style.color = 'rgba(255, 255, 255, 1)';
-        });
-      }
-      // 点击时标牌进行显示
-      self.getById(entity.id).infobox.show(true);
-      // 显示航迹
-      entity.path.show = true;
-    }, ScreenSpaceEventType.LEFT_CLICK);
+        }
+      }],
+      close: (entity) => {
+        entity.path.show = false;
+      },
+      open: (entity) => {
+        entity.path.show = true;
+      },
+      single: false,
+      follow: true
+    });
+    // // 创建事件管理对象
+    // let event = new EventHelper(global.viewer);
+
+    // // 设置左键点击处理函数
+    // event.setEvent((movement) => {
+    //   // 获取屏幕的坐标
+    //   let screenPosition = movement.position;
+    //   // 获取屏幕坐标点击后的实体
+    //   let pickEntity = global.viewer.scene.pick(screenPosition);
+    //   // 如果没有目标被选中或者选中的是倾斜摄影则退出
+    //   if (!pickEntity || (pickEntity && !pickEntity.id) || pickEntity instanceof Cesium3DTileFeature) return;
+
+    //   console.log(pickEntity instanceof MovingTarget);
+    //   // 获取实体
+    //   let entity = pickEntity.id;
+    //   // 获取当前实体所属的动目标集合
+    //   // let self = MovingTargetCollection.getCurrentCollection(entity.id);
+    //   // 如果该目标没有标牌的话就创建标牌
+    //   // if (!document.querySelector('#infobox' + entity.id)) {
+    //     // 标牌获取
+    //     // let infobox = self.getById(entity.id).infobox;
+    //     // // 初始化标牌
+    //     // infobox.init();
+    //     // // 对标牌数据进行更新 todo 更新坐标或者位置时间
+    //     // infobox.setFeature((key) => {
+    //     //   switch (key) {
+    //     //     case 'id':
+    //     //       return entity.options[key].substring(0, 8);
+    //     //     default:
+    //     //       return entity.options[key];
+    //     //   }
+    //     // });
+    //     // 为其标牌添加关闭事件
+    //     // infobox.closeEventListener(() => {
+    //     //   infobox.show(false);
+    //     //   // 隐藏航迹
+    //     //   entity.path.show = false;
+    //     // });
+    //     // 点击小眼睛按钮触发跟踪实体, 并修改按钮颜色
+    //     // infobox.focusEventListener((event) => {
+    //     //   let target = event.target;
+    //     //   let isTrack = self.trackEntity(entity, {
+    //     //     callback: () => {
+    //     //       document.querySelectorAll('.rp-icon-view').forEach(val => {
+    //     //         val.style.color = 'white';
+    //     //       });
+    //     //     }
+    //     //   });
+    //     //   isTrack ? target.style.color = 'yellow' : target.style.color = 'rgba(255, 255, 255, 1)';
+    //     // });
+    //   // }
+    //   // 点击时标牌进行显示
+    //   // self.getById(entity.id).infobox.show(true);
+    //   // 显示航迹
+    //   // entity.path.show = !entity.path.show;
+    // }, ScreenSpaceEventType.LEFT_CLICK);
     // // 设置右键点击处理函数
     // this.event.setEvent((movement) => {
     //   // 获取屏幕的坐标
@@ -219,8 +240,6 @@ class MovingTargetCollection {
    * @param    {Object}   entity 实体对象
    */
   static bindWithInfobox() {
-    let scratch = new Cartesian2();
-
     // 绑定预渲染事件
     let postUpdate = function() {
       // 获取当前的朱丽叶时间
@@ -233,25 +252,6 @@ class MovingTargetCollection {
         let dataSource = movingTargetCollection._entities._entities._array;
         // 遍历这个集合
         dataSource.forEach(entity => {
-          // 获取标牌
-          let infobox = movingTargetCollection.getById(entity.id).infobox;
-          // 如果创建了标牌,并且标牌为打开状态
-          if (infobox || infobox.status === 'open') {
-            // 获取当前时间下该实体目标的笛卡尔坐标
-            let position = entity.position.getValue(time);
-            // 如果目标还存在时
-            if (position) {
-              // 获取实体目标屏幕坐标
-              let canvasPosition = global.viewer.scene.cartesianToCanvasCoordinates(position, scratch);
-              // 对其详情标牌的位置进行刷新
-              InfoBox.setPosition(entity.id, canvasPosition);
-              // 更新实体的位置时间
-              let timeLabel = document.querySelector('#infobox' + entity.id + ' table>#time>td');
-              let timeValue = crtTimeFtt(time);
-              if (timeLabel) timeLabel.textContent = timeValue;
-              entity.options.time = timeValue;
-            }
-          }
           // 比较一下,如果当前时间超过了实体最大显示时间,那么就删除标牌
           if (entity._availability._intervals[0] && JulianDate.compare(time, entity._availability._intervals[0].stop) > 0) {
             // 删除详情标牌

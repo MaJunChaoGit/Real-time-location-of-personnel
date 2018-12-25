@@ -31,7 +31,10 @@ class PickedFeature {
     };
     this.infoBoxManager = new InfoBoxManager({
       id: 'PickFeature',
-      type: Cesium3DTileFeature,
+      valid: {
+        validProps: '',
+        validType: Cesium3DTileFeature
+      },
       props: 'getProperty',
       keys: ['id', 'type', 'height', 'area', 'longitude', 'latitude'],
       icons: [{
@@ -175,7 +178,6 @@ class PickedFeature {
       // 否则记录选中要素原来的颜色
       Color.clone(pickedFeature.color, self.selected.originalColor);
     }
-    // 修改pickBUG
     // 修改要素颜色
     pickedFeature.color = Color.LIME;
     // // 设置显示的infobox的内容

@@ -2,16 +2,17 @@ import EventHelper from './EventHelper';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
 import defined from 'cesium/Core/defined';
 import InfoBox from './InfoBox';
-
+import createGuid from 'cesium/Core/createGuid';
 class InfoBoxManager {
   constructor({
     close = () => {},
+    open = () => {},
     trigger = 'LEFT_CLICK',
     single = true,
     follow = false,
     icons = [],
     id,
-    type,
+    valid,
     props,
     keys
   }) {
@@ -24,7 +25,9 @@ class InfoBoxManager {
     // 标牌是否为同一管理类中唯一性质
     this.single = single;
     // 监听对比点击对象的类型
-    this.listenType = type;
+    this.validType = valid.validType;
+    // 获取对比点击对象中的深度属性，先进行按.分割
+    this.validProps = valid.validProps.split('.');
     // 获取点击实体对象的属性名
     this.propsObject = props;
     // 劫持对象的字段
@@ -33,6 +36,8 @@ class InfoBoxManager {
     this.icons = [].concat(icons);
     // 关闭标牌按钮的处理事件
     this.closeHandler = close;
+    // 打开标牌触发的处理事件
+    this.openHandler = open;
     // 生成infobox对象便于管理
     this.infobox = this.single ? {} : [];
     // 创建事件管理对象
@@ -50,14 +55,19 @@ class InfoBoxManager {
    * @param    {String}   id 标牌id
    * @return   {InfoBox}     标牌实例对象
    */
-  _initInfoBox(id = '') {
+  _initInfoBox(pickedFeature) {
     // 由于点击到的可能是primitives, 可能存在没有id的情况,默认id为''
+    let id = pickedFeature.id;
     // 如果该标牌已经存在了,那么就获取该infobox
-    if (InfoBox.isExist(this.id + '_' + id)) return this.getInfoBoxById(id);
+    if (InfoBox.isExist(id)) return this.getInfoBoxById(id);
     // 否则的话创建一个infobox
-    let infobox = new InfoBox(this.id + '_' + id, this.observeKeys, this.icons, this.follow);
+    let infobox = new InfoBox(id, this.observeKeys, this.icons, this.follow);
+    // 将infobox与点击的实体绑定
+    if (this.follow) infobox.bindEntity(pickedFeature);
     // 为其标牌添加关闭事件
     infobox.closeEventListener(this.closeHandler);
+    // 为其添加打开事件
+    infobox.openEventListener(this.openHandler);
     // 如果是独立模式的话
     if (this.single) {
       // 只需要创建一个InfoBox就可以了
@@ -90,7 +100,30 @@ class InfoBoxManager {
   removeTriggerEvent() {
     this.eventHelper.destory(ScreenSpaceEventType[this.trigger]);
   }
-
+  /**
+   * 深度迭代用户传入的多个属性
+   * @Author   MJC
+   * @DateTime 2018-12-25
+   * @version  1.0.0
+   * @param    {[type]}   pickedFeature [description]
+   * @return   {[type]}                 [description]
+   */
+  depthIterator(pickedFeature) {
+    // length === 1,分为'' 或者 'xxx'
+    if (this.validProps.length === 1) {
+      // 如果不为空，就代表1级属性,如Obj[key]
+      if (this.validProps[0] !== '') {
+        return pickedFeature[this.validProps[0]];
+      } else {
+        return pickedFeature;
+      }
+    } else {
+      // 由于可能判断的是对象深度属性，需要reduce以下
+      return this.validProps.reduce(function(pre, cur) {
+        if (pickedFeature[pre]) return pickedFeature[pre][cur];
+      }, pickedFeature);
+    }
+  }
   /**
    * 触发事件管理方法
    * @Author   MJC
@@ -113,10 +146,13 @@ class InfoBoxManager {
         return;
       }
 
+      pickedFeature = self.depthIterator(pickedFeature);
       // 如果pick的不是预先传入的类型就直接返回
-      if (!(pickedFeature instanceof self.listenType)) return;
+      if (!(pickedFeature instanceof self.validType)) return;
+
+      if (!pickedFeature.id) pickedFeature.id = createGuid();
       // 初始化标牌
-      let infobox = self._initInfoBox(pickedFeature.id);
+      let infobox = self._initInfoBox(pickedFeature);
 
       // 根据方法或者字段名设置显示的infobox的内容
       infobox.setFeature(function(key) {
@@ -139,13 +175,15 @@ class InfoBoxManager {
    * @return   {[type]}      [description]
    */
   getInfoBoxById(id) {
+
     // 由于单例下的infobox不是数组,所以直接获取就好了
-    if (!Array.isArray(this.infobox) && this.infobox.id === (this.id + '_' + id)) return this.infobox;
+    if (!Array.isArray(this.infobox) && this.infobox.id === id) return this.infobox;
     // 否则需要验证一下
     return this.infobox.filter(val => {
       return val.id === id;
     })[0];
   }
+
 }
 
 export default InfoBoxManager;

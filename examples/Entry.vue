@@ -74,7 +74,7 @@ export default {
                 let collection = new MovingTargetCollection(global.viewer);
                 // 循环该分类下的数据，添加到动目标分组内
                 classification[key].forEach(val => {
-                  collection.add(new MovingTarget(global.viewer, val));
+                  collection.add(new MovingTarget(val));
                 });
                 // 开启动目标融合功能
                 let custering = new Clustering({

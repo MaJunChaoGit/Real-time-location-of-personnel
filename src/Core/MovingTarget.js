@@ -15,19 +15,18 @@ import Color from 'cesium/Core/Color';
 import createGuid from 'cesium/Core/createGuid';
 import NearFarScalar from 'cesium/Core/NearFarScalar';
 import TypeEnum from 'source/Core/TypeEnum';
-import InfoBox from 'source/Core/InfoBox';
-class MovingTarget {
-  constructor(viewer, data) {
+// import InfoBox from 'source/Core/InfoBox';
+import Entity from 'cesium/DataSources/Entity';
+
+class MovingTarget extends Entity {
+  constructor(data) {
     // 必须传入viewer对象
-    if (!defined(viewer)) {
-      throw new Error('需要viewer对象');
+    if (!defined(data)) {
+      throw new Error('需要data对象');
     }
-    this._viewer = viewer;
-    this.clock = this._viewer.clock;
-    this.data = data;
-    this.id = this.data.id;
+    super(MovingTarget.createEntity(data));
     // 创建标牌等
-    this.infobox = new InfoBox(this.data.id, ['id', 'phone', 'type', 'ascriptions', 'time']);
+    // this.infobox = new InfoBox(this.data.id, ['id', 'phone', 'type', 'ascriptions', 'time']);
   }
   /**
    * 线性插值添加采样点
@@ -36,12 +35,12 @@ class MovingTarget {
    * @version  1.0.0
    * @param    {Object} positions 数据经纬度时间的数组
    */
-  addSample(positions) {
+  static addSample(positions) {
     if (!defined(positions)) {
       throw new Error('请传入正确的采样点对象');
     }
 
-    let property = this.getProperty();
+    let property = MovingTarget.getProperty();
     positions.forEach(val => {
       // 获取当前位置的事件
       let time = JulianDate.fromDate(new Date(val.time));
@@ -51,6 +50,7 @@ class MovingTarget {
     });
     return property;
   }
+  // let timeValue = crtTimeFtt(global.viewer.clock._currentTime);
   /**
    * 创建target的实体
    * @Author   Hybrid
@@ -59,13 +59,12 @@ class MovingTarget {
    * @param    {Object}
    * @return   {Entity}
    */
-  createEntity() {
-    let data = this.data;
+  static createEntity(data) {
     let type = data.options.type;
     // 翻译一下类型 e.g 1 = 家用车
     data.options.type = TypeEnum[type].name;
     // 对坐标位置进行采样点
-    let property = this.addSample(data.timePositions);
+    let property = MovingTarget.addSample(data.timePositions);
     return {
       id: data.id ? data.id : createGuid(),
       options: data.options,
@@ -122,7 +121,7 @@ class MovingTarget {
    * @param  {Boolean} reference          true: 惯性坐标系 false: 固定坐标系
    * @return {SampledPositionProperty}    采样点容器
    */
-  getProperty(reference) {
+  static getProperty(reference) {
     const REFERENCE = reference ? ReferenceFrame.INERTIAL : ReferenceFrame.FIXED;
 
     return new SampledPositionProperty(REFERENCE);
