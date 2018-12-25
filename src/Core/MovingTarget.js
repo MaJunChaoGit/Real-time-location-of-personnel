@@ -25,6 +25,7 @@ class MovingTarget extends Entity {
       throw new Error('需要data对象');
     }
     super(MovingTarget.createEntity(data));
+
     // 创建标牌等
     // this.infobox = new InfoBox(this.data.id, ['id', 'phone', 'type', 'ascriptions', 'time']);
   }
@@ -126,6 +127,5 @@ class MovingTarget extends Entity {
 
     return new SampledPositionProperty(REFERENCE);
   }
-
 };
 export default MovingTarget;

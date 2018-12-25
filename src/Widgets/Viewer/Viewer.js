@@ -10,8 +10,9 @@ class Viewer extends supViewer {
   constructor(el, options = {}) {
     super(el, options);
 
+    this._trackedEntity = {};
+    this.resetPosition = {};
     this[initializeCamera]();
-
   }
 
   /**
@@ -114,5 +115,66 @@ class Viewer extends supViewer {
     this.clock.currentTime = start.clone();
     this.clock.endTime = stop.clone();
   }
+
+  /**
+   * 跟踪或者取消跟踪实体的方法
+   * @Author   MJC
+   * @DateTime 2018-10-21
+   * @version  1.0.1
+   * @param    {Entity}   entity 实体对象
+   */
+  trackEntity(entity, { callback = () => {}, cancel = () => {}}) {
+    // 获取下该实体是否被跟踪
+    if (this.isTrack(entity.id)) {
+      // 如果被跟踪并且已经记录上次摄像机的位置时那么就取消跟踪并将摄像机位置重置至右键点击时位置
+      if (this.resetPosition) this.camera.updateCamera(this.resetPosition);
+      // 取消追踪方法
+      this.cancelTrack();
+      cancel();
+      return false;
+    } else {
+      // 跟踪目标并记录右键点击时位置
+      this.track(entity);
+      // 记录上次的摄像机位置
+      this.resetPosition = this.camera.setOptions();
+      callback();
+      return true;
+    }
+  }
+  /**
+   * 判断实体目前是否跟踪状态
+   * @Author   MJC
+   * @DateTime 2018-10-11
+   * @version  1.0.1
+   * @param    {String}   id 实体对象的id
+   * @return   {Boolean}     true 跟踪 false 不跟踪
+   */
+  isTrack(id) {
+    if (this._trackedEntity) return this._trackedEntity.id === id;
+    return false;
+  }
+  /**
+   * 取消目标的跟踪状态
+   * @Author   MJC
+   * @DateTime 2018-10-11
+   * @version  1.0.1
+   * @param    {String}   id 取消跟踪目标
+   */
+  cancelTrack() {
+    this.trackedEntity = undefined;
+    this._trackedEntity = null;
+  }
+  /**
+   * 跟踪当前传入的实体目标
+   * @Author   MJC
+   * @DateTime 2018-10-11
+   * @version  1.0.1
+   * @param    {Entity}   entity 跟踪的实体
+   */
+  track(entity) {
+    this.trackedEntity = entity;
+    this._trackedEntity = entity;
+  }
+
 };
 export default Viewer;

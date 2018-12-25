@@ -11,13 +11,12 @@ class InfoBox {
    * @param    {[type]}   container [description]
    * @return   {[type]}             [description]
    */
-  constructor(id, keys, icons = [], follow = false) {
+  constructor(id, keys, icons = []) {
     if (!id) throw new Error('需要传入infobox的ID');
     this.id = id;
     this.status = 'pending';
     this.container = {};
     this.icons = icons;
-    this.follow = follow;
     this.table = {};
     this.feature = {};
     this.keys = keys;
@@ -120,7 +119,7 @@ class InfoBox {
     this.icons.forEach(icon => {
       this._initIcon(icon.name);
       document.querySelector('#infobox' + this.id + ' .' + icon.name).addEventListener('click', (event) => {
-        icon.callback(event);
+        icon.callback(this.entity, event);
       }, false);
     });
   }
@@ -277,6 +276,7 @@ class InfoBox {
     if (!box) return;
     box.style.top = canvasPosition.y + 'px';
     box.style.left = canvasPosition.x + 'px';
+    box.style.bottom = 'auto';
   }
 
   /**

@@ -42,13 +42,6 @@ class PickedFeature {
         callback: () => { console.log(1); }
       }]
     });
-    // // 新建infobox对象
-    // this.infoBox = new InfoBox('newYork', ['id', 'type', 'height', 'area', 'longitude', 'latitude']);
-    // // 初始化标牌
-    // this.infoBox.init();
-    // // 为其标牌添加关闭事件
-    // this.infoBox.closeEventListener(() => {
-    // });
     // 新建标牌对象
     this.nameOverlay = new NameOverlay('rp-nameOverlay', global.viewer);
     // 新建事件管理类
@@ -180,12 +173,6 @@ class PickedFeature {
     }
     // 修改要素颜色
     pickedFeature.color = Color.LIME;
-    // // 设置显示的infobox的内容
-    // self.infoBox.setFeature(function(key) {
-    //   return pickedFeature.getProperty(key);
-    // });
-    // // 显示infobox
-    // self.infoBox.show(true);
   }
 }
 export default PickedFeature;

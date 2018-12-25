@@ -49,8 +49,8 @@ class NameOverlay {
    * @param    {Object}   movement 事件中的movement对象
    */
   setPostion(movement) {
-    this.nameOverlay.style.bottom = this.viewer.canvas.clientHeight - movement.endPosition.y + 'px';
-    this.nameOverlay.style.left = movement.endPosition.x + 'px';
+    this.nameOverlay.style.bottom = this.viewer.canvas.clientHeight - 10 - movement.endPosition.y + 'px';
+    this.nameOverlay.style.left = movement.endPosition.x + 10 + 'px';
   }
   /**
    * 控制标牌中的文字内容

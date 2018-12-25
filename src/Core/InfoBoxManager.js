@@ -56,12 +56,14 @@ class InfoBoxManager {
    * @return   {InfoBox}     标牌实例对象
    */
   _initInfoBox(pickedFeature) {
+    // 1.如果是独立模式的话那么只有第一次进来会创建
+    if (this.single && this.infobox instanceof InfoBox) return this.infobox;
     // 由于点击到的可能是primitives, 可能存在没有id的情况,默认id为''
     let id = pickedFeature.id;
     // 如果该标牌已经存在了,那么就获取该infobox
     if (InfoBox.isExist(id)) return this.getInfoBoxById(id);
     // 否则的话创建一个infobox
-    let infobox = new InfoBox(id, this.observeKeys, this.icons, this.follow);
+    let infobox = new InfoBox(id, this.observeKeys, this.icons);
     // 将infobox与点击的实体绑定
     if (this.follow) infobox.bindEntity(pickedFeature);
     // 为其标牌添加关闭事件
@@ -156,11 +158,14 @@ class InfoBoxManager {
 
       // 根据方法或者字段名设置显示的infobox的内容
       infobox.setFeature(function(key) {
+        let value;
         if (typeof pickedFeature[self.propsObject] === 'object') {
-          return pickedFeature[self.propsObject][key];
+          value = pickedFeature[self.propsObject][key];
         } else {
-          return pickedFeature[self.propsObject](key);
+          value = pickedFeature[self.propsObject](key);
         }
+        if (key === 'id' && value) return value.toString().substring(0, 8);
+        return value;
       });
       // 显示infobox
       infobox.show(true);
@@ -175,10 +180,9 @@ class InfoBoxManager {
    * @return   {[type]}      [description]
    */
   getInfoBoxById(id) {
-
     // 由于单例下的infobox不是数组,所以直接获取就好了
     if (!Array.isArray(this.infobox) && this.infobox.id === id) return this.infobox;
-    // 否则需要验证一下
+    // 否则需要从多模式下数组遍历出需要的infobox
     return this.infobox.filter(val => {
       return val.id === id;
     })[0];
