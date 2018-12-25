@@ -1,5 +1,6 @@
 <template>
   <div class="rp-layout">
+    <rp-tree></rp-tree>
     <rp-infobox></rp-infobox>
     <rp-right-side></rp-right-side>
     <rp-footer></rp-footer>
@@ -10,6 +11,7 @@
 import { viewerCesiumNavigationMixin } from 'source/index';
 
 import RpFooter from './Footer';
+import RpTree from '../functionality/Tree';
 import RpRightSide from './RightSideBar';
 import RpInfobox from '../functionality/InfoBox';
 
@@ -26,7 +28,8 @@ export default {
   components: {
     RpFooter,
     RpRightSide,
-    RpInfobox
+    RpInfobox,
+    RpTree
   }
 };
 </script>
