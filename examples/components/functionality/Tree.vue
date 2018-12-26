@@ -172,7 +172,7 @@ export default {
     },
     pointInfoControl() {
       if (!this.$store.getters.getLocation()) {
-        let dataSourcePromise = new KmlLoader(global.viewer, '../../../src/Assets/newYorkData/sampleGeocacheLocations.kml');
+        let dataSourcePromise = new KmlLoader(global.viewer, '../Assets/newYorkData/sampleGeocacheLocations.kml');
         this.$store.dispatch('set_location', dataSourcePromise);
       } else {
         this.$store.getters.getLocation().show = this.pointInfo;
@@ -181,7 +181,7 @@ export default {
     boroughInfoControl() {
       debugger
       if (!this.$store.getters.getBorough()) {
-        let dataSourcePromise = new GeojsonLoader(global.viewer, '../../../src/Assets/newYorkData/sampleNeighborhoods.geojson');
+        let dataSourcePromise = new GeojsonLoader(global.viewer, '../Assets/newYorkData/sampleNeighborhoods.geojson');
         this.$store.dispatch('set_borough', dataSourcePromise);
       } else {
         this.$store.getters.getBorough().show = this.boroughInfo;
