@@ -56,29 +56,55 @@ class InfoBoxManager {
    * @return   {InfoBox}     标牌实例对象
    */
   _initInfoBox(pickedFeature) {
-    // 1.如果是独立模式的话那么只有第一次进来会创建
-    if (this.single && this.infobox instanceof InfoBox) return this.infobox;
+
+    let model = {
+      single: this.single,
+      follow: this.follow,
+      first: !(this.infobox instanceof InfoBox)
+    };
     // 由于点击到的可能是primitives, 可能存在没有id的情况,默认id为''
     let id = pickedFeature.id;
-    // 如果该标牌已经存在了,那么就获取该infobox
-    if (InfoBox.isExist(id)) return this.getInfoBoxById(id);
-    // 否则的话创建一个infobox
-    let infobox = new InfoBox(id, this.observeKeys, this.icons);
-    // 将infobox与点击的实体绑定
-    if (this.follow) infobox.bindEntity(pickedFeature);
-    // 为其标牌添加关闭事件
-    infobox.closeEventListener(this.closeHandler);
-    // 为其添加打开事件
-    infobox.openEventListener(this.openHandler);
-    // 如果是独立模式的话
-    if (this.single) {
-      // 只需要创建一个InfoBox就可以了
-      this.infobox = infobox;
+    // 独立模式
+    if (model.single) {
+      if (model.first) {
+        // 新建一个infobox
+        let infobox = new InfoBox(id, this.observeKeys, this.icons);
+        // 为其标牌添加关闭事件
+        infobox.closeEventListener(this.closeHandler);
+        // 为其添加打开事件
+        infobox.openEventListener(this.openHandler);
+        // 设置标牌的实体
+        infobox.setEntity(pickedFeature);
+        // 如果是follow模式
+        // 将infobox与点击的实体绑定
+        if (this.follow) infobox.bindEntity(pickedFeature);
+        // 给实例装上该infobox
+        this.infobox = infobox;
+        return infobox;
+      } else {
+        // 设置标牌的实体
+        this.infobox.setEntity(pickedFeature);
+        // 直接赋值
+        return this.infobox;
+      }
     } else {
-      // 判断一下是否存在每次点击创建一次
+      // 如果该标牌已经存在了,那么就获取该infobox
+      if (InfoBox.isExist(id)) return this.getInfoBoxById(id);
+      // 否则的话创建一个infobox
+      let infobox = new InfoBox(id, this.observeKeys, this.icons);
+      // 设置标牌的实体
+      infobox.setEntity(pickedFeature);
+      // 为其标牌添加关闭事件
+      infobox.closeEventListener(this.closeHandler);
+      // 为其添加打开事件
+      infobox.openEventListener(this.openHandler);
+      // 将infobox与点击的实体绑定
+      if (this.follow) infobox.bindEntity(pickedFeature);
+      // 给实例添加infbox
       this.infobox.push(infobox);
+
+      return infobox;
     }
-    return infobox;
   }
 
   /**
@@ -164,7 +190,7 @@ class InfoBoxManager {
         } else {
           value = pickedFeature[self.propsObject](key);
         }
-        if (key === 'id' && value) return value.toString().substring(0, 8);
+        if (key === 'id' && value) return value.toString().substring(0, 4);
         return value;
       });
       // 显示infobox

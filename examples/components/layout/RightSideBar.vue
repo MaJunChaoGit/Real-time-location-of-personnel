@@ -3,11 +3,19 @@
     <div class="rp-right-side__item rp-right-side__navigation" id="rp-outring"></div>
     <div class="rp-right-side__item">
       <rp-button-group direction="column">
-        <rp-button round icon="rp-icon--custom__distance" @click="measureDistance" v-if="deviceType() === 'else'"></rp-button>
-        <rp-button round icon="rp-icon--custom__area" @click="measureArea" v-if="deviceType() === 'else'"></rp-button>
-        <rp-button round icon="rp-icon--custom__fullscreen" @click="screenHandle" v-if="deviceType() !== 'ios'"></rp-button>
-        <rp-button round icon="rp-icon--custom__scenemode" @click="sceneModeHandle"></rp-button>
-        <rp-button round :icon="featureButtonClass" @click="featuresControll"></rp-button>
+        <transition name="bounce">
+          <rp-button round icon="rp-icon--custom__distance" @click="measureDistance" v-if="deviceType() === 'else' && buttonShow"></rp-button>
+        </transition>
+        <transition name="bounce">
+          <rp-button round icon="rp-icon--custom__area" @click="measureArea" v-if="deviceType() === 'else' && buttonShow"></rp-button>
+        </transition>
+        <transition name="bounce">
+          <rp-button round icon="rp-icon--custom__fullscreen" @click="screenHandle" v-if="deviceType() !== 'ios' && buttonShow"></rp-button>
+        </transition>
+        <transition name="bounce">
+          <rp-button round icon="rp-icon--custom__scenemode" @click="sceneModeHandle" v-if="buttonShow"></rp-button>
+        </transition>
+        <rp-button round :icon="customButtonClass" @click="buttonShowControll"></rp-button>
       </rp-button-group>
     </div>
   </div>
@@ -36,8 +44,8 @@ export default {
 
   data() {
     return {
-      featuresShow: false,
-      featureButtonClass: 'rp-icon--custom__show'
+      buttonShow: true,
+      customButtonClass: 'rp-icon--custom__hide',
     };
   },
 
@@ -100,9 +108,9 @@ export default {
     deviceType() {
       return getDeviceType();
     },
-    featuresControll() {
-      this.featureButtonClass = this.featuresShow ? 'rp-icon--custom__show' : 'rp-icon--custom__hide';
-      this.featuresShow = !Features.getFeatures().show(this.featuresShow);
+    buttonShowControll() {
+      this.customButtonClass = this.buttonShow ? 'rp-icon--custom__show' : 'rp-icon--custom__hide';
+      this.buttonShow = !this.buttonShow;
     }
   },
   mounted() {

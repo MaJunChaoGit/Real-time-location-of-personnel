@@ -74,18 +74,23 @@ $--loading-shadow-xl-height: 2.5vh !default;
 $--footer-container-ls-width: 60vw !default;
 $--footer-container-ls-height: 7% !default;
 $--footer-container-ls-lineheight: 7vh !default;
+
 $--footer-container-xs-width: 100vw !default;
 $--footer-container-xs-height: 4% !default;
 $--footer-container-xs-lineheight: 4vh !default;
+
 $--footer-container-sm-width: 40vw !default;
 $--footer-container-sm-height: 3% !default;
 $--footer-container-sm-lineheight: 3vh !default;
+
 $--footer-container-md-width: 50vw !default;
 $--footer-container-md-height: 3% !default;
 $--footer-container-md-lineheight: 3vh !default;
+
 $--footer-container-lg-width: 40vw !default;
 $--footer-container-lg-height: 3% !default;
 $--footer-container-lg-lineheight: 3vh !default;
+
 $--footer-container-xl-width: 40vw !default;
 $--footer-container-xl-height: 3% !default;
 $--footer-container-xl-lineheight: 3vh !default;
@@ -107,13 +112,38 @@ $--footer-container-xl-lineheight: 3vh !default;
 
  $--infobox-container-ls-width: 30vw !default;
  $--infobox-container-ls-height: 10% !default;
- $--infobox-container-xs-width: 45vw !default;
+
+ $--infobox-container-xs-width: 40vw !default;
  $--infobox-container-xs-height: 10% !default;
+
  $--infobox-container-sm-width: 20vw !default;
  $--infobox-container-sm-height: 10% !default;
+
  $--infobox-container-md-width: 15vw !default;
  $--infobox-container-md-height: 10% !default;
+
  $--infobox-container-lg-width: 13vw !default;
  $--infobox-container-lg-height: 10% !default;
+ 
  $--infobox-container-xl-width: 10vw !default;
  $--infobox-container-xl-height: 10% !default;
+
+/* Tree
+ -------------------------- */
+ $--tree-container-ls-width: 30vw !default;
+ $--tree-container-ls-height: 30% !default;
+
+ $--tree-container-xs-width: 45vw !default;
+ $--tree-container-xs-height: 30% !default;
+
+ $--tree-container-sm-width: 23vw !default;
+ $--tree-container-sm-height: 30% !default;
+
+ $--tree-container-md-width: 25vw !default;
+ $--tree-container-md-height: 30% !default;
+
+ $--tree-container-lg-width: 20vw !default;
+ $--tree-container-lg-height: 30% !default;
+
+ $--tree-container-xl-width: 15vw !default;
+ $--tree-container-xl-height: 24% !default;

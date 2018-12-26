@@ -9,8 +9,6 @@ const initializeCamera = Symbol();
 class Viewer extends supViewer {
   constructor(el, options = {}) {
     super(el, options);
-
-    this._trackedEntity = {};
     this.resetPosition = {};
     this[initializeCamera]();
   }
@@ -150,7 +148,7 @@ class Viewer extends supViewer {
    * @return   {Boolean}     true 跟踪 false 不跟踪
    */
   isTrack(id) {
-    if (this._trackedEntity) return this._trackedEntity.id === id;
+    if (this.trackedEntity) return this.trackedEntity.id === id;
     return false;
   }
   /**
@@ -162,7 +160,6 @@ class Viewer extends supViewer {
    */
   cancelTrack() {
     this.trackedEntity = undefined;
-    this._trackedEntity = null;
   }
   /**
    * 跟踪当前传入的实体目标
@@ -173,7 +170,6 @@ class Viewer extends supViewer {
    */
   track(entity) {
     this.trackedEntity = entity;
-    this._trackedEntity = entity;
   }
 
 };

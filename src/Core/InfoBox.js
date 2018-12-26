@@ -23,6 +23,16 @@ class InfoBox {
     this.init();
   }
   /**
+   * 设置标牌的实体
+   * @Author   MJC
+   * @DateTime 2018-12-26
+   * @version  1.0.0
+   * @param    {[type]}   entity [description]
+   */
+  setEntity(entity) {
+    this.entity = entity;
+  }
+  /**
    * 对外调用的初始化HTML元素方法
    * @Author   MJC
    * @DateTime 2018-10-18
@@ -69,12 +79,12 @@ class InfoBox {
           // 更新实体的位置时间
           let timeValue = crtTimeFtt(time);
           entity.options.time = timeValue;
-          let timeLabel = document.querySelector('#infobox' + self.entity.id + ' table>#time>td');
+          let timeLabel = document.querySelector('#infobox' + entity.id + ' table>#time>td');
           if (timeLabel) timeLabel.textContent = timeValue;
         }
       }
       // 如果当前时间超过了时钟设置的总的结束时间, 移除目标的预渲染处理事件
-      if (!InfoBox.isExist(self.entity.id)) global.viewer.scene.postUpdate.removeEventListener(postUpdate);
+      if (!InfoBox.isExist(entity.id)) global.viewer.scene.postUpdate.removeEventListener(postUpdate);
     };
     // 在场景中添加绑定
     global.viewer.scene.postUpdate.addEventListener(postUpdate);
@@ -166,7 +176,8 @@ class InfoBox {
         let tr = document.createElement('tr');
         tr.setAttribute('id', prop);
         table.appendChild(tr);
-        tr.innerHTML = '<th>' + prop + '</th><td>' + (this.feature[prop] ? this.feature[prop] : '暂无') + '</td>';
+        let tempProp = prop === 'longitude' ? 'lon' : prop === 'latitude' ? 'lat' : prop === 'ascriptions' ? 'sub' : prop;
+        tr.innerHTML = '<th>' + tempProp + '</th><td>' + (this.feature[prop] ? this.feature[prop] : '暂无') + '</td>';
       }
     });
     return table;
@@ -258,7 +269,7 @@ class InfoBox {
    */
   toFixed(prop, value) {
     // 如果是经度或纬度的属性，那么转为度数显示并保留两位小数
-    if (prop === 'longitude' || prop === 'latitude') value = Math.toDegrees(Number(value)).toFixed(2);
+    if (prop === 'longitude' || prop === 'latitude') value = Math.toDegrees(parseFloat(value)).toFixed(2);
     // 如果是高度或面积的的属性，那么只保留两位小数
     if (prop === 'height' || prop === 'area') value = value.toFixed(2);
     return value;

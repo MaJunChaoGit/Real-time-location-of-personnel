@@ -5,6 +5,9 @@ import Color from 'cesium/Core/Color';
 import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
 import Cesium3DTileFeature from 'cesium/Scene/Cesium3DTileFeature';
 import InfoBoxManager from 'source/Core/InfoBoxManager';
+import HeadingPitchRoll from 'cesium/Core/HeadingPitchRoll';
+import Math from 'cesium/Core/Math';
+import Cartesian3 from 'cesium/Core/Cartesian3';
 
 let self = {};
 
@@ -38,8 +41,26 @@ class PickedFeature {
       props: 'getProperty',
       keys: ['id', 'type', 'height', 'area', 'longitude', 'latitude'],
       icons: [{
-        name: 'rp-icon-view',
-        callback: () => { console.log(1); }
+        name: 'rp-icon-location-outline',
+        callback: (features) => {
+          let lon = features.getProperty('longitude');
+          let lat = features.getProperty('latitude');
+          let height = features.getProperty('height');
+          try {
+            // 设置相机的初始位置
+            let position = Cartesian3.fromDegrees(Math.toDegrees(parseFloat(lon)) - 0.013, Math.toDegrees(parseFloat(lat)), parseFloat(height) + 500);
+            /* eslint-disable new-cap */
+            let orientation = new HeadingPitchRoll.fromDegrees(90, -30, 0);
+            global.viewer.camera.flyTo({
+              destination: position,
+              duration: 2,
+              orientation: orientation
+            });
+          } catch (e) {
+            // statements
+            console.log(e);
+          }
+        }
       }]
     });
     // 新建标牌对象

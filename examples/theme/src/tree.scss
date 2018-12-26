@@ -15,29 +15,35 @@
   background:  rgba(20,62,141,0.4);
   
   @include res(ls) {
-    width: $--infobox-container-ls-width;
+    width: $--tree-container-ls-width;
+    height: $--tree-container-ls-height;
   }
 
   @include res(xs) {
-    width: $--infobox-container-xs-width;
+    width: $--tree-container-xs-width;
+    height: $--tree-container-xs-height;
   }
   @include res(sm) {
-    width: $--infobox-container-sm-width;
+    width: $--tree-container-sm-width;
+    height: $--tree-container-sm-height;
   }
   @include res(md) {
-    width: $--infobox-container-md-width;
+    width: $--tree-container-md-width;
+    height: $--tree-container-md-height;
   }
   @include res(lg) {
-    width: $--infobox-container-lg-width;
+    width: $--tree-container-lg-width;
+    height: $--tree-container-lg-height;
   }
   @include res(xl) {
-    width: $--infobox-container-xl-width;
+    width: $--tree-container-xl-width;
+    height: $--tree-container-xl-height;
   }
 
   @include e(header) {
     box-sizing: border-box;
     position: relative;
-    height: 20%;
+    height: 15%;
     width: 100%;
     padding: 5px;
     border-bottom: $--border-base;
@@ -56,7 +62,7 @@
 
     box-sizing: border-box;
     position: relative;
-    height: 80%;
+    height: 85%;
     width: 100%;
     text-align:center;
     padding: 5px;

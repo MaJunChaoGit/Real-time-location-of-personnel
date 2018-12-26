@@ -74,7 +74,6 @@ ResetViewNavigationControl.prototype.resetView = function() {
   this.isActive = true;
   // 获取当前摄像机
   var camera = scene.camera;
-
   // 判断是否有正在追踪的实体
   if (defined(this.terria.trackedEntity)) {
     // 当跟踪实体不会重置为默认椭球视图，而是重置为跟踪实体的默认视图

@@ -7,7 +7,6 @@
   position: absolute;
   bottom: 0;
   left: 2.5%;
-  margin-bottom: 3vh;
   color: white;
   border: $--border-base; 
   box-shadow: $--box-shadow-base;
@@ -16,22 +15,34 @@
   
   @include res(ls) {
     width: $--infobox-container-ls-width;
+    // bottom: $--footer-container-ls-height;
+    bottom: $--footer-container-ls-height + ((100 - $--footer-container-ls-height) * 0.03);
   }
 
   @include res(xs) {
     width: $--infobox-container-xs-width;
+    // bottom: $--footer-container-xs-height;
+    bottom: $--footer-container-xs-height + ((100 - $--footer-container-xs-height) * 0.03);
   }
   @include res(sm) {
     width: $--infobox-container-sm-width;
+    // bottom: $--footer-container-sm-height;
+    bottom: $--footer-container-sm-height + ((100 - $--footer-container-sm-height) * 0.03);
   }
   @include res(md) {
     width: $--infobox-container-md-width;
+    // bottom: $--footer-container-md-height;
+    bottom: $--footer-container-md-height + ((100 - $--footer-container-md-height) * 0.03);
   }
   @include res(lg) {
     width: $--infobox-container-lg-width;
+    // bottom: $--footer-container-lg-height;
+    bottom: $--footer-container-lg-height + ((100 - $--footer-container-lg-height) * 0.03);
   }
   @include res(xl) {
     width: $--infobox-container-xl-width;
+    // bottom: $--footer-container-xl-height;
+    bottom: $--footer-container-xl-height + ((100 - $--footer-container-xl-height) * 0.03);
   }
 
   @include e(header) {

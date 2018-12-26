@@ -1,7 +1,7 @@
 <template>
   <div class="rp-tree">
     <div class="rp-tree__header">
-      
+      <i class="rp-icon-document" @click = "containerClose()"></i>
       <i class="rp-icon-close" @click = "containerClose()"></i>
     </div>
     <div class="rp-tree__container">

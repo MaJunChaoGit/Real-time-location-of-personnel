@@ -1,7 +1,9 @@
 <template>
   <div class="rp-container">
     <div :id="mountedId" class="rp-content"></div>
-    <rp-layout v-if="isReady"></rp-layout>
+    <transition name="fade">
+      <rp-layout v-if="isReady"></rp-layout>
+    </transition>
     <rp-loading @after-leave="loaded" background="#fff"></rp-loading>
   </div>
 </template>
