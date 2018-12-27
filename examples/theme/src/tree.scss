@@ -16,28 +16,28 @@
   
   @include res(ls) {
     width: $--tree-container-ls-width;
-    height: $--tree-container-ls-height;
+    // height: $--tree-container-ls-height;
   }
 
   @include res(xs) {
     width: $--tree-container-xs-width;
-    height: $--tree-container-xs-height;
+    // height: $--tree-container-xs-height;
   }
   @include res(sm) {
     width: $--tree-container-sm-width;
-    height: $--tree-container-sm-height;
+    // height: $--tree-container-sm-height;
   }
   @include res(md) {
     width: $--tree-container-md-width;
-    height: $--tree-container-md-height;
+    // height: $--tree-container-md-height;
   }
   @include res(lg) {
     width: $--tree-container-lg-width;
-    height: $--tree-container-lg-height;
+    // height: $--tree-container-lg-height;
   }
   @include res(xl) {
     width: $--tree-container-xl-width;
-    height: $--tree-container-xl-height;
+    // height: $--tree-container-xl-height;
   }
 
   @include e(header) {
@@ -54,6 +54,10 @@
     i:first-child {
       margin-left: 5px;
     }
+    i {
+      margin-top: 1%;
+      margin-bottom: 1%;
+    }
     .rp-icon-close {
       cursor: pointer;
     }
@@ -62,39 +66,72 @@
 
     box-sizing: border-box;
     position: relative;
-    height: 85%;
     width: 100%;
     text-align: left;
     padding: 5px;
-    
-    .rp-infobox__table {
-      font-size: $--font-size;
-      color: $--font-label-color;
-      font-family: $--font-family;
-      border-collapse: collapse;
-      margin:0px auto;
-      width: 100%;
-      height: 100%;
-      position: relative;
-      // border-right: 1px solid rgba(255, 255, 255, .3);
+
+    h4 {
+      margin-top: 2%;
+      margin-bottom:  2%;
+      color: white;
     }
-    tr {
-      width: 100%;
+    label {
+      color: yellow;
     }
-    th {
-      color: $--font-label-color;
+    .el-row {
+      margin-top: 1%;
+      margin-bottom: 1%;
     }
-    td {
-      color: $--font-content-color;
-    }
-    th, td{
-      // border-left: 1px solid rgba(255, 255, 255, .3);
-      border-top: $--border-base;
-      padding: 5px;
+    .el-input__inner{
+      background-color: rgba(64, 158, 255, 0.0784313725490196);
+      border: 1px solid #56aad2;
+      color: white;
     }
 
-    .rp-infobox__table tr:nth-child(1) *{
-      border-top: 0;
+    .el-select:hover .el-input__inner {
+      border-color: #67abf1;
+    }
+    .el-select .el-input .el-select__caret {
+      color: #56aad2;
+    }
+    .el-input__inner::-webkit-input-placeholder {
+      color: white;
     }
   }
+  @include e(icon) {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+  }
+
+  @include e(title) {
+    @include res(ls) {
+      display: none;
+    }
+    @include res(xs) {
+      display: none;
+    }
+  }
+}
+
+#body .el-select-dropdown {
+  border: 1px solid #56aad2;
+  background-color: rgba(64, 158, 255, 0.0784313725490196);
+}
+#body .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+  background-color: rgba(103, 152, 226, 0.12941176470588237);
+}
+#body .el-select-dropdown__item {
+  color: #56aad2;
+}
+#body .el-popper[x-placement^=bottom] .popper__arrow {
+  border-bottom-color: #56aad2;
+}
+#body .el-popper[x-placement^=bottom] .popper__arrow::after {
+  border-bottom-color: #56aad2;
+}
+
+#body .el-select-dropdown__item.hover,#body .el-select-dropdown__item:hover {
+  background-color: rgba(103, 152, 226, 0.12941176470588237);
 }

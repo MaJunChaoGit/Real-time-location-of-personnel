@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       mountedId: 'cesiumContainer',
-      isReady: true
+      isReady: false
     };
   },
 
@@ -37,19 +37,19 @@ export default {
   },
 
   mounted() {
-    // // 1.优化加载顺序
-    // let initScene = new InitScene(this.mountedId);
-    // // 2、调整代码结构，使用promise进行异步处理
-    // initScene
-    //   .then(resolve => {
-    //     // 现加载页面HTML
-    //     this.isReady = resolve.status;
-    //     return resolve.entity;
-    //   })
-    //   .then(feature => {
-    //     // 再复制INFOBOX,开启pickUp功能
-    //     feature.pickUp();
-    //   });
+    // 1.优化加载顺序
+    let initScene = new InitScene(this.mountedId);
+    // 2、调整代码结构，使用promise进行异步处理
+    initScene
+      .then(resolve => {
+        // 现加载页面HTML
+        this.isReady = resolve.status;
+        return resolve.entity;
+      })
+      .then(feature => {
+        // 再复制INFOBOX,开启pickUp功能
+        feature.pickUp();
+      });
   },
 
   methods: {
