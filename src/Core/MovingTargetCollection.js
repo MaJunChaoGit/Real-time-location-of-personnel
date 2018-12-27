@@ -9,7 +9,8 @@ import InfoBoxManager from './InfoBoxManager';
  * 2.统一进行删除，显示隐藏操作
  * 3.通过id索引出具体动目标
  */
-
+let infoBoxManager = null;
+let postUpdate = () => {};
 const dataSourceCollection = []; // 保存所有MovingTargetCollection的大集合
 class MovingTargetCollection {
   constructor(viewer) {
@@ -79,7 +80,7 @@ class MovingTargetCollection {
    * @version  1.0.0
    */
   static withInfobox() {
-    return new InfoBoxManager({
+    infoBoxManager = new InfoBoxManager({
       id: 'MovingTarget',
       valid: {
         validProps: 'id',
@@ -110,6 +111,17 @@ class MovingTargetCollection {
       single: false,
       follow: true
     });
+    return infoBoxManager;
+  }
+  /**
+   * 获取infoboxManager
+   * @Author   MJC
+   * @DateTime 2018-12-27
+   * @version  1.0.0
+   * @return   {[type]}   [description]
+   */
+  static getInfobox() {
+    return infoBoxManager;
   }
   /**
    * 在添加完实体后就绑定其标牌一起运动
@@ -120,7 +132,7 @@ class MovingTargetCollection {
    */
   static bindEntityWithInfobox() {
     // 绑定预渲染事件
-    let postUpdate = function() {
+    postUpdate = function() {
       // 获取当前的朱丽叶时间
       let time = global.viewer.clock._currentTime;
       // 遍历所有创建的总体动目标集合
@@ -148,6 +160,16 @@ class MovingTargetCollection {
     };
     // 在场景中添加绑定
     global.viewer.scene.postUpdate.addEventListener(postUpdate);
+  }
+  /**
+   * 解除标牌绑定事件
+   * @Author   MJC
+   * @DateTime 2018-12-27
+   * @version  1.0.0
+   * @return   {[type]}   [description]
+   */
+  static unbindEntityWithInfobox() {
+    global.viewer.scene.postUpdate.removeEventListener(postUpdate);
   }
   /**
    * 根据实体的id删除实体
@@ -187,12 +209,29 @@ class MovingTargetCollection {
    * @param    {Boolean} 显示还是隐藏
    */
   visiableAll(flag) {
+    // 取消目标的跟踪
+    global.viewer.cancelTrack();
+    // 实体全部隐藏
     this._dataSource.show = flag;
     return flag;
   }
-
-  destroy() {
-
+  /**
+   * @Author   MJC
+   * @DateTime 2018-12-27
+   * @version  1.0.0
+   * @param    {Boolean}   flag 显示还是隐藏
+   * @return   {[type]}        [description]
+   */
+  static visiableAllCollection(flag) {
+    // 控制标牌隐藏
+    MovingTargetCollection.getInfobox().visiable(flag);
+    // 控制标牌绑定实体
+    flag ? MovingTargetCollection.bindEntityWithInfobox() : MovingTargetCollection.unbindEntityWithInfobox();
+    // 控制实体显示隐藏
+    dataSourceCollection.forEach(dataSource => {
+      dataSource.visiableAll(flag);
+    });
+    return flag;
   }
 };
 export default MovingTargetCollection;

@@ -97,7 +97,7 @@ class PickedFeature {
     if (this.highlighted.feature) this.highlighted.feature.color = this.highlighted.originalColor;
     if (this.selected.feature) this.selected.feature.color = this.selected.originalColor;
     this.infoBoxManager.removeTriggerEvent();
-    this.infoBoxManager.infobox.show(false);
+    this.infoBoxManager.infobox.show && this.infoBoxManager.infobox.show(false);
     this.nameOverlay.show(false);
   }
   /**

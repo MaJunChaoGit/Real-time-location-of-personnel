@@ -3,6 +3,7 @@ import ScreenSpaceEventType from 'cesium/Core/ScreenSpaceEventType';
 import defined from 'cesium/Core/defined';
 import InfoBox from './InfoBox';
 import createGuid from 'cesium/Core/createGuid';
+let tempInfo = [];
 class InfoBoxManager {
   constructor({
     close = () => {},
@@ -45,7 +46,36 @@ class InfoBoxManager {
     // 初始化标牌触发事件
     this.initTriggerEvent();
   }
-
+  /**
+   * 控制标牌显示隐藏
+   * @Author   MJC
+   * @DateTime 2018-12-27
+   * @version  1.0.0
+   * @param    {[type]}   flag [description]
+   * @return   {[type]}        [description]
+   */
+  visiable(flag) {
+    // 如果是隐藏的话,需要将所有小黄标改为白色
+    if (!flag) {
+      document.querySelectorAll('.rp-icon-view').forEach(val => {
+        val.style.color = 'white';
+      });
+    }
+    // 如果是多目标控制的话
+    if (Array.isArray(this.infobox)) {
+      // 如果是需要隐藏的话,需要将所有当前状态为close的infobox的id保存
+      this.infobox.forEach(info => {
+        if (!flag && info.status === 'close') tempInfo.push(info.id);
+      });
+      // 遍历的时候,如果是要重新打开infobox时,需要只打开之前显示的标牌,其他隐藏的继续隐藏
+      this.infobox.forEach(info => {
+        if (flag && tempInfo.indexOf(info.id) === -1) info.show(flag);
+        if (!flag) info.show(flag);
+      });
+    } else {
+      this.infobox.show(flag);
+    }
+  }
   /**
    * 初始化标牌
    * 由于点击到的可能是primitives, 可能存在没有id的情况,默认id为''

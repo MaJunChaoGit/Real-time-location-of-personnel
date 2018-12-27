@@ -18,8 +18,9 @@
         <el-col :span="3">
           <el-switch
             v-model="buildInfo"
-            active-color="#56aad2"
-            inactive-color="#264686">
+            @change="featureControl"
+            active-color="#33a3d8"
+            inactive-color="#1347af">
           </el-switch>
         </el-col>
       </el-row>
@@ -31,8 +32,9 @@
         <el-col :span="3">
           <el-switch
             v-model="targetInfo"
-            active-color="#56aad2"
-            inactive-color="#264686">
+            @change="movingTargetControl"
+            active-color="#33a3d8"
+            inactive-color="#1347af">
           </el-switch>
         </el-col>
         <el-col :span="4" :offset="5">
@@ -42,8 +44,8 @@
         <el-col :span="3">
           <el-switch
             v-model="pointInfo"
-            active-color="#56aad2"
-            inactive-color="#264686">
+            active-color="#33a3d8"
+            inactive-color="#1347af">
           </el-switch>
         </el-col>
       </el-row>
@@ -55,8 +57,8 @@
         <el-col :span="3">
           <el-switch
             v-model="boroughInfo"
-            active-color="#56aad2"
-            inactive-color="#264686">
+            active-color="#33a3d8"
+            inactive-color="#1347af">
           </el-switch>
         </el-col>
         <el-col :span="4" :offset="5">
@@ -66,8 +68,8 @@
         <el-col :span="3">
           <el-switch
             v-model="heatmapInfo"
-            active-color="#56aad2"
-            inactive-color="#264686">
+            active-color="#33a3d8"
+            inactive-color="#1347af">
           </el-switch>
         </el-col>
       </el-row>
@@ -110,6 +112,7 @@
 
 <script>
 import { getDeviceType } from 'ex/utils/dom';
+import MovingTargetCollection from 'source/Core/MovingTargetCollection';
 export default {
   name: 'RpTree',
 
@@ -146,13 +149,18 @@ export default {
   mounted() {
   
   },
-
   methods: {
     containerClose() {
       document.querySelector('.rp-tree').style.display = 'none';
     },
     deviceType() {
       return getDeviceType();
+    },
+    featureControl() {
+      this.buildInfo = this.$store.getters.getBuild.build.show(this.buildInfo);
+    },
+    movingTargetControl() {
+      this.targetInfo = MovingTargetCollection.visiableAllCollection(this.targetInfo);
     }
   }
 };
