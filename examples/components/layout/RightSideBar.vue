@@ -21,19 +21,18 @@
   </div>
 </template>
 <script>
-import RpButtonGroup from './ButtonGroup';
-import RpButton from '../functionality/Button';
-import Features from 'ex/src/Features';
-import { getDeviceType } from '../../utils/dom';
 import {
   Fullscreen,
   changeSceneMode,
   DrawHelper
 } from 'source/index';
+import RpButtonGroup from './ButtonGroup';
+import RpButton from '../functionality/Button';
+import Features from 'ex/src/Features';
 import carToDegrees from 'ex/src/carToDegrees';
 import api from 'ex/api/index';
 import createGuid from 'cesium/Core/createGuid';
-import { crtTimeFtt } from 'ex/utils/dom';
+import { crtTimeFtt, getDeviceType } from 'ex/utils/dom';
 export default {
   name: 'RpRightSide',
 
@@ -45,7 +44,7 @@ export default {
   data() {
     return {
       buttonShow: true,
-      customButtonClass: 'rp-icon--custom__hide',
+      customButtonClass: 'rp-icon--custom__hide'
     };
   },
 
