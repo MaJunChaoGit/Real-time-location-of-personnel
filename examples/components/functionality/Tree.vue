@@ -44,6 +44,7 @@
         <el-col :span="3">
           <el-switch
             v-model="pointInfo"
+            @change="pointInfoControl"
             active-color="#33a3d8"
             inactive-color="#1347af">
           </el-switch>
@@ -57,6 +58,7 @@
         <el-col :span="3">
           <el-switch
             v-model="boroughInfo"
+            @change="boroughInfoControl"
             active-color="#33a3d8"
             inactive-color="#1347af">
           </el-switch>
@@ -73,7 +75,7 @@
           </el-switch>
         </el-col>
       </el-row>
-       <el-row type="flex" align="middle" v-if="deviceType() === 'else'">
+       <!-- <el-row type="flex" align="middle" v-if="deviceType() === 'else'">
         <el-col :span="24">
           <h4>风格设置</h4>
         </el-col>
@@ -83,7 +85,7 @@
           <label>建筑:</label>
         </el-col>
         <el-col :span="7">
-          <el-select v-model="buildStyle" placeholder="请选择风格" size="mini">
+          <el-select v-model="buildStyle" placeholder="请选择风格" size="mini" @change="buildStyleControl">
             <el-option
                 v-for="item in buildStyleOptions"
                 :key="item.value"
@@ -96,7 +98,7 @@
           <label>地图:</label>
         </el-col>
         <el-col :span="7">
-          <el-select v-model="mapStyle" placeholder="请选择风格" size="mini">
+          <el-select v-model="mapStyle" placeholder="请选择风格" size="mini" @change="mapStyleControl">
             <el-option
                 v-for="item in mapStyleOptions"
                 :key="item.value"
@@ -105,7 +107,7 @@
             </el-option>
           </el-select>
         </el-col>
-      </el-row>
+      </el-row> -->
     </div>
   </div>
 </template>
@@ -113,6 +115,8 @@
 <script>
 import { getDeviceType } from 'ex/utils/dom';
 import MovingTargetCollection from 'source/Core/MovingTargetCollection';
+import KmlLoader from 'source/Core/KmlLoader';
+import GeojsonLoader from 'source/Core/GeojsonLoader';
 export default {
   name: 'RpTree',
 
@@ -121,18 +125,18 @@ export default {
       buildStyle: '1',
       buildStyleOptions: [{
         value: '0',
-        label: '原始风格'
+        label: '经典'
       }, {
         value: '1',
-        label: '科技风格'
+        label: '科技'
       }],
       mapStyle: '1',
       mapStyleOptions: [{
         value: '0',
-        label: '原始风格'
+        label: '经典'
       }, {
         value: '1',
-        label: '科技风格'
+        label: '科技'
       }],
       buildInfo: true,
       targetInfo: true,
@@ -149,6 +153,10 @@ export default {
   mounted() {
   
   },
+  computed: {
+
+  },
+
   methods: {
     containerClose() {
       document.querySelector('.rp-tree').style.display = 'none';
@@ -161,6 +169,23 @@ export default {
     },
     movingTargetControl() {
       this.targetInfo = MovingTargetCollection.visiableAllCollection(this.targetInfo);
+    },
+    pointInfoControl() {
+      if (!this.$store.getters.getLocation()) {
+        let dataSourcePromise = new KmlLoader(global.viewer, '../../../src/Assets/newYorkData/sampleGeocacheLocations.kml');
+        this.$store.dispatch('set_location', dataSourcePromise);
+      } else {
+        this.$store.getters.getLocation().show = this.pointInfo;
+      }
+    },
+    boroughInfoControl() {
+      debugger
+      if (!this.$store.getters.getBorough()) {
+        let dataSourcePromise = new GeojsonLoader(global.viewer, '../../../src/Assets/newYorkData/sampleNeighborhoods.geojson');
+        this.$store.dispatch('set_borough', dataSourcePromise);
+      } else {
+        this.$store.getters.getBorough().show = this.boroughInfo;
+      }
     }
   }
 };

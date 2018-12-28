@@ -17,15 +17,11 @@ var store = new Vuex.Store({
         car: state.car
       };
     },
-    getLocation: state => {
-      return {
-        location: state.location
-      };
+    getLocation: state => () => {
+      return state.location;
     },
-    getBorough: state => {
-      return {
-        borough: state.borough
-      };
+    getBorough: state => () => {
+      return state.borough;
     },
     getHeatmap: state => {
       return {
@@ -49,6 +45,18 @@ var store = new Vuex.Store({
     },
     SET_HEATMAP(state, load) {
       state.heatmap = load;
+    }
+  },
+  actions: {
+    set_location(context, load) {
+      load.then(dataSource => {
+        context.commit('SET_LOCATION', dataSource);
+      });
+    },
+    set_borough(context, load) {
+      load.then(dataSource => {
+        context.commit('SET_BOROUGH', dataSource);
+      });
     }
   }
 });
