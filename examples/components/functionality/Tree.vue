@@ -179,7 +179,6 @@ export default {
       }
     },
     boroughInfoControl() {
-      debugger
       if (!this.$store.getters.getBorough()) {
         let dataSourcePromise = new GeojsonLoader(global.viewer, '../../../src/Assets/newYorkData/sampleNeighborhoods.geojson');
         this.$store.dispatch('set_borough', dataSourcePromise);
