@@ -70,6 +70,7 @@
         <el-col :span="3">
           <el-switch
             v-model="heatmapInfo"
+            @change="heatmapControl"
             active-color="#33a3d8"
             inactive-color="#1347af">
           </el-switch>
@@ -117,6 +118,9 @@ import { getDeviceType } from 'ex/utils/dom';
 import MovingTargetCollection from 'source/Core/MovingTargetCollection';
 import KmlLoader from 'source/Core/KmlLoader';
 import GeojsonLoader from 'source/Core/GeojsonLoader';
+import api from 'ex/api/index';
+import CesiumHeatmap from 'source/Core/CesiumHeatmap';
+import HeatmapImageryProvider from 'source/Scene/HeatmapImageryProvider';
 export default {
   name: 'RpTree',
 
@@ -151,7 +155,7 @@ export default {
   },
 
   mounted() {
-  
+    
   },
   computed: {
 
@@ -185,6 +189,71 @@ export default {
       } else {
         this.$store.getters.getBorough().show = this.boroughInfo;
       }
+    },
+    heatmapControl() {
+      let bounds = {
+        west: -74.13833844,
+        east:  73.13856899,
+        south: 41.9,
+        north: 39.0
+      };
+      
+      this.$http.get(api.heatmap).then(response => {
+        let data = this.getHeatMapData(response.data);
+        // let heatmap = CesiumHeatmap.create(global.viewer, bounds, {});
+        // heatmap.setWGS84Data(data.min, data.max, data.points);
+        let layer = new HeatmapImageryProvider({
+          data: data,
+          bounds: this.getBounds()
+        });
+        global.viewer.scene.imageryLayers.addImageryProvider(layer);
+        viewer.setLayersStyles({
+          brightness: 0.8,
+          contrast: 0.76,
+          hue: 0.08,
+          saturation: 0.52,
+          gamma: 0.06
+        }, 1);
+      });
+    },
+    // 获取热力图数据
+    getHeatMapData(currentData) {
+      let points = [];
+      let maxValue = 0;
+      let minValue = 0;
+
+      for (let i = 0; i < currentData.length; i++) {
+          let x = currentData[i].lon;
+          let y = currentData[i].lat;
+          let value = currentData[i].value;
+
+          maxValue = Math.max(maxValue, value);
+          minValue = Math.min(minValue, value);
+
+          points.push({
+            x: x,
+            y: y,
+            value: value
+          });
+      }
+
+      let data = {
+        max: maxValue,
+        points: points,
+        min: minValue
+      };
+      return data;
+    },
+
+    getBounds() {
+      let currentRectangle = global.viewer.scene.camera.computeViewRectangle();
+      let bounds = {
+        north: currentRectangle.north * 180.0 / Math.PI,
+        west: currentRectangle.west * 180.0 / Math.PI,
+        south: currentRectangle.south * 180.0 / Math.PI,
+        east: currentRectangle.east * 180.0 / Math.PI
+      };
+      return bounds;
     }
   }
 };
