@@ -126,6 +126,9 @@ export default {
 
   data() {
     return {
+      min: -6,
+      max: 6,
+      step: 0.1,
       buildStyle: '1',
       buildStyleOptions: [{
         value: '0',
@@ -191,30 +194,25 @@ export default {
       }
     },
     heatmapControl() {
-      let bounds = {
-        west: -74.13833844,
-        east:  73.13856899,
-        south: 41.9,
-        north: 39.0
-      };
-      
-      this.$http.get(api.heatmap).then(response => {
-        let data = this.getHeatMapData(response.data);
-        // let heatmap = CesiumHeatmap.create(global.viewer, bounds, {});
-        // heatmap.setWGS84Data(data.min, data.max, data.points);
-        let layer = new HeatmapImageryProvider({
-          data: data,
-          bounds: this.getBounds()
+      if (global.viewer.scene.imageryLayers._layers[1]) global.viewer.scene.imageryLayers._layers[1].show = this.heatmapInfo;
+      else {
+        this.$http.get(api.heatmap).then(response => {
+          let data = this.getHeatMapData(response.data);
+          let layer = new HeatmapImageryProvider({
+            data: data,
+            bounds: this.getBounds()
+          });
+          global.viewer.scene.imageryLayers.addImageryProvider(layer);
+          global.viewer.setLayersStyles({
+            brightness: 0.9,
+            contrast: 0.3,
+            hue: -0.1,
+            saturation: 1.3,
+            gamma: 1.6
+          }, 1);
         });
-        global.viewer.scene.imageryLayers.addImageryProvider(layer);
-        viewer.setLayersStyles({
-          brightness: 0.8,
-          contrast: 0.76,
-          hue: 0.08,
-          saturation: 0.52,
-          gamma: 0.06
-        }, 1);
-      });
+      }
+      
     },
     // 获取热力图数据
     getHeatMapData(currentData) {

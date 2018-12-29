@@ -76,7 +76,7 @@ import * as h337 from 'heatmap.js/build/heatmap.js';
         
         this._setWidthAndHeight(this._mbounds);
         this._options.radius = Math.round(defaultValue(this._options.radius, ((this.width > this.height) ? this.width / 60 : this.height / 60)));
-        this._options.radius = 80;
+        this._options.radius = 60;
 
         this._spacing = this._options.radius * 1;
         this._xoffset = this._mbounds.west;
