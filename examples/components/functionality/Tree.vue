@@ -70,6 +70,7 @@
         <el-col :span="3">
           <el-switch
             v-model="heatmapInfo"
+            @change="heatmapControl"
             active-color="#33a3d8"
             inactive-color="#1347af">
           </el-switch>
@@ -117,11 +118,17 @@ import { getDeviceType } from 'ex/utils/dom';
 import MovingTargetCollection from 'source/Core/MovingTargetCollection';
 import KmlLoader from 'source/Core/KmlLoader';
 import GeojsonLoader from 'source/Core/GeojsonLoader';
+import api from 'ex/api/index';
+import CesiumHeatmap from 'source/Core/CesiumHeatmap';
+import HeatmapImageryProvider from 'source/Scene/HeatmapImageryProvider';
 export default {
   name: 'RpTree',
 
   data() {
     return {
+      min: -6,
+      max: 6,
+      step: 0.1,
       buildStyle: '1',
       buildStyleOptions: [{
         value: '0',
@@ -151,7 +158,7 @@ export default {
   },
 
   mounted() {
-  
+    
   },
   computed: {
 
@@ -179,13 +186,72 @@ export default {
       }
     },
     boroughInfoControl() {
-      debugger
       if (!this.$store.getters.getBorough()) {
         let dataSourcePromise = new GeojsonLoader(global.viewer, '../Assets/newYorkData/sampleNeighborhoods.geojson');
         this.$store.dispatch('set_borough', dataSourcePromise);
       } else {
         this.$store.getters.getBorough().show = this.boroughInfo;
       }
+    },
+    heatmapControl() {
+      if (global.viewer.scene.imageryLayers._layers[1]) global.viewer.scene.imageryLayers._layers[1].show = this.heatmapInfo;
+      else {
+        this.$http.get(api.heatmap).then(response => {
+          let data = this.getHeatMapData(response.data);
+          let layer = new HeatmapImageryProvider({
+            data: data,
+            bounds: this.getBounds()
+          });
+          global.viewer.scene.imageryLayers.addImageryProvider(layer);
+          global.viewer.setLayersStyles({
+            brightness: 0.9,
+            contrast: 0.3,
+            hue: -0.1,
+            saturation: 1.3,
+            gamma: 1.6
+          }, 1);
+        });
+      }
+      
+    },
+    // 获取热力图数据
+    getHeatMapData(currentData) {
+      let points = [];
+      let maxValue = 0;
+      let minValue = 0;
+
+      for (let i = 0; i < currentData.length; i++) {
+          let x = currentData[i].lon;
+          let y = currentData[i].lat;
+          let value = currentData[i].value;
+
+          maxValue = Math.max(maxValue, value);
+          minValue = Math.min(minValue, value);
+
+          points.push({
+            x: x,
+            y: y,
+            value: value
+          });
+      }
+
+      let data = {
+        max: maxValue,
+        points: points,
+        min: minValue
+      };
+      return data;
+    },
+
+    getBounds() {
+      let currentRectangle = global.viewer.scene.camera.computeViewRectangle();
+      let bounds = {
+        north: currentRectangle.north * 180.0 / Math.PI,
+        west: currentRectangle.west * 180.0 / Math.PI,
+        south: currentRectangle.south * 180.0 / Math.PI,
+        east: currentRectangle.east * 180.0 / Math.PI
+      };
+      return bounds;
     }
   }
 };

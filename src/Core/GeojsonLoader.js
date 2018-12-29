@@ -31,11 +31,16 @@ class GeojsonLoader {
       if (defined(entity.polygon)) {
         entity.name = entity.properties.neighborhood;
         entity.polygon.material = Color.fromRandom({
-          red: 0.1,
-          maximumGreen: 0.5,
-          minimumBlue: 0.5,
-          alpha: 0.3
+          minimumRed: 0.129,
+          maximumRed: 0.278,
+          minimumGreen: 0.364,
+          maximumGreen: 0.611,
+          minimumBlue: 0.58,
+          alpha: 0.1
         });
+        // entity.polygon.material = Color.fromCssColorString('rgba(27, 68, 10, 0.4)');
+        // entity.polygon.fill = false;
+        // entity.polygon.outlineColor = Color.fromCssColorString('rgba(152, 242, 255, 0.43)');
         entity.polygon.classificationType = ClassificationType.BOTH;
         let polyPositions = entity.polygon.hierarchy.getValue(JulianDate.now()).positions;
         let polyCenter = BoundingSphere.fromPoints(polyPositions).center;
