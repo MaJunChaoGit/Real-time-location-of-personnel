@@ -57,46 +57,46 @@ export default {
     },
     measureDistance() {
       
-      // if (process.env.NODE_ENV === 'development') {
-      //   // 下面是保存数据的方法
-      //   new DrawHelper(global.viewer.scene).startMeasureDistance((positions, time) => {
-      //     let movingTarget = {
-      //       id: createGuid(),
-      //       options: {
-      //         type: Math.ceil(Math.random() * 6),
-      //         phone: '13376090266',
-      //         ascriptions: '第一中队'
-      //       },
-      //       timePositions: []
-      //     };
-      //     let date = new Date('2018-10-17 23:06:00');
-      //     positions.forEach((val, index) => {
-      //       let position = carToDegrees(val);
-      //       position.lon = position.lon;
-      //       position.lat = position.lat;
-      //       position.height = position.height;
-      //       if (index !== 0) date.setMilliseconds(time[index] + 5000);
-      //       position.time = crtTimeFtt(date);     
-      //       movingTarget.timePositions.push(position);
-      //     });
-      //     console.log(movingTarget.id);
-      //     console.log(movingTarget.timePositions);
-      //     movingTarget.startTime = movingTarget.timePositions[0].time;
-      //     movingTarget.endTime = movingTarget.timePositions[movingTarget.timePositions.length - 1].time;
-      //     this.$http.post(api.saveMovingTarget, movingTarget)
-      //     .then(function(response) {
-      //       console.log(response);
-      //     })
-      //     .catch(function(error) {
-      //       console.log(error);
-      //     });
-      //   });
-      // } else {
+       if (process.env.NODE_ENV === 'development') {
+         // 下面是保存数据的方法
+         new DrawHelper(global.viewer.scene).startMeasureDistance((positions, time) => {
+           let movingTarget = {
+             id: createGuid(),
+             options: {
+               type: Math.ceil(Math.random() * 6),
+               phone: '13376090266',
+               ascriptions: '第一中队'
+             },
+             timePositions: []
+           };
+           let date = new Date('2018-10-17 23:06:00');
+           positions.forEach((val, index) => {
+             let position = carToDegrees(val);
+             position.lon = position.lon;
+             position.lat = position.lat;
+             position.height = position.height;
+             if (index !== 0) date.setMilliseconds(time[index] + 5000);
+             position.time = crtTimeFtt(date);     
+             movingTarget.timePositions.push(position);
+           });
+           console.log(movingTarget.id);
+           console.log(movingTarget.timePositions);
+           movingTarget.startTime = movingTarget.timePositions[0].time;
+           movingTarget.endTime = movingTarget.timePositions[movingTarget.timePositions.length - 1].time;
+           this.$http.post(api.saveMovingTarget, movingTarget)
+           .then(function(response) {
+             console.log(response);
+           })
+           .catch(function(error) {
+             console.log(error);
+           });
+         });
+       } else {
         Features.getFeatures().pickDown();
         new DrawHelper(global.viewer.scene).startMeasureDistance(() => {
           Features.getFeatures().pickUp();
         });
-      // }
+      }
     },
     measureArea() {
       Features.getFeatures().pickDown();
