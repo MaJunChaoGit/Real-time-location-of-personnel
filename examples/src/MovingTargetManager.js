@@ -8,13 +8,13 @@ import {
 class MovingTargetManager {
   constructor(url) {
     // 设置一个分类对象, 便于之后的集群操作
-    this.classification;
+    this.classification = {};
     // 初始化WebSocket以及hooks
     this.socket = new WebSocket(url);
-    this.socket.onOpen = this.open;
-    this.socket.onMessage = this.message;
-    this.socket.onClose = this.close;
-    this.socket.onError = this.error;
+    this.socket.onopen = this.open;
+    this.socket.onmessage = this.message();
+    this.socket.onclose = this.close;
+    this.socket.onerror = this.error;
   }
   /**
    * websocket的open方法
@@ -36,9 +36,15 @@ class MovingTargetManager {
    * @param    {[type]}   event [description]
    * @return   {[type]}         [description]
    */
-  message(event) {
-    let arr = this.classifiTargets(event.data);
-    this.parseBatchData(arr);
+  message() {
+    // 改变下this;
+    let self = this;
+    return function(event) {
+      // 进行目标分类
+      let arr = self.classifiTargets(JSON.parse(event.data));
+      // 转换当前批次动目标
+      self.parseBatchData(arr);
+    };
   }
   /**
    * websocket的close方法
@@ -68,7 +74,7 @@ class MovingTargetManager {
    * @param    {[type]}   data [description]
    * @return   {[type]}        [description]
    */
-  classifiTargets(data) {
+  classifiTargets({data}) {
     let tempArr = [];
     data.forEach(val => {
       // 获取当前分类对象, 如果没有定义的话就定义一个, 之后开始填充数据
@@ -89,7 +95,7 @@ class MovingTargetManager {
         MovingTargetCollection.bindEntityWithInfobox();
       }
       // 将id存入方便管理
-      this.classification[val.options.type]['id'].push(val.id);
+      this.classification[val.options.type]['idArrays'].push(val.id);
       // 临时数据用于存放当前批次的数据
       tempArr.push(val);
     });
@@ -107,7 +113,7 @@ class MovingTargetManager {
     // 遍历解析数据，如果没有创建该目标信息，那么新建一个动目标
     // 如果已经有该数据了，直接改变坐标点
     array.forEach(val => {
-      if (this.classification[val.options.type]['idArrays'].indexOf(val.id) < 0) {
+      if (!this.classification[val.options.type]['collection'].getById(val.id)) {
         // 新增动目标到指定的分类集合中
         this.classification[val.options.type]['collection'].add(new MovingTarget(val));
       } else {

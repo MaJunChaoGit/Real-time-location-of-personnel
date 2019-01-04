@@ -141,7 +141,7 @@ class MovingTarget extends Entity {
       let time = JulianDate.fromDate(new Date(val.time));
       // 获取当前位置的采样点
       let position = Cartesian3.fromDegrees(val.lon, val.lat, val.height);
-      this.positions.addSample(time, position);
+      this.position.addSample(time, position);
     });
   }
 };

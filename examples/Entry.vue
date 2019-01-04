@@ -58,7 +58,8 @@ export default {
           global.viewer.setLifeCircle(data.overallStarttime, data.overallEndtime);
           // 设置时钟效率
           global.viewer.setMultiplier(0.1);
-          MovingTargetManager(api.movingTargets)
+          // 创建websocket连接
+          let manager = new MovingTargetManager(api.movingTargets);
         })
         .catch(function(error) {
           console.log(error);
