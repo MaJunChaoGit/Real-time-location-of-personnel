@@ -10,7 +10,7 @@ import InfoBoxManager from './InfoBoxManager';
  * 3.通过id索引出具体动目标
  */
 let infoBoxManager = null;
-let postUpdate = () => {};
+let postUpdate;
 const dataSourceCollection = []; // 保存所有MovingTargetCollection的大集合
 class MovingTargetCollection {
   constructor(viewer) {
@@ -131,6 +131,7 @@ class MovingTargetCollection {
    * @param    {Object}   entity 实体对象
    */
   static bindEntityWithInfobox() {
+    if (postUpdate) MovingTargetCollection.unbindEntityWithInfobox();
     // 绑定预渲染事件
     postUpdate = function() {
       // 获取当前的朱丽叶时间
@@ -156,7 +157,7 @@ class MovingTargetCollection {
         });
       }
       // 如果当前时间超过了时钟设置的总的结束时间, 移除目标的预渲染处理事件
-      if (JulianDate.compare(time, global.viewer.clock.endTime) > 0) global.viewer.scene.postUpdate.removeEventListener(postUpdate);
+      if (JulianDate.compare(time, global.viewer.clock.endTime) > 0) MovingTargetCollection.unbindEntityWithInfobox();
     };
     // 在场景中添加绑定
     global.viewer.scene.postUpdate.addEventListener(postUpdate);

@@ -104,7 +104,7 @@ class Viewer extends supViewer {
    * @param    {StringDate} start 整个动画的起始时间 e.g '2018-06-01 16:22:00'
    * @param    {StringDate} stop  整个动画的结束时间 e.g '2019-06-01 16:22:00'
    */
-  setLifyCircle(start, stop) {
+  setLifeCircle(start, stop) {
     if (!defined(start) && !defined(stop)) throw new Error('需要传入开始字符串,格式为yyyy-mm-dd hh:mm:ss');
     start = JulianDate.fromDate(new Date(start));
     stop = JulianDate.fromDate(new Date(stop));

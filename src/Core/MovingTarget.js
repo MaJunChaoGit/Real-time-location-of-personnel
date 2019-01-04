@@ -127,5 +127,22 @@ class MovingTarget extends Entity {
 
     return new SampledPositionProperty(REFERENCE);
   }
+  /**
+   * 动目标新增坐标方法
+   * @Author   MJC
+   * @DateTime 2019-01-04
+   * @version  1.0.0
+   * @param    {Array}   positions [description]
+   * @return   {[type]}             [description]
+   */
+  pushPositions(positions) {
+    positions.forEach(val => {
+      // 获取当前位置的事件
+      let time = JulianDate.fromDate(new Date(val.time));
+      // 获取当前位置的采样点
+      let position = Cartesian3.fromDegrees(val.lon, val.lat, val.height);
+      this.positions.addSample(time, position);
+    });
+  }
 };
 export default MovingTarget;
