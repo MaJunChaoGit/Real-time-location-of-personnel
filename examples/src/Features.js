@@ -51,6 +51,9 @@ class Features {
       dynamicScreenSpaceErrorDensity: 0.00278,
       dynamicScreenSpaceErrorFactor: 4.0,
       dynamicScreenSpaceErrorHeightFalloff: 0.25,
+      sphericalHarmonicCoefficients: undefined,
+      specularEnvironmentMaps: undefined,
+      luminanceAtZenith: 100,
       // imageBasedLightingFactor: new Cartesian2(1, 1),
       // lightColor: new Cartesian3(0, 0, 0)
       shadows: ShadowMode.DISABLED

@@ -44,7 +44,8 @@ class Viewer extends supViewer {
     contrast = 1,
     hue = 0,
     saturation = 1,
-    gamma = 1
+    gamma = 1,
+    alpha = 1
   }, layer = 0) {
     this.imageryLayers.get(parseFloat(layer)).saturation = parseFloat(saturation);
     this.imageryLayers.get(parseFloat(layer)).brightness = parseFloat(brightness);
@@ -52,6 +53,7 @@ class Viewer extends supViewer {
     this.imageryLayers.get(parseFloat(layer)).hue = parseFloat(hue);
     this.imageryLayers.get(parseFloat(layer)).saturation = parseFloat(saturation);
     this.imageryLayers.get(parseFloat(layer)).gamma = parseFloat(gamma);
+    this.imageryLayers.get(parseFloat(layer)).alpha = parseFloat(alpha);
   }
 
   /**

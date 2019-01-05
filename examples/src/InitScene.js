@@ -114,11 +114,11 @@ class InitScene {
     viewer.scene.globe.enableLighting = true;
     // 设置图层颜色
     viewer.setLayersStyles({
-      brightness: 0.8,
-      contrast: 0.76,
+      brightness: 0.2,
+      contrast: 1,
       hue: 0.08,
-      saturation: 0.52,
-      gamma: 0.06
+      saturation: 1.4,
+      gamma: 0.04
     });
     return viewer;
   }

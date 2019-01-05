@@ -168,11 +168,12 @@ export default {
           });
           global.viewer.scene.imageryLayers.addImageryProvider(layer);
           global.viewer.setLayersStyles({
-            brightness: 0.9,
-            contrast: 0.3,
-            hue: -0.1,
-            saturation: 1.3,
-            gamma: 1.6
+            brightness: 0.3,
+            contrast: 0.6,
+            hue: 0.1,
+            saturation: 1,
+            gamma: 1,
+            alpha: 0.5
           }, 1);
         });
       }
