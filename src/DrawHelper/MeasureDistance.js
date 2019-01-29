@@ -71,6 +71,7 @@ class MeasureDistance extends ChangeablePrimitive {
               _self._createPrimitive = true;
             },
             onDragEnd: function(index, position) {
+              debugger
               _self._createPrimitive = true;
               onEdited();
             }

@@ -46,18 +46,21 @@ class BillboardGroup {
       if (callbacks.dragHandlers) {
         var _self = this;
         setListener(billboard, 'leftDown', function(position) {
+          let handler = new ScreenSpaceEventHandler(global.viewer.scene.canvas);
           function onDrag(position) {
             billboard.position = position;
             for (var i = 0, I = _self._orderedBillboards.length; i < I && _self._orderedBillboards[i] != billboard; ++i);
             callbacks.dragHandlers.onDrag && callbacks.dragHandlers.onDrag(getIndex(), position);
           }
           function onDragEnd(position) {
-            handler.destroy();
+            handler = handler && handler.destroy();
+            global.viewer.screenSpaceEventHandler.removeInputAction(ScreenSpaceEventType.MOUSE_MOVE);
+            global.viewer.screenSpaceEventHandler.removeInputAction(ScreenSpaceEventType.LEFT_UP);
             enableRotation(true);
             callbacks.dragHandlers.onDragEnd && callbacks.dragHandlers.onDragEnd(getIndex(), position);
           }
-          var handler = new ScreenSpaceEventHandler(_self._scene.canvas);
-          handler.setInputAction(function(movement) {
+
+          global.viewer.screenSpaceEventHandler.setInputAction(function(movement) {
             var cartesian = _self._scene.camera.pickEllipsoid(movement.endPosition, _self.ellipsoid);
             if (cartesian) {
               onDrag(cartesian);
@@ -66,9 +69,10 @@ class BillboardGroup {
             }
           }, ScreenSpaceEventType.MOUSE_MOVE);
 
-          handler.setInputAction(function(movement) {
+          global.viewer.screenSpaceEventHandler.setInputAction(function(movement) {                  
             onDragEnd(_self._scene.camera.pickEllipsoid(position, _self.ellipsoid));
           }, ScreenSpaceEventType.LEFT_UP);
+
 
           enableRotation(false);
           callbacks.dragHandlers.onDragStart && callbacks.dragHandlers.onDragStart(getIndex(), _self._scene.camera.pickEllipsoid(position, _self.ellipsoid));
@@ -80,7 +84,7 @@ class BillboardGroup {
         });
       }
       if (callbacks.onClick) {
-        setListener(billboard, 'leftClick', function(position) {
+        setListener(billboard, 'leftClick', function(position) { 
 
           callbacks.onClick(getIndex());
         });

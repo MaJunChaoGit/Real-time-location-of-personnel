@@ -57,7 +57,7 @@ export default {
     },
     measureDistance() {
       
-       if (process.env.NODE_ENV === 'development') {
+       if (process.env.NODE_ENV !== 'development') {
          // 下面是保存数据的方法
          new DrawHelper(global.viewer.scene).startMeasureDistance((positions, time) => {
            let movingTarget = {
@@ -92,16 +92,16 @@ export default {
            });
          });
        } else {
-        Features.getFeatures().pickDown();
+        // Features.getFeatures().pickDown();
         new DrawHelper(global.viewer.scene).startMeasureDistance(() => {
-          Features.getFeatures().pickUp();
+          // Features.getFeatures().pickUp();
         });
       }
     },
     measureArea() {
-      Features.getFeatures().pickDown();
+      // Features.getFeatures().pickDown();
       new DrawHelper(global.viewer.scene).startMeasureArea(() => {
-        Features.getFeatures().pickUp();
+        // Features.getFeatures().pickUp();
       });
     },
     deviceType() {
