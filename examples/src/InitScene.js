@@ -5,7 +5,8 @@ import {
   Cartesian3,
   Matrix4,
   HeadingPitchRoll,
-  IonImageryProvider
+  IonImageryProvider,
+  MouseAnimation
 } from 'source/index';
 
 import Features from 'ex/src/Features';
@@ -22,6 +23,7 @@ class InitScene {
           if (process.env.NODE_ENV === 'development') viewer.scene.debugShowFramesPerSecond = true;
           setTimeout(() => {
             this.focusScene(viewer, resolve);
+            this.mouseAnimation = new MouseAnimation(viewer);
           }, 1000);
         });
     });

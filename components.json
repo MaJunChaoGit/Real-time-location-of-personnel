@@ -10,5 +10,6 @@
   "MovingTargetCollection": "'source/Core/MovingTargetCollection'",
   "TypeEnum": "'source/Core/TypeEnum'",
   "Clustering": "'source/Core/Clustering'",
-  "CirclePrimitive": "'source/DrawHelper/CirclePrimitive'"
+  "CirclePrimitive": "'source/DrawHelper/CirclePrimitive'",
+  "MouseAnimation": "'source/Core/MouseAnimation'"
 }

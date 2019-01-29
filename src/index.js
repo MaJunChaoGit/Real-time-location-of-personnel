@@ -921,6 +921,7 @@ import Core_MovingTargetCollection from 'source/Core/MovingTargetCollection';
 import Core_TypeEnum from 'source/Core/TypeEnum';
 import Core_Clustering from 'source/Core/Clustering';
 import DrawHelper_CirclePrimitive from 'source/DrawHelper/CirclePrimitive';
+import Core_MouseAnimation from 'source/Core/MouseAnimation';
 
 const _shaders = {
   Shaders_AdjustTranslucentFS,
@@ -1849,7 +1850,8 @@ module.exports = {
   MovingTargetCollection: Core_MovingTargetCollection,
   TypeEnum: Core_TypeEnum,
   Clustering: Core_Clustering,
-  CirclePrimitive: DrawHelper_CirclePrimitive
+  CirclePrimitive: DrawHelper_CirclePrimitive,
+  MouseAnimation: Core_MouseAnimation
 };
 
 module.exports.default = module.exports;
