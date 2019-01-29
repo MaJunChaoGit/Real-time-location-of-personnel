@@ -79,8 +79,6 @@ export default {
              position.time = crtTimeFtt(date);     
              movingTarget.timePositions.push(position);
            });
-           console.log(movingTarget.id);
-           console.log(movingTarget.timePositions);
            movingTarget.startTime = movingTarget.timePositions[0].time;
            movingTarget.endTime = movingTarget.timePositions[movingTarget.timePositions.length - 1].time;
            this.$http.post(api.saveMovingTarget, movingTarget)
@@ -92,16 +90,16 @@ export default {
            });
          });
        } else {
-        // Features.getFeatures().pickDown();
+        Features.getFeatures().pickDown();
         new DrawHelper(global.viewer.scene).startMeasureDistance(() => {
-          // Features.getFeatures().pickUp();
+          Features.getFeatures().pickUp();
         });
       }
     },
     measureArea() {
-      // Features.getFeatures().pickDown();
+      Features.getFeatures().pickDown();
       new DrawHelper(global.viewer.scene).startMeasureArea(() => {
-        // Features.getFeatures().pickUp();
+        Features.getFeatures().pickUp();
       });
     },
     deviceType() {
