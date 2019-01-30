@@ -21,10 +21,8 @@ class InitScene {
         .then(viewer => {
           global.viewer = viewer;
           if (process.env.NODE_ENV === 'development') viewer.scene.debugShowFramesPerSecond = true;
-          setTimeout(() => {
-            this.focusScene(viewer, resolve);
-            this.mouseAnimation = new MouseAnimation(viewer);
-          }, 1000);
+          this.focusScene(viewer, resolve);
+          this.mouseAnimation = new MouseAnimation(viewer);
         });
     });
   }

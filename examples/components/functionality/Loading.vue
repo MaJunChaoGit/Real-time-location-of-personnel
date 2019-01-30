@@ -113,7 +113,7 @@ export default {
       svgStyle: {display: 'block', width: '100%', height: '100%'}
     });
 
-    bar.animate(1.0, () => {
+    bar.animate(3.0, () => {
       this.visible = false;
     });
   },

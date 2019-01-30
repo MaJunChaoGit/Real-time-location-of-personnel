@@ -31,12 +31,13 @@ export default {
   },
 
   mounted() {
-    // 1.优化加载顺序
-    initScene = new InitScene(this.mountedId);
+
   },
 
   methods: {
     loaded() {
+      // 1.优化加载顺序
+      initScene = new InitScene(this.mountedId);
       // 2、调整代码结构，使用promise进行异步处理
       initScene
         .then(resolve => {
