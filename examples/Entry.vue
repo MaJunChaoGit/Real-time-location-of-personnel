@@ -14,6 +14,7 @@ import MovingTargetManager from 'ex/src/MovingTargetManager';
 import RpLayout from 'ex/components/layout/Layout';
 import RpLoading from 'ex/components/functionality/Loading';
 import api from './api/index';
+let initScene;
 export default {
   name: 'Entry',
 
@@ -30,13 +31,12 @@ export default {
   },
 
   mounted() {
-   
+    // 1.优化加载顺序
+    initScene = new InitScene(this.mountedId);
   },
 
   methods: {
     loaded() {
-      // 1.优化加载顺序
-      let initScene = new InitScene(this.mountedId);
       // 2、调整代码结构，使用promise进行异步处理
       initScene
         .then(resolve => {
