@@ -131,7 +131,6 @@ class Galaxy {
     }
   }
   escHandler() {
-    console.log(1)
     if (this.flag) {
       this.timeout = setTimeout(this.anim.bind(this), this.fps);
     } else {
