@@ -107,7 +107,6 @@ export default {
       strokeWidth: 2,
       easing: 'easeInOut',
       duration: LOADINGTIME,
-      // duration: 1000000,
       color: '#FFEA82',
       trailColor: '#eee',
       trailWidth: 1,
