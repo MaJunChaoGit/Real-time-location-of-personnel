@@ -68,20 +68,22 @@
       </div>
       <div class="rp-loading-shadow"></div>
       <div class="rp-loading-progressbar" id="progress"></div>
+      <canvas class="rp-loading-starfield" ref="starfield" @mousemove="moveHandler" @mousewheel="mousewheelHandler"></canvas>
     </div>
   </transition>
 </template>
 
 <script>
 import ProgressBar from 'progressbar.js';
-
+import Galaxy from 'ex/src/Galaxy.js';
 export default {
   name: 'RpLoading',
 
   data() {
     return {
       /* eslint-disable no-undef */
-      visible: true
+      visible: true,
+      galaxy: null
     };
   },
 
@@ -98,11 +100,14 @@ export default {
   },
 
   mounted() {
+    this.galaxy = new Galaxy(this.$refs.starfield);
+    this.galaxy.start();
     /* eslint-disable no-undef */
     let bar = new ProgressBar.Line(progress, {
       strokeWidth: 2,
       easing: 'easeInOut',
       duration: LOADINGTIME,
+      // duration: 1000000,
       color: '#FFEA82',
       trailColor: '#eee',
       trailWidth: 1,
@@ -120,6 +125,12 @@ export default {
     },
     setText(text) {
       this.text = text;
+    },
+    moveHandler(evt) {
+      this.galaxy.move(evt);
+    },
+    mousewheelHandler(evt) {
+      this.galaxy.mouse_wheel(evt);
     }
   }
 };

@@ -1,245 +1,178 @@
-function $i(id) {
-  return document.getElementById(id);
-}
-
-function get_screen_size() {
-  var w = document.documentElement.clientWidth;
-  var h = document.documentElement.clientHeight;
-  return [w, h];
-}
-
-var url = document.location.href;
-
-var flag = true;
-
-var test = true;
-
-var n = 512;
-
-var w = 0;
-
-var h = 0;
-
-var x = 0;
-
-var y = 0;
-
-var z = 0;
-
-var star_color_ratio = 0;
-
-var star_x_save, star_y_save;
-
-var star_ratio = 256;
-
-var star_speed = 4;
-
-var star_speed_save = 0;
-
-var star = new Array(n);
-
-var opacity = 0.1;
-
-var cursor_x = 0;
-
-var cursor_y = 0;
-
-var mouse_x = 0;
-
-var mouse_y = 0;
-
-var canvas_x = 0;
-
-var canvas_y = 0;
-
-var context;
-
-var key;
-
-var timeout;
-
-var fps = 0;
-
-function init() {
-  for (var i = 0; i < n; i++) {
-    star[i] = new Array(5);
-    star[i][0] = Math.random() * w * 2 - x * 2;
-    star[i][1] = Math.random() * h * 2 - y * 2;
-    star[i][2] = Math.round(Math.random() * z);
-    star[i][3] = 0;
-    star[i][4] = 0;
-  }
-  var starfield = $i('starfield');
-  starfield.style.position = 'absolute';
-  starfield.width = w;
-  starfield.height = h;
-  context = starfield.getContext('2d');
-  context.fillStyle = 'rgb(0,0,0)';
-  context.strokeStyle = 'rgb(255,255,255)';
-  var adsense = $i('adsense');
-  adsense.style.left = Math.round((w - 728) / 2) + 'px';
-  adsense.style.top = (h - 15) + 'px';
-  adsense.style.width = 728 + 'px';
-  adsense.style.height = 15 + 'px';
-  adsense.style.display = 'block';
-}
-
-function anim() {
-
-  mouse_x = cursor_x - x;
-
-  mouse_y = cursor_y - y;
-
-  context.fillRect(0, 0, w, h);
-
-  for (var i = 0; i < n; i++) {
-
-    test = true;
-
-    star_x_save = star[i][3];
-
-    star_y_save = star[i][4];
-
-    star[i][0] += mouse_x >> 4;
-    if (star[i][0] > x << 1) {
-      star[i][0] -= w << 1;
-      test = false;
-    }
-    if (star[i][0] < -x << 1) {
-      star[i][0] += w << 1;
-      test = false;
-    }
-
-    star[i][1] += mouse_y >> 4;
-    if (star[i][1] > y << 1) {
-      star[i][1] -= h << 1;
-      test = false;
-    }
-    if (star[i][1] < -y << 1) {
-      star[i][1] += h << 1;
-      test = false;
-    }
-
-    star[i][2] -= star_speed;
-    if (star[i][2] > z) {
-      star[i][2] -= z;
-      test = false;
-    }
-    if (star[i][2] < 0) {
-      star[i][2] += z;
-      test = false;
-    }
-
-    star[i][3] = x + (star[i][0] / star[i][2]) * star_ratio;
-
-    star[i][4] = y + (star[i][1] / star[i][2]) * star_ratio;
-
-    if (star_x_save > 0 && star_x_save < w && star_y_save > 0 && star_y_save < h && test) {
-
-      context.lineWidth = (1 - star_color_ratio * star[i][2]) * 2;
-
-      context.beginPath();
-
-      context.moveTo(star_x_save, star_y_save);
-
-      context.lineTo(star[i][3], star[i][4]);
-
-      context.stroke();
-
-      context.closePath();
-
-    }
-
+class Galaxy {
+  constructor(el) {
+    this.flag = true;
+    this.test = true;
+    this.n = 512;
+    this.w = 0;
+    this.h = 0;
+    this.x = 0;
+    this.y = 0;
+    this.z = 0;
+    this.star_color_ratio = 0;
+    this.star_x_save = 0;
+    this.star_y_save = 0;
+    this.star_ratio = 256;
+    this.star_speed = 4;
+    this.star_speed_save = 0;
+    this.star = new Array(this.n);
+    this.opacity = 0.1;
+    this.cursor_x = 0;
+    this.cursor_y = 0;
+    this.mouse_x = 0;
+    this.mouse_y = 0;
+    this.canvas_x = 0;
+    this.canvas_y = 0;
+    this.context;
+    this.key;
+    this.timeout;
+    this.fps = 0;
+    this.el = el;
+    this.init();
   }
 
-  timeout = setTimeout(anim, fps);
+  init() {
+    for (let i = 0; i < this.n; i++) {
+      this.star[i] = new Array(5);
+      this.star[i][0] = Math.random() * this.w * 2 - this.x * 2;
+      this.star[i][1] = Math.random() * this.h * 2 - this.y * 2;
+      this.star[i][2] = Math.round(Math.random() * this.z);
+      this.star[i][3] = 0;
+      this.star[i][4] = 0;
+    }
+    this.el.width = this.w;
+    this.el.height = this.h;
+    this.context = this.el.getContext('2d');
+    this.context.fillStyle = 'rgb(0,0,0)';
+    this.context.strokeStyle = 'rgb(255,255,255)';
+  }
 
-}
-
-function move(evt) {
-  evt = evt;
-  cursor_x = evt.pageX - canvas_x;
-  cursor_y = evt.pageY - canvas_y;
-}
-
-function key_manager(evt) {
-
-  evt = evt;
-
-  key = evt.which || evt.keyCode;
-
-  switch (key) {
-
-    case 27:
-      if (flag) {
-        timeout = setTimeout(anim, fps);
-      } else {
-        clearTimeout(timeout);
+  anim() {
+    this.mouse_x = this.cursor_x - this.x;
+    this.mouse_y = this.cursor_y - this.y;
+    this.context.fillRect(0, 0, this.w, this.h);
+    for (let i = 0; i < this.n; i++) {
+      this.test = true;
+      this.star_x_save = this.star[i][3];
+      this.star_y_save = this.star[i][4];
+      this.star[i][0] += this.mouse_x >> 4;
+      if (this.star[i][0] > this.x << 1) {
+        this.star[i][0] -= this.w << 1;
+        this.test = false;
       }
-      break;
-    case 32:
-      star_speed_save = (star_speed !== 0) ? star_speed : star_speed_save;
-      star_speed = (star_speed !== 0) ? 0 : star_speed_save;
-      break;
-    case 13:
-      context.fillStyle = 'rgba(0,0,0,' + opacity + ')';
-      break;
+      if (this.star[i][0] < -this.x << 1) {
+        this.star[i][0] += this.w << 1;
+        this.test = false;
+      }
+      this.star[i][1] += this.mouse_y >> 4;
+      if (this.star[i][1] > this.y << 1) {
+        this.star[i][1] -= this.h << 1;
+        this.test = false;
+      }
+      if (this.star[i][1] < -this.y << 1) {
+        this.star[i][1] += this.h << 1;
+        this.test = false;
+      }
+      this.star[i][2] -= this.star_speed;
+      if (this.star[i][2] > this.z) {
+        this.star[i][2] -= this.z;
+        this.test = false;
+      }
+      if (this.star[i][2] < 0) {
+        this.star[i][2] += this.z;
+        this.test = false;
+      }
+      this.star[i][3] = this.x + (this.star[i][0] / this.star[i][2]) * this.star_ratio;
+      this.star[i][4] = this.y + (this.star[i][1] / this.star[i][2]) * this.star_ratio;
+      if (this.star_x_save > 0 && this.star_x_save < this.w && this.star_y_save > 0 && this.star_y_save < this.h && this.test) {
+        this.context.lineWidth = (1 - this.star_color_ratio * this.star[i][2]) * 2;
+        this.context.beginPath();
+        this.context.moveTo(this.star_x_save, this.star_y_save);
+        this.context.lineTo(this.star[i][3], this.star[i][4]);
+        this.context.stroke();
+        this.context.closePath();
+      }
+    }
+    this.timeout = setTimeout(this.anim.bind(this), this.fps);
   }
-  top.status = 'key=' + ((key < 100) ? '0' : '') + ((key < 10) ? '0' : '') + key;
 
-}
-
-function release() {
-  switch (key) {
-    case 13:
-      context.fillStyle = 'rgb(0,0,0)';
-      break;
-  }
-}
-
-function mouse_wheel(evt) {
-  var delta = 0;
-  if (evt.wheelDelta) {
-    delta = evt.wheelDelta / 120;
-  } else if (evt.detail) {
-    delta = -evt.detail / 3;
+  move(evt) {
+    evt = evt;
+    this.cursor_x = evt.pageX - this.canvas_x;
+    this.cursor_y = evt.pageY - this.canvas_y;
   }
 
-  star_speed += (delta >= 0) ? -0.2 : 0.2;
+  key_manager(evt) {
+    evt = evt;
+    this.key = evt.which || evt.keyCode;
+    switch (this.key) {
+      case 27:
+        if (this.flag) {
+          this.timeout = setTimeout(this.anim.bind(this), this.fps);
+        } else {
+          clearTimeout(this.timeout);
+        }
+        break;
+      case 32:
+        this.star_speed_save = (this.star_speed !== 0) ? this.star_speed : this.star_speed_save;
+        this.star_speed = (this.star_speed !== 0) ? 0 : this.star_speed_save;
+        break;
+      case 13:
+        this.context.fillStyle = 'rgba(0,0,0,' + this.opacity + ')';
+        break;
+    }
+    top.status = 'key=' + ((this.key < 100) ? '0' : '') + ((this.key < 10) ? '0' : '') + this.key;
+  }
 
-  if (evt.preventDefault) evt.preventDefault();
+  release() {
+    switch (this.key) {
+      case 13:
+        this.context.fillStyle = 'rgb(0,0,0)';
+        break;
+    }
+  }
+  escHandler() {
+    console.log(1)
+    if (this.flag) {
+      this.timeout = setTimeout(this.anim.bind(this), this.fps);
+    } else {
+      clearTimeout(this.timeout);
+    }
+  }
+  mouse_wheel(evt) {
+    let delta = 0;
+    if (evt.wheelDelta) {
+      delta = evt.wheelDelta / 120;
+    } else if (evt.detail) {
+      delta = -evt.detail / 3;
+    }
 
+    this.star_speed += (delta >= 0) ? -0.2 : 0.2;
+    if (evt.preventDefault) evt.preventDefault();
+  }
+
+  start() {
+    this.resize();
+    this.anim();
+  }
+
+  resize() {
+    [this.w, this.h] = this.get_screen_size();
+    this.x = Math.round(this.w / 2);
+    this.y = Math.round(this.h / 2);
+    this.z = (this.w + this.h) / 2;
+    this.star_color_ratio = 1 / this.z;
+    this.cursor_x = this.x;
+    this.cursor_y = this.y;
+    this.init();
+  }
+  get_screen_size() {
+    return [document.documentElement.clientWidth, document.documentElement.clientHeight];
+  }
 }
+export default Galaxy;
 
-function start() {
-
-  resize();
-
-  anim();
-
-}
-
-function resize() {
-  [w, h] = get_screen_size();
-  x = Math.round(w / 2);
-  y = Math.round(h / 2);
-  z = (w + h) / 2;
-
-  star_color_ratio = 1 / z;
-
-  cursor_x = x;
-
-  cursor_y = y;
-
-  init();
-
-}
-
-document.onmousemove = move;
-
-document.onkeypress = key_manager;
-
-document.onkeyup = release;
-
-document.onmousewheel = mouse_wheel;
-if (window.addEventListener) window.addEventListener('DOMMouseScroll', mouse_wheel, false);
+// document.onmousemove = move;
+// document.onkeypress = key_manager;
+// document.onkeyup = release;
+// document.onmousewheel = mouse_wheel;
+// if (window.addEventListener) window.addEventListener('DOMMouseScroll', mouse_wheel, false);
