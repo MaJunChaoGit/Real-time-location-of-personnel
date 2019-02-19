@@ -95,6 +95,10 @@ var webpackConfig = {
       {
         test: /(cesiumWorkerBootstrapper|\.worker)\.js$/,
         loader: 'worker-loader'
+      },
+      {
+        test: /xxxxx.js$/,
+        loader: ['cesium-loader', 'babel-loader']
       }
     ]
   },

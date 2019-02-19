@@ -4,7 +4,7 @@ import api from './api';
 import axios from 'axios';
 import Vuex from 'vuex';
 import store from './vuex/store';
-
+import xxxxx from './xxxxx.js';
 import './theme/src/index.scss';
 import 'element-ui/lib/theme-chalk/index.css';
 import { Row, Col, Select, Option, Switch } from 'element-ui';
